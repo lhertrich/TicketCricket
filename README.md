@@ -4,3 +4,4 @@
 ## Namenszuordnung
 
  - **ItsSiMio** - Sidney Strasser
+ - **lhertrich** - Levin Hertrich
