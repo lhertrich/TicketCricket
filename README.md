@@ -6,3 +6,4 @@
  - **ItsSiMio** - Sidney Strasser
  - **Luca-Schorer** - Luca Schorer
  - **lhertrich** - Levin Hertrich
+ - **maischfa23** - Fabian Maisch
