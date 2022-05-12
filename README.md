@@ -5,3 +5,4 @@
 
  - **ItsSiMio** - Sidney Strasser
  - **Luca-Schorer** - Luca Schorer
+ - **lhertrich** - Levin Hertrich
