@@ -4,3 +4,4 @@
 ## Namenszuordnung
 
  - **ItsSiMio** - Sidney Strasser
+ - **Luca-Schorer** - Luca Schorer
