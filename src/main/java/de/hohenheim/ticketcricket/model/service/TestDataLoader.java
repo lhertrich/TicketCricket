@@ -2,8 +2,6 @@ package de.hohenheim.ticketcricket.model.service;
 
 import de.hohenheim.ticketcricket.model.entity.User;
 import de.hohenheim.ticketcricket.model.entity.Role;
-import de.hohenheim.ticketcricket.model.service.RoleService;
-import de.hohenheim.ticketcricket.model.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         // Initialisieren Sie Beispielobjekte und speichern Sie diese über Ihre Services
         Role userRole = new Role("ROLE_USER");
         Role adminRole = new Role("ROLE_ADMIN");
-        roleService.saveRole(adminRole);
+        roleService.saveRole(userRole);
         roleService.saveRole(adminRole);
 
         Set<Role> userRoles = new HashSet<>();

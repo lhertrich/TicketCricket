@@ -38,7 +38,7 @@ public class UserService implements UserDetailsService {
      * @return User-Objekt.
      */
     public User getUserByUsername(String username) {
-        return userRepository.findbyUsername(username);
+        return userRepository.findByUsername(username);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ public class UserService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findbyUsername(username);
+        User user = userRepository.findByUsername(username);
         if (Objects.isNull(user)) {
             throw new UsernameNotFoundException("Could not find the user for username " + username);
         }
