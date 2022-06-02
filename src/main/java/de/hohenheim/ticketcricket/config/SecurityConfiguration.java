@@ -64,6 +64,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // Deaktiviert header security. Ermöglicht Nutzung der H2 Console.
         http.headers().frameOptions().sameOrigin().disable();
+
+        // Security erweiterung
+        http.cors().and().csrf().disable();
     }
 
     @Override
