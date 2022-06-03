@@ -2,18 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="">
 <head>
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet" />
-    <link href="css/login.css" rel="stylesheet" />
-    <title>Document</title>
+    <link href="../static/css/login.css" rel="stylesheet" />
+    <title>Dashboard</title>
 </head>
 
-<body>
-<div class="v13_30">
-    <div class="v13_31"></div>
-    <div class="v66_134"></div>
-    <div class="v66_135"></div><span class="v66_136">Email:</span><span class="v66_137">Passwort:</span>
-    <div class="v66_191"></div><span class="v66_192">Anmelden</span>
-    <div class="v66_98"></div><span class="v66_194">Gebrauchtwaren GmbH</span>
-</div>
+<body style="height: 1500px">
+<div th:insert="navbarFragments :: navbarAdmin" > </div>
+<div th:insert="innerWindowOverviewFragment :: innerWindow"> </div>
 </body>
 
 <script>
