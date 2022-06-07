@@ -2,24 +2,26 @@
 <html xmlns:th="htttp://www.thymeleaf.org" xmlns:object-position="http://www.w3.org/1999/xhtml">
 <head>Test</head>
 <body>
-<div th:fragment="navbarAdmin" style="font-size: 1.2em">
+
+<div id="wholeNavbar" th:fragment="navbarAdmin">
     <meta charset="utf-8">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/navbar.css">
 
-    <nav class="navbar fixed-top navbar-expand-md navbar-dark" style="background-color: darkslategrey">
+    <nav id="navbarBody" class="navbar fixed-top navbar-expand-md navbar-dark">
         <div class="container-fluid">
-                <ul class="navbar-nav me-auto">
-                    <li>
-                        <a class="navbar-brand" href="#">
-                            <img class="d-inline-block align-center"
-                                 src="https://img.myloview.de/sticker/home-icon-house-symbol-simple-flat-outline-shape-building-logo-sign-isolated-on-white-background-vector-illustration-image-400-253454058.jpg"
-                                 width="42"
-                                 height="42">
-                        </a>
-                    </li>
-                    </ul>
+            <ul class="navbar-nav me-auto">
+                <li>
+                    <a class="navbar-brand">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                            <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
             <div class="navbar-collapse collapse w-100 order-2 order-sm-0 dual-collapse2">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
@@ -42,7 +44,11 @@
                            href="#" id="navbarScrollingDropdownAdmin"
                            role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
-                            Notifications </a>
+                            Notifications
+                            <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                <span class="visually-hidden">New alerts </span>
+                            </span>
+                        </a>
                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarScrollingDropdownAdmin">
                             <li><a class="dropdown-item" href="#">
                                 Notification #1
@@ -62,10 +68,10 @@
                         </ul>
                     <li>
                         <a class="nav-brand" href="#">
-                            <img src="data:image/png;base64,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"
-                                 width="42"
-                                 height="42"
-                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" style="color: white; margin-top: 4px">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
                         </a>
                     </li>
                 </ul>
@@ -77,27 +83,26 @@
             crossorigin="anonymous"></script>
 </div>
 
-<div th:fragment="navbarUser" style="font-size: 1.2em">
+<div id="wholeNavbar" th:fragment="navbarUser">
     <meta charset="utf-8">
 
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/navbar.css">
 
-    <nav class="navbar fixed-top navbar-expand-md navbar-dark" style="background-color: darkslategrey">
+    <nav id="navbarBody" class="navbar fixed-top navbar-expand-md navbar-dark">
         <div class="container-fluid">
-
-                <ul class="navbar-nav me-auto">
-                    <li>
-                        <a class="navbar-brand" href="#">
-                            <img class="d-inline-block align-center"
-                                 src="https://img.myloview.de/sticker/home-icon-house-symbol-simple-flat-outline-shape-building-logo-sign-isolated-on-white-background-vector-illustration-image-400-253454058.jpg"
-                                 width="42"
-                                 height="42"
-                            >
-                        </a>
-                    </li>
-                </ul>
+            <ul class="navbar-nav me-auto">
+                <li>
+                    <a class="navbar-brand" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                            <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                        </svg>
+                    </a>
+                </li>
+            </ul>
             <div class="navbar-collapse collapse w-100 order-2 order-md-0 dual-collapse2">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
@@ -117,7 +122,11 @@
                            href="#" id="navbarScrollingDropdownUser"
                            role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
-                            Notifications
+                            <svg xmlns="http://www.w3.org/2000/svg" width=30 height="30" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                            </svg>
+                            <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                            </span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarScrollingDropdownUser">
                             <li><a class="dropdown-item" href="#">
@@ -137,12 +146,12 @@
                             </a></li>
                         </ul>
                     <li>
-                        <a class="nav-brand disabled">
-                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAe1BMVEX///8AAAD29vbBwcEoKCj6+vre3t6tra3v7+/m5uby8vLJycnZ2dnQ0NB+fn45OTm4uLhfX18UFBQiIiJsbGyYmJhSUlKQkJBmZmZISEhycnI2NjadnZ3k5OSDg4NBQUEbGxulpaVZWVkuLi6JiYkPDw94eHhMTEy6urrmmUP3AAAHG0lEQVR4nO2dZ3viMAyASyCEDGYTUiiQBijw/3/hdVyvyHaGt7hH7+fGSHEsa9l9eiIIgiAIgiAIgiAIgiAIgiAIgrgnni7KS7784GV7jqbj0LdARtlHL6cBw9umTH3LZYisZJX7JR8+/FQGddWs3xfnsW8ZdQjKtw79PllOfcupTNFDvW8dY9+iKnFb9VXw81t9vPWYvEjo98Ho0QzrUGYC/06jb5mlaNkgmpknvsXuz1JFwcHgPfMteE+SjZqCHzzGYkxelRUcDIa+pe9B8Nwk/er1eCl2dXF4qRr/5gFmMWzw0pZ1dmdIwvFt26AlegdHaGSqaML/ZZDmQhWR+zeibaJqnJbJQfDnI5fySjPkBX5tXVmxYB5fXEmrQMKLW3Y9M+TDj8iFrGrwi7CH3Uj4p9AuxYhbgUGv587sc0vLgqoSsN/bse+TNasi0o2ftaO9FeRn/82WjFqwZqaSCWrZdABKYzNjpqHfGvxhC59+Rhjzs1MoGwnN4eMLK0JqsYMSFrLPj+HzGxsy6gFjprn8AMxSRBcNT6F8KhHCCIwwMy6iJtDOKG3ZC/iSTEuoSQh3e7Ug7x2MgSwWzoBwldogcN9Hll2EZkLR1AdgEGRx4hoIp7pdw21fkBfwCBAtVx0FBtCoFmIMRFN2KidgGGmnwSbw5asHsCCXjCqbAazgs5zPfc/lfpyrQQG1Afu9RoQO3tRJ/U2ZB6RaturjpPfjvGMypmD9dKbXmoGOw96cgNqA4K5WHwfaZExdGiB00shATNBqeDKkYYJWw/9/DkFJTcMXgakMTJYGON4H9XFgpgBTch9UkJQdb8b7e8O0H4LwUCNNBsZRjKPtAFMs6u8e+EZrgwJqA9ePcik+BLsOqmxbCDRUdtugKcWV9gZtbK+qo8BsD66uDJguVd2qYaeKUQG1gaZGcUeEkYVE+dEF0N1STLbBVBu2EiJMJyoFUMxbwrTff1ID6STLo9/AKURXXoOxq8qGAVchuo+U66WRN6dX3B8pV0A8yT7PFEhROTR/YQrxkjsG84JQRb8/sF17UguJsaO48t3/YCZRprISsEfbMIX3v7AfWn8VA/blXGzKqQHXK3rr99yEO5yI9eRFzAraLymVcedr8O2FP3Dtl4Njt3Oz4x9yIKoqgj72jjh2LDh+gm+z/0V02GLdYnCEreyoqtscmUDiwbVB5v1M9NcapSsnCLr1v8TO2JBx0nBCWKP66Aje2nyzyot0HE+SZBLvp/WF3QF/wGxlfuBt472ez8+th5/RRYVC6jYV2kHVnNDColsVMRoVD8dM37u1EYCqRaiDSddNCiKQHrJoQvqs8xWzJyMkk5tGjQYOfzTtjAK2mMq9EgTckS0xa3R9+f0Jiu7LTV4eWL9Pwlvr9QPV7kG/T0ASiY80D64FxpyhIuPoUN27Aae8ThEe3tIl2GfTNE2n44fb+giCIDCwT29RXc7y4/q6qTbX9TGflXV0S3EWYCQIkywqt+038rxuiyhLHnFvjKdF3v+2ode8nD6S/zYZHlSC/OoyfAhfICtUtPvhVOAONcLpufkKqL6szlOsyzIrda75uueE8s7Pm/o1bSI2uNpLnya9b/KUoMRjd2JhmcwAMxwuQXzpFlWZi/9dMuyZUFPm4PmgpURSVBmfrRnZtVu+b1bzdb69HMqyKIqyPFy2+Xre+xbXjTcvoFdxYn2uh3ES8Jt4GCTxsD6vu4fwVdyPuVYmhrdlnfZZREFaL7vm8+TB4rTXQU/5Qs4tGd+27W/M+Wps2wKrgmu96EOYFW3r2m1TbdgsykgrUR/vml33q0OHPG4SY3XRN3vZrGlRPjtbjOOGOv08MrM7B1FDu83KkRfHd1l+UZksxKcNy8CJimIFT6Yb7lLxPDr4UCeiNTiyEc3dRqJfsh9SiQLd0o6VC0VOk/XGsC3/m5W9lMNY8Kla7l4UxBJ2fUbBNFr1bvbcz73bbulN+WYHmwaVCwQq+7Yt5vKvFs+xc962mzPz3Hu1locL2V9ydTyJ+5cutjxUdtW7O3/FqmjJurEX6brs6GWdODvpKbaD22V1gV0gOys/wjhRbtNDzEmOk43Xm8LfcN2zzNQNbGzDMLVt5SW2AS8+sXFEkVkJ7ruymeM45t8wPCKqcJ21NtALN28GoCX1Ud2DHpV5awo7YY0P3wcggXl3Awzv54QZjE2NDw9G91MOqq1qiOFaSniPlOm4DZpSPxV2ePOC6XukgEez8nNgPgHJcNNeDdhvR34qzwHwjE37HKShC0hDPUhDF5CGepCGLiAN9SANXUAa6kEauoA01IM0dAFpqAdp6ALSUA/S0AWkoR6koQtIQz3+fw1Bx46vf1QE+jCNtyosfg9ZHH0d7IyP/2R4t9ErMV7sDrNzPfR5qDMY1ufZYSd5bIwgCIIgCIIgCIIgCIIgCIIgCAIFfwAraVBNHYA1nwAAAABJRU5ErkJggg=="
-                                 width="42"
-                                 height="42"
-                            >
-                        </a>
+                        <span class="nav-brand disabled">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16" style="color: white; margin-top: 4px">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+                        </span>
                     </li>
                 </ul>
             </div>
