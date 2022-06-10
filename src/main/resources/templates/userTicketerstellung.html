@@ -43,6 +43,7 @@
             height: 67px;
             text-align: center;
             font-size: xx-large;
+            padding: 10px;
 
 
             /* Hellgrau */
@@ -54,7 +55,7 @@
 
         input[type=text] {
             position: absolute;
-
+            padding: 10px;
 
             background: #FFFFFF;
             /* Grau */
@@ -71,10 +72,20 @@
             top: 15%;
         }
 
-        #problembeschreibung {
+        #problembeschreibungTextfeld {
             width: 1265px;
             height: 287px;
             top: 35%;
+            padding: 10px;
+            position: absolute;
+
+
+            background: #FFFFFF;
+            /* Grau */
+
+            border: 3px solid #3E4251;
+            border-radius: 45px;
+            margin-left: 3%;
 
         }
 
@@ -121,10 +132,12 @@
             <option value="Sonstiges">Sonstiges</option>
         </select>
 
-        <input type="text" placeholder="Beschreiben Sie ihr Problem..." id="problembeschreibung"
-               name="problembeschreibung">
-
+        <textarea placeholder="Beschreiben Sie ihr Problem..." id="problembeschreibungTextfeld"
+                  name="problembeschreibung"></textarea>
+    <form name="f" th:action="@{/user}" method="post">
         <button id="ticketErstellenButton" type="submit">Ticket erstellen</button>
+    </form>
+
     </div>
 </div>
 </body>
