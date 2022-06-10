@@ -1,5 +1,6 @@
 package de.hohenheim.ticketcricket.controller;
 
+import de.hohenheim.ticketcricket.model.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomeController {
+
+
 
     /**
      * Zeigt die Startseite Ihrer Anwendung.
@@ -21,18 +24,19 @@ public class HomeController {
         return "home";
     }
 
-   @PostMapping("/user")
-    public String user(Model model, @RequestParam String uname, @RequestParam String password){
-        if(uname.equals("user") && password.equals("user")){
-            return "userTicketerstellung";
-        }
-        model.addAttribute("errorMsg", "Please provide the correct Username and Password");
-        return "login";
-    }
 
-    @PostMapping("/admin")
-    public String admin(){
+    @GetMapping("/user")
+    public String user(Model model){
+        model.addAttribute("message", "Und hier sehen Sie ein ModelAttribut");
         return "userTicketerstellung";
     }
+    @PostMapping("/user")
+    public String storeTicket(Model model){
+        model.addAttribute("message", "Und hier sehen Sie ein ModelAttribut");
+        // hier müssen noch die Daten gespeichert werden, die eingegeben wurden.
+        return "home";
+    }
+
+
 
 }

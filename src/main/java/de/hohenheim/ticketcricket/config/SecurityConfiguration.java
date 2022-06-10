@@ -56,6 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Request zum Aufruf der Login-Seite
                 .and().formLogin().loginPage("/login").failureUrl("/login?error=true").permitAll()
                 .defaultSuccessUrl("/", true)
+
                 .usernameParameter("username")
                 .passwordParameter("password")
                 // jeder kann sich ausloggen über den simplen /logout request ausloggen
