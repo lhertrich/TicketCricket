@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="d-flex flew-row justify-content-end align-items-center">
-            <button style="border:none" class="badge bg-danger" id="withdraw-ticket-badge">Ticket zurücknehmen</button>
+            <button style="border:none" class="badge bg-danger">Ticket zurücknehmen</button>
             <svg style="margin-left:1em" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
             </svg>
@@ -39,7 +39,7 @@
 
     <div class="d-flex flex-row">
 
-    <div id="ticket-description" class="container-fluid d-flex flex-column" style="border-right-width:0px">
+    <div class="container-fluid d-flex flex-column ticket-container" style="border-right-width:0px">
         <div>
             <span class="fs-10 fw-bold">Datum:</span> 22.03.2022
         </div>
@@ -51,17 +51,17 @@
             <span class="fs-10 fw-bold">Status:</span> In Beabeitung
         </div>
         <div>
-            <span class="fs-10 fw-bold">Kategorie:</span> <span id="inactivityBadge" class="badge rounded-pill text-bg-danger">Inaktivität</span>
+            <span class="fs-10 fw-bold">Kategorie:</span> <span class="badge rounded-pill text-bg-danger">Inaktivität</span>
         </div>
     </div>
 
 
-    <div id="ticket-description" class="container-fluid d-flex flex-column col-2 justify-content-around align-items-end"   style="border-left-width:0px">
+    <div class="container-fluid d-flex flex-column col-2 justify-content-around align-items-end ticket-container"   style="border-left-width:0px">
         <div>
-            <button style="border:none" class="badge bg-info" id="withdraw-ticket-badge">Ticket zuweisen</button>
+            <button style="border:none" class="badge bg-info">Ticket zuweisen</button>
         </div>
         <div>
-            <button style="border:none" class="badge bg-info" id="withdraw-ticket-badge">Status ändern</button>
+            <button style="border:none" class="badge bg-info">Status ändern</button>
         </div>
     </div>
 
@@ -69,7 +69,7 @@
     </div>
 
 
-    <div id="bottomOuterBorder" class="container-fluid d-flex" >
+    <div class="container-fluid d-flex bottomOuterBorder" >
         <form class="input-group align-self-end" id="text-input-bar">
             <input id="searchBar" type="text" class="form-control" placeholder="Send message...">
 

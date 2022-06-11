@@ -1,7 +1,7 @@
 body{
 }
 
-#bottomOuterBorder{
+.bottomOuterBorder{
     border: 2px solid black;
     min-height:300px;
     border-bottom-left-radius: 10px;
@@ -17,7 +17,7 @@ body{
     background-color: darkslategray;
 }
 
-#ticket-description {
+.ticket-container {
     border: 2px solid black;
     border-bottom-width:0px;
     padding-bottom: 0.3em;
@@ -63,14 +63,6 @@ body{
 #openBadge{
     width: 100px;
     background-color: Red
-}
-#inactivityBadge{
-    background-color: deepskyblue;
-    opacity: 70%
-}
-
-#withdraw-ticket-badge {
-    background-color: red;
 }
 
 
