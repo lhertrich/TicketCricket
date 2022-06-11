@@ -5,10 +5,13 @@
 </head>
 
 <body>
-    <div> Hier steht die Nachricht: </div>
-
-    <form action="/lol">
-        <button name="TestButton" value="NextPage" type="Submit"></button>
+    <div> Einen neuen User anlegen: </div>
+    <form th:action="@{/input}" th:object="${user}" method="post">
+        <label for="username">User name:</label>
+        <input type="text" id="username" placeholder="name" field="*{username}" name="username" /> <br>
+        <label for="password">Password:</label>
+        <input type="text" id="password" placeholder="password" field="*{password}" name="password" /> <br>
+        <button th:text="Submit" th:type="submit" />
     </form>
 </body>
 
