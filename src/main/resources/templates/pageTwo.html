@@ -2,10 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Page Two</title>
-    <b>User:</b> </br>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body>
-    <div th:text="${testUser}"></div> <br>
+    <h1>TestSeite</h1>
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="TestUser: ${testUser}">
+            <td th:text="${TestUser.userid}"></td>
+            <td th:text="${TestUser.username"></td>
+        </tr>
+        </tbody>
+    </table>
 </body>
 </html>
