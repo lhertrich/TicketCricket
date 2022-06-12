@@ -13,10 +13,10 @@ public class HomeController {
      * @param model enthält alle ModelAttribute.
      * @return home-Seite.
      */
-    @GetMapping("/")
+    /*@GetMapping("/")
     public String showHome(Model model) {
         model.addAttribute("message", "Und hier sehen Sie ein ModelAttribut");
         return "home";
-    }
+    }*/
 
 }

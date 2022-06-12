@@ -8,6 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 public class TestController {
@@ -15,16 +18,26 @@ public class TestController {
     @Autowired
     private TestUserService service;
 
-    @PostMapping ("/input")
+    @PostMapping ("/addUser")
     public String getNewUser(@ModelAttribute("user") TestUser user){
         service.saveUser(user);
-        return "pageTwo";
+        return "redirect:/list";
     }
 
-    @GetMapping("/input")
-    public String showUsers(Model model){
-        System.out.println("getMapping wird aufgerufen");
-        model.addAttribute("testUser", service.findAllUsers());
-        return "pageTwo";
+
+    @GetMapping ("/input")
+    public ModelAndView inputNewUserForm(){
+        ModelAndView mav = new ModelAndView("inputview");
+        TestUser user = new TestUser();
+        mav.addObject("user", user);
+        return mav;
+    }
+
+    @GetMapping({"/showUsers", "/", "/list"})
+    public ModelAndView showUsers(){
+        ModelAndView mv = new ModelAndView("home");
+        List<TestUser> users = service.findAllUsers();
+        mv.addObject("testUsers", users);
+        return mv;
     }
 }

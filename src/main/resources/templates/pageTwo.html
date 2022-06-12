@@ -16,10 +16,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="TestUser: ${testUser}">
-            <td th:text="${TestUser.userid}"></td>
-            <td th:text="${TestUser.username}"></td>
-        </tr>
+        <!-- display the testUsers via Thymeleaf -->
+        <tr th:each="user : ${testUsers}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+
         </tbody>
     </table>
 </body>

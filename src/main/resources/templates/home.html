@@ -1,18 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="">
 <head>
-    <b> Das ist unsere Test Seite</b>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 
 <body>
-    <div> Einen neuen User anlegen: </div>
-    <form th:action="@{/input}" th:object="${user}" method="post">
-        <label for="username">User name:</label>
-        <input type="text" id="username" placeholder="name" field="*{username}" name="username" /> <br>
-        <label for="password">Password:</label>
-        <input type="text" id="password" placeholder="password" field="*{password}" name="password" /> <br>
-        <button th:text="Submit" th:type="submit" />
-    </form>
+    <h2>Home</h2>
+    <br>
+    <div class="container">
+        <a th:href="@{/input}" class="btn btn-primary mb-2">Add User</a>
+    </div>
+    <br>
+    <div class="container">
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- displaying the testUsers via Thymeleaf -->
+            <tr th:each="user : ${testUsers}">
+                <td th:text="${user.userId}"></td>
+                <td th:text="${user.username}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 <script>
