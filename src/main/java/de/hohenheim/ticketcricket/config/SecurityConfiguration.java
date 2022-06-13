@@ -47,6 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Achtung: Spring Security fügt automatisch das Prefix "ROLE_" für die Überprüfung ein. Daher verwenden wir
                 // hier nicht "ROLE_ADMIN", wie bspw. im TestDataLoader angegeben.
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user").hasAnyRole("ADMIN", "USER")
                 // alle weiteren Requests erfordern Authentifizierung
                 .anyRequest().authenticated()
                 // füge CSRF token ein, welches evtl. für AJAX-requests benötigt wird
@@ -55,6 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // Request zum Aufruf der Login-Seite
                 .and().formLogin().loginPage("/login").failureUrl("/login?error=true").permitAll()
                 .defaultSuccessUrl("/", true)
+
                 .usernameParameter("username")
                 .passwordParameter("password")
                 // jeder kann sich ausloggen über den simplen /logout request ausloggen
@@ -71,7 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 // gewähre immer Zugriff auf Dateien in den folgenden Ordnern
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+                .antMatchers("/resources/**", "/static/**", "/static/css/**", "/js/**", "/images/**");
     }
 
     /**
