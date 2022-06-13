@@ -17,8 +17,18 @@ body{
     background-color: darkslategray;
 }
 
-#inactivityBadge{
+.inactivityBadge{
     background-color: deepskyblue;
+    opacity: 70%
+}
+
+.technicalBadge{
+    background-color: darkorange;
+    opacity: 70%
+}
+
+.elseBadge{
+    background-color: dimgray;
     opacity: 70%
 }
 
@@ -47,3 +57,4 @@ body{
 #deny:hover {
     cursor: pointer;
 }
+

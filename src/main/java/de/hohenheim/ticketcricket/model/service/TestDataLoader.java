@@ -72,7 +72,28 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket.setDate(new Date(d));
         ticket.setProblem("Darko antwortet nicht");
         ticket.setStatus(Status.OFFEN);
+        ticket.setTitle("Darko antwortet nicht");
         ticketService.saveTicket(ticket);
+
+        Ticket ticket2 = new Ticket();
+        ticket2.setCategory(Category.SONSTIGES);
+        ticket2.setUser(normalUser);
+        long d2 = System.currentTimeMillis();
+        ticket2.setDate(new Date(d2));
+        ticket2.setProblem("Ihr seid nicht so schön");
+        ticket2.setStatus(Status.IN_BEARBEITUNG);
+        ticket2.setTitle("Ihr seid nicht so schön");
+        ticketService.saveTicket(ticket2);
+
+        Ticket ticket3 = new Ticket();
+        ticket3.setCategory(Category.TECHNISCHE_PROBLEME);
+        ticket3.setUser(normalUser);
+        long d3 = System.currentTimeMillis();
+        ticket3.setDate(new Date(d3));
+        ticket3.setProblem("Technisches Problem gefunden");
+        ticket3.setStatus(Status.ERLEDIGT);
+        ticket3.setTitle("Technisches Problem gefunden");
+        ticketService.saveTicket(ticket3);
 
         Message message = new Message();
         message.setMessage("Darko wollte mir sein Fahrrad für 100€ verkaufen, ich habe 3€ geboten und jetzt antwortet er nicht mehr");

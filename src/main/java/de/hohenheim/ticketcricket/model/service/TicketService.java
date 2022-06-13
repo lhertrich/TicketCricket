@@ -17,6 +17,10 @@ public class TicketService {
         return ticketRepository.save(ticket);
     }
 
+    public Ticket findTicketById(int id) {
+        return ticketRepository.getById(id);
+    }
+
     public List<Ticket> findAllTickets(){
         return ticketRepository.findAll();
     }

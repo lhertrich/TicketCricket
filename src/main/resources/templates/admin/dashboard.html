@@ -55,7 +55,8 @@
     </li>
 
     <div id="bottomOuterBorder" class="container-fluid" >
-        <a th:each="ticket: ${tickets}" id="ticketBox" href="#" class="list-group-item list-group-item-action list-group-item-light mb-2">
+        <div th:each="ticket: ${tickets}" >
+            <a th:href="@{/ticket/expand(id=${ticket.ticketID})}" id="ticketBox" href="#" class="list-group-item list-group-item-action list-group-item-light mb-2">
             <div class="d-flex justify-content-between" >
                 <div class="container">
                     <div class="row">
@@ -71,37 +72,8 @@
                     <div th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}" th:text="${ticket.category.displayValue}" class="badge rounded-pill text-bg-danger elseBadge"/>
                 </div>
             </div>
-        </a>
-        <!--<a  id="ticketBox"
-            href="#"
-           class="list-group-item list-group-item-action list-group-item-light ticketBox">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold"><span id="progressBadge"
-                                                   class="badge badge-secondary">In Bearbeitung</span> [#1234]
-                            DarkoCutokovic antwortet nicht
-                        </div>
-                    </div>
-                </div>
-                <div><span class="badge rounded-pill text-bg-danger inactivityBadge">Inaktivität</span></div>
-            </div>
-        </a>
-
-        <a id="ticketBox" style="margin-bottom: 10px"
-           href="#"
-           class="list-group-item list-group-item-action list-group-item-light ticketBox">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold"><span id="openBadge" class="badge badge-secondary">Offen</span> [#1234]
-                            DarkoCutokovic antwortet nicht
-                        </div>
-                    </div>
-                </div>
-                <div><span class="badge rounded-pill text-bg-danger inactivityBadge">Inaktivität</span></div>
-            </div>
-        </a>-->
+            </a>
+        </div>
     </div>
 </div>
 </ul>
