@@ -17,6 +17,11 @@ body{
     background-color: darkslategray;
 }
 
+#inactivityBadge{
+    background-color: deepskyblue;
+    opacity: 70%
+}
+
 .ticket-container {
     border: 2px solid black;
     border-bottom-width:0px;
@@ -32,37 +37,6 @@ body{
     border-color: black;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px
-}
-
-#search{
-    background-color: dimgray;
-    color: white;
-    border-color: black;
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px
-}
-#filter{
-    background-color: dimgray;
-}
-#ticketBox{
-    margin-top: 10px;
-    border-color: black;
-    border-radius: 10px;
-    border-width: 1.5px
-}
-
-#finishedBadge{
-    width: 100px;
-    background-color: green
-}
-
-#progressBadge{
-    width: 100px;
-    background-color: orange
-}
-#openBadge{
-    width: 100px;
-    background-color: Red
 }
 
 
