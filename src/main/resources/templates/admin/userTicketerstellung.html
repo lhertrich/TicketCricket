@@ -122,21 +122,24 @@
 <div id="borderBox">
     <div id="rectangle">
         <div id="topRow">Ticket erstellen</div>
-        <input type="text" placeholder="Titel" id="ticketTitel" name="ticketTitel">
+        <form name="ticketCreation" th:action="@{/admin/createTicket}" th:object="${ticket}" method="post">
 
+            <input type="text" placeholder="Titel" id="ticketTitel" name="ticketTitel" th:field="*{title}">
 
-        <select name="vorkategoriserung" id="vorkategorisierung" required>
-            <option disabled selected value> -- Vorkategorisierung -- </option>
-            <option value="Inaktivität">Inaktivität</option>
-            <option value="Technisch">Technisch</option>
-            <option value="Sonstiges">Sonstiges</option>
-        </select>
+            <select name="vorkategorisierung" id="vorkategorisierung" required th:field="*{category}">
+                <!--<option disabled selected value> -- Vorkategorisierung -- </option>
+                <option th:value="" th:text="Inaktivität"></option>
+                <option value="Technisch">Technisch</option>
+                <option value="Sonstiges">Sonstiges</option>-->
+                <option th:each="category : ${T(de.hohenheim.ticketcricket.model.entity.Category).values()}"
+                        th:value="${category}" th:text="${category.displayValue}"></option>
+            </select>
 
-        <textarea placeholder="Beschreiben Sie ihr Problem..." id="problembeschreibungTextfeld"
-                  name="problembeschreibung"></textarea>
-    <form name="f" th:action="@{/templates/user}" method="post">
-        <button id="ticketErstellenButton" type="submit">Ticket erstellen</button>
-    </form>
+            <textarea placeholder="Beschreiben Sie ihr Problem..." id="problembeschreibungTextfeld"
+                      name="problembeschreibung" th:field="*{problem}"></textarea>
+
+            <button id="ticketErstellenButton" th:text="'Ticket erstellen'" th:type="submit" />
+        </form>
 
     </div>
 </div>

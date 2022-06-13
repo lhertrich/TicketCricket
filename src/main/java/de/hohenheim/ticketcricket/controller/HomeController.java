@@ -19,22 +19,7 @@ public class HomeController {
     @GetMapping("/")
     public String showHome(Model model) {
         model.addAttribute("message", "Und hier sehen Sie ein ModelAttribut");
-        return "admin/dashboard";
+        return "user/dashboard";
     }
-
-
-    @GetMapping("/user")
-    public String user(Model model){
-        model.addAttribute("message", "Und hier sehen Sie ein ModelAttribut");
-        return "userTicketerstellung";
-    }
-    @PostMapping("/user")
-    public String storeTicket(Model model){
-        model.addAttribute("message", "Und hier sehen Sie ein ModelAttribut");
-        // hier müssen noch die Daten gespeichert werden, die eingegeben wurden.
-        return "admin/dashboard";
-    }
-
-
 
 }

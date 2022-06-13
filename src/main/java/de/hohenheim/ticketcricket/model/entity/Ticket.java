@@ -14,12 +14,18 @@ public class Ticket {
     @JoinColumn(name = "creatorID")
     private User user;
 
+    private String title;
+
     private String problem;
 
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     private Date date;
 
+    private Date lastRequest;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public Ticket(){
@@ -31,6 +37,14 @@ public class Ticket {
 
     public void setTicketID(int ticketID) {
         this.ticketID = ticketID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public User getUser() {
@@ -63,6 +77,14 @@ public class Ticket {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Date getLastRequest() {
+        return lastRequest;
+    }
+
+    public void setLastRequest(Date lastRequest) {
+        this.lastRequest = lastRequest;
     }
 
     public Status getStatus() {
