@@ -1,7 +1,6 @@
 package de.hohenheim.ticketcricket.model.service;
 
-import de.hohenheim.ticketcricket.model.entity.User;
-import de.hohenheim.ticketcricket.model.entity.Role;
+import de.hohenheim.ticketcricket.model.entity.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,6 +26,12 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TicketService ticketService;
+
+    @Autowired
+    private MessageService messageService;
 
     /**
      * Diese Methode wird zum Aufsetzen von Testdaten für die Datenbank verwendet werden. Die Methode wird immer dann
@@ -58,5 +64,20 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         admin.setPassword(passwordEncoder.encode("admin"));
         admin.setRoles(adminRoles);
         userService.saveUser(admin);
+
+        Ticket ticket = new Ticket();
+        ticket.setCategory(Category.Inaktivität);
+        ticket.setUser(normalUser);
+        long d = System.currentTimeMillis();
+        ticket.setDate(new Date(d));
+        ticket.setProblem("Darko antwortet nicht");
+        ticket.setStatus(Status.Offen);
+        ticketService.saveTicket(ticket);
+
+        Message message = new Message();
+        message.setMessage("Darko wollte mir sein Fahrrad für 100€ verkaufen, ich habe 3€ geboten und jetzt antwortet er nicht mehr");
+        message.setUser(normalUser);
+        message.setTicket(ticket);
+        messageService.saveMessage(message);
     }
 }
