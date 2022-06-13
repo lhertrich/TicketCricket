@@ -71,7 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         web
                 .ignoring()
                 // gewähre immer Zugriff auf Dateien in den folgenden Ordnern
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+                .antMatchers("/resources/**", "/static/**", "/static/css/**", "/js/**", "/images/**");
     }
 
     /**
