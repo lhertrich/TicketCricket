@@ -56,21 +56,31 @@ body{
     border-color: black;
     border-width: 1.5px
 }
-#finishedBadge{
+.finishedBadge{
     width: 100px;
     background-color: green
 }
 
-#progressBadge{
+.progressBadge{
     width: 100px;
     background-color: orange
 }
-#openBadge{
+.openBadge{
     width: 100px;
     background-color: Red
 }
 .inactivityBadge{
     background-color: deepskyblue;
+    opacity: 70%
+}
+
+.technicalBadge{
+    background-color: darkorange;
+    opacity: 70%
+}
+
+.elseBadge{
+    background-color: dimgray;
     opacity: 70%
 }
 

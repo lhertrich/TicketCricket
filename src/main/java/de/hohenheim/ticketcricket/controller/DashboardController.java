@@ -1,14 +1,17 @@
 package de.hohenheim.ticketcricket.controller;
 
+import de.hohenheim.ticketcricket.model.service.TicketService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class HomeController {
+public class DashboardController {
 
-
+    @Autowired
+    private TicketService ticketService;
 
     /**
      * Zeigt die Startseite Ihrer Anwendung.
@@ -18,10 +21,9 @@ public class HomeController {
      */
     @GetMapping("/")
     public String showHome(Model model) {
-        model.addAttribute("message", "Und hier sehen Sie ein ModelAttribut");
+        model.addAttribute("tickets", ticketService.findAllTickets());
         return "admin/dashboard";
     }
-
 
     @GetMapping("/user")
     public String user(Model model){
@@ -34,6 +36,7 @@ public class HomeController {
         // hier müssen noch die Daten gespeichert werden, die eingegeben wurden.
         return "admin/dashboard";
     }
+
 
 
 

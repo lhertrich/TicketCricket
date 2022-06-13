@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+<!-- Navbar -->
+<div th:insert="navbarFragments::navbarAdmin"></div>
+
+<!-- Tickets -->
 <div th:fragment="innerWindow" style=" margin-top:10%; padding: 0.5%">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -51,23 +55,24 @@
     </li>
 
     <div id="bottomOuterBorder" class="container-fluid" >
-        <a id="ticketBox"
-                href="#"
-           class="list-group-item list-group-item-action list-group-item-light">
+        <a th:each="ticket: ${tickets}" id="ticketBox" href="#" class="list-group-item list-group-item-action list-group-item-light mb-2">
             <div class="d-flex justify-content-between" >
-                <div>
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold">
-                            <span id="finishedBadge" class="badge badge-secondary">Fertig</span>
-                            [#1234]
-                            DarkoCutokovic antwortet nicht
-                        </div>
+                <div class="container">
+                    <div class="row">
+                        <div th:if="${ticket.status.getDisplayValue() == 'Offen'}" class="col-1 openBadge badge badge-secondary">Offen</div>
+                        <div th:if="${ticket.status.getDisplayValue() == 'In Bearbeitung'}" class="col-1 progressBadge badge badge-secondary">In Bearbeitung</div>
+                        <div th:if="${ticket.status.getDisplayValue() == 'Erledigt'}" class="col-1 finishedBadge badge badge-secondary">Erledigt</div>
+                        <div th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}" class="col-10 fw-bold"/>
                     </div>
                 </div>
-                <div><span class="badge rounded-pill text-bg-danger inactivityBadge">Inaktivität</span></div>
+                <div>
+                    <div th:if="${ticket.category.getDisplayValue() == 'Inaktivität'}" th:text="${ticket.category.displayValue}" class="badge rounded-pill text-bg-danger inactivityBadge"/>
+                    <div th:if="${ticket.category.getDisplayValue() == 'Technisches Problem'}" th:text="${ticket.category.displayValue}" class="badge rounded-pill text-bg-danger technicalBadge"/>
+                    <div th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}" th:text="${ticket.category.displayValue}" class="badge rounded-pill text-bg-danger elseBadge"/>
+                </div>
             </div>
         </a>
-        <a  id="ticketBox"
+        <!--<a  id="ticketBox"
             href="#"
            class="list-group-item list-group-item-action list-group-item-light ticketBox">
             <div class="d-flex justify-content-between">
@@ -96,7 +101,7 @@
                 </div>
                 <div><span class="badge rounded-pill text-bg-danger inactivityBadge">Inaktivität</span></div>
             </div>
-        </a>
+        </a>-->
     </div>
 </div>
 </ul>

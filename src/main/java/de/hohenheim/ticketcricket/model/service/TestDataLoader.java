@@ -66,12 +66,12 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         userService.saveUser(admin);
 
         Ticket ticket = new Ticket();
-        ticket.setCategory(Category.Inaktivität);
+        ticket.setCategory(Category.INAKTIVITÄT);
         ticket.setUser(normalUser);
         long d = System.currentTimeMillis();
         ticket.setDate(new Date(d));
         ticket.setProblem("Darko antwortet nicht");
-        ticket.setStatus(Status.Offen);
+        ticket.setStatus(Status.OFFEN);
         ticketService.saveTicket(ticket);
 
         Message message = new Message();
