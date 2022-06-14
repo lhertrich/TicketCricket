@@ -84,6 +84,19 @@ body{
     opacity: 70%
 }
 
+.no-overflow{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.dot {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
 
 #confirm:hover {
     cursor: pointer;
