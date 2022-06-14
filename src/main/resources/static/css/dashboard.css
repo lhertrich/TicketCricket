@@ -70,16 +70,19 @@ body{
     background-color: Red
 }
 .inactivityBadge{
+    max-width: 150px;
     background-color: deepskyblue;
     opacity: 70%
 }
 
 .technicalBadge{
+    max-width: 150px;
     background-color: darkorange;
     opacity: 70%
 }
 
 .elseBadge{
+    max-width: 150px;
     background-color: dimgray;
     opacity: 70%
 }
