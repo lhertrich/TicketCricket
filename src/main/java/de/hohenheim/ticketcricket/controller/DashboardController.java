@@ -26,16 +26,7 @@ public class DashboardController {
 
     @GetMapping("/")
     public String showDashboard(Model model) {
-        Set<Role> roles = user.getCurrentUser().getRoles();
-        Set<String> rolesString = new HashSet<>();
-        for(Role r: roles){
-            rolesString.add(r.getRolename());
-        }
-        if (rolesString.contains("ROLE_ADMIN")){
-            return "admin/dashboard";
-        }else{
-            return "user/dashboard";
-        }
+            return "user/userTicketerstellung";
     }
 
 
