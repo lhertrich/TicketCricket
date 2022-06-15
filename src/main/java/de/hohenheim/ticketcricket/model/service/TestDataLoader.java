@@ -111,6 +111,16 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket4.setTitle("Darko antwortet nicht schnell genug");
         ticketService.saveTicket(ticket4);
 
+        Ticket ticket5 = new Ticket();
+        ticket5.setCategory(Category.INAKTIVITÄT);
+        ticket5.setUser(admin);
+        long d5 = System.currentTimeMillis();
+        ticket5.setDate(new Date(d5));
+        ticket5.setProblem("Darko antwortet nicht schnell genug. Ich finde, dass das nicht in Ordnung ist.");
+        ticket5.setStatus(Status.OFFEN);
+        ticket5.setTitle("Admin test");
+        ticketService.saveTicket(ticket5);
+
         Message message = new Message();
         message.setMessage("Darko wollte mir sein Fahrrad für 100€ verkaufen, ich habe 3€ geboten und jetzt antwortet er nicht mehr");
         message.setUser(normalUser);
