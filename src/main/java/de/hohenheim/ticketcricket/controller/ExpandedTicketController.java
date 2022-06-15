@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -34,6 +35,7 @@ public class ExpandedTicketController {
             model.addAttribute("user", userService.getCurrentUser());
             return "admin/expanded-ticket";
         } else {
+            model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
             return "user/expanded-ticket";
         }
     }
@@ -46,7 +48,6 @@ public class ExpandedTicketController {
 
     @PostMapping("/ticket/status{id}")
     public String requestStatus(@RequestParam("id") Integer id){
-        System.out.println("Got request");
         ticketService.setRequest(id);
         return "redirect:/ticket/expand?id="+id;
     }

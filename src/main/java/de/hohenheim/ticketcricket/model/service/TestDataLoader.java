@@ -9,6 +9,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -87,7 +88,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket2.setUser(normalUser);
         long d2 = System.currentTimeMillis();
         ticket2.setDate(new Date(d2));
-        ticket2.setLastRequest(new Date(d2));
+        ticket2.setLastRequest(new Date(d2-100000000));
         ticket2.setProblem("Ihr seid nicht so schön");
         ticket2.setStatus(Status.IN_BEARBEITUNG);
         ticket2.setTitle("Ihr seid nicht so schön");
@@ -98,7 +99,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket3.setUser(normalUser);
         long d3 = System.currentTimeMillis();
         ticket3.setDate(new Date(d3));
-        ticket3.setLastRequest(new Date(d3));
+        ticket3.setLastRequest(new Date(d3-432000000));
         ticket3.setProblem("Technisches Problem gefunden");
         ticket3.setStatus(Status.ERLEDIGT);
         ticket3.setTitle("Technisches Problem gefunden");

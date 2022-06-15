@@ -6,6 +6,7 @@ import de.hohenheim.ticketcricket.model.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,6 +45,8 @@ public class TicketService {
     }
 
     public void setRequest(int id){
-        ticketRepository.getById(id).setLastRequest(new Date(System.currentTimeMillis()));
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.setLastRequest(new Date(System.currentTimeMillis()));
+        ticketRepository.save(ticketToUpdate);
     }
 }
