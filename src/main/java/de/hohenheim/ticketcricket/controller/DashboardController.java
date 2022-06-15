@@ -42,13 +42,4 @@ public class DashboardController {
         }
     }
 
-    /*@GetMapping("/ticket/expand{id}")
-    public String expandTicket(@RequestParam("id") Integer id, Model model){
-        model.addAttribute("ticket", ticketService.findTicketById(id));
-        return "admin/expanded-ticket";
-    }*/
-
-
-
-
 }
