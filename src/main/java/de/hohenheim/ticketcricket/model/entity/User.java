@@ -73,4 +73,5 @@ public class User {
 
         return userId != null ? userId.equals(user.userId) : user.userId == null;
     }
+
 }
