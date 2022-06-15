@@ -59,6 +59,12 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         normalUser.setRoles(userRoles);
         userService.saveUser(normalUser);
 
+        User normalUser2 = new User();
+        normalUser2.setUsername("user2");
+        normalUser2.setPassword(passwordEncoder.encode("1234"));
+        normalUser2.setRoles(userRoles);
+        userService.saveUser(normalUser2);
+
         User admin = new User();
         admin.setUsername("admin");
         admin.setPassword(passwordEncoder.encode("admin"));
@@ -94,6 +100,16 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket3.setStatus(Status.ERLEDIGT);
         ticket3.setTitle("Technisches Problem gefunden");
         ticketService.saveTicket(ticket3);
+
+        Ticket ticket4 = new Ticket();
+        ticket4.setCategory(Category.INAKTIVITÄT);
+        ticket4.setUser(normalUser2);
+        long d4 = System.currentTimeMillis();
+        ticket4.setDate(new Date(d4));
+        ticket4.setProblem("Darko antwortet nicht schnell genug. Ich finde, dass das nicht in Ordnung ist.");
+        ticket4.setStatus(Status.OFFEN);
+        ticket4.setTitle("Darko antwortet nicht schnell genug");
+        ticketService.saveTicket(ticket4);
 
         Message message = new Message();
         message.setMessage("Darko wollte mir sein Fahrrad für 100€ verkaufen, ich habe 3€ geboten und jetzt antwortet er nicht mehr");

@@ -1,6 +1,8 @@
 package de.hohenheim.ticketcricket.controller;
 
+import de.hohenheim.ticketcricket.model.entity.User;
 import de.hohenheim.ticketcricket.model.service.TicketService;
+import de.hohenheim.ticketcricket.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,9 @@ public class DashboardController {
     @Autowired
     private TicketService ticketService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * Zeigt die Startseite Ihrer Anwendung.
      *
@@ -22,8 +27,14 @@ public class DashboardController {
      */
     @GetMapping("/")
     public String showHome(Model model) {
-        model.addAttribute("tickets", ticketService.findAllTickets());
-        return "admin/dashboard";
+        User currentUser = userService.getCurrentUser();
+        if(currentUser.getRoles().contains("ROLE_ADMIN")) {
+            model.addAttribute("tickets", ticketService.findAllTickets());
+            return "admin/dashboard";
+        } else {
+            model.addAttribute("tickets", ticketService.findAllTicketsByUser(currentUser));
+            return "user/dashboard";
+        }
     }
 
     @GetMapping("/user")
