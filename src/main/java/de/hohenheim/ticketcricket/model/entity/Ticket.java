@@ -16,10 +16,14 @@ public class Ticket {
 
     private String problem;
 
+    @Enumerated(EnumType.STRING)
     private Category category;
+
+    private String title;
 
     private Date date;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public Ticket(){
@@ -71,5 +75,13 @@ public class Ticket {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

@@ -1,0 +1,138 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Expanded Ticket</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/expanded-ticket.css">
+</head>
+
+<body>
+<!-- Navbar -->
+<div>
+    <div th:insert="navbarFragments::navbarAdmin"/>
+
+
+    <div>
+        <div id="topBar" class="list-group-item d-flex justify-content-between">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-7">
+                        <div th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"
+                             class="fs-5 fw-bold no-overflow"/>
+                    </div>
+                    <div class="col-5">
+                        <div class="row justify-content-end">
+                            <button type="button" style="max-width: 190px" class="col-6 btn btn-danger no-overflow" data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
+                                Ticket&nbsp;zurücknehmen
+                            </button>
+                            <div class="col-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                     fill="currentColor" class="bi bi-person" viewBox="0 0 16 16"
+                                     style="min-width: 32px; min-height: 32px">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                </svg>
+                            </div>
+                            <a th:href="@{/}" class="col-3 link-dark d-flex justify-content-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                     fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16"
+                                     style="min-width: 32px; min-height: 32px">
+                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="d-flex flex-row">
+            <div class="container-fluid d-flex flex-column ticket-container" style="border: 2px solid black;">
+                <div class="row">
+                    <div class="col-9">
+                        <div class="row">
+                            <div class="col fs-10 fw-bold">Datum:
+                                <span th:text="${ticket.date}" style="font-weight:normal"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col fs-10 fw-bold">Problembeschreibung:
+                                <span th:text="${ticket.problem}"
+                                      style="font-weight: normal; overflow-wrap: break-word;"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col fs-10 fw-bold">Status:
+                                <span th:if="${ticket.status.getDisplayValue() == 'Offen'}"
+                                      class="openBadge badge">Offen
+                                </span>
+                                <span th:if="${ticket.status.getDisplayValue() == 'In Bearbeitung'}"
+                                      class="progressBadge badge">In Bearbeitung
+                                </span>
+                                <span th:if="${ticket.status.getDisplayValue() == 'Erledigt'}"
+                                      class="finishedBadge badge">Erledigt
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col fs-10 fw-bold">Kategorie:
+                                <span th:if="${ticket.category.getDisplayValue() == 'Inaktivität'}"
+                                      th:text="${ticket.category.displayValue}"
+                                      class="inactivityBadge badge rounded-pill text-bg-danger"/>
+                                <span th:if="${ticket.category.getDisplayValue() == 'Technisches Problem'}"
+                                      th:text="${ticket.category.displayValue}"
+                                      class="technicalBadge badge rounded-pill text-bg-danger"/>
+                                <span th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}"
+                                      th:text="${ticket.category.displayValue}"
+                                      class="elseBadge badge rounded-pill text-bg-danger"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container-fluid d-flex bottomOuterBorder">
+            <form class="input-group align-self-end" id="text-input-bar">
+                <input id="searchBar" type="text" class="form-control" placeholder="Send message...">
+
+            </form>
+        </div>
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+</div>
+
+<!-- Modal for takeback -->
+<div class="modal fade" id="modalSubmitDelete" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header header-element">
+                <h5 class="modal-title" id="exampleModalLongTitle">Sind Sie sich sicher?</h5>
+            </div>
+            <div class="modal-body">
+                <p>Möchten Sie dieses Ticket wirklich zurücknehmen? Der Vorgang kann nicht rückgängig gemacht werden. </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                <form th:action="@{/ticket/delete(id=${ticket.ticketID})}" th:object="${ticket}"
+                      method="post">
+                    <button type="submit" class="btn btn-danger">
+                        Ticket zurücknehmen
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
