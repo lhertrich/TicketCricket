@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -41,6 +42,13 @@ public class ExpandedTicketController {
     public String deleteTicket(@RequestParam("id") Integer id) {
         ticketService.deleteTicket(ticketService.findTicketById(id));
         return "redirect:/";
+    }
+
+    @PostMapping("/ticket/status{id}")
+    public String requestStatus(@RequestParam("id") Integer id){
+        System.out.println("Got request");
+        ticketService.setRequest(id);
+        return "redirect:/ticket/expand?id="+id;
     }
 
 }

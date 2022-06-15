@@ -76,6 +76,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket.setUser(normalUser);
         long d = System.currentTimeMillis();
         ticket.setDate(new Date(d));
+        ticket.setLastRequest(new Date(d));
         ticket.setProblem("Darko antwortet nicht");
         ticket.setStatus(Status.OFFEN);
         ticket.setTitle("Darko antwortet nicht");
@@ -86,6 +87,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket2.setUser(normalUser);
         long d2 = System.currentTimeMillis();
         ticket2.setDate(new Date(d2));
+        ticket2.setLastRequest(new Date(d2));
         ticket2.setProblem("Ihr seid nicht so schön");
         ticket2.setStatus(Status.IN_BEARBEITUNG);
         ticket2.setTitle("Ihr seid nicht so schön");
@@ -96,6 +98,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket3.setUser(normalUser);
         long d3 = System.currentTimeMillis();
         ticket3.setDate(new Date(d3));
+        ticket3.setLastRequest(new Date(d3));
         ticket3.setProblem("Technisches Problem gefunden");
         ticket3.setStatus(Status.ERLEDIGT);
         ticket3.setTitle("Technisches Problem gefunden");
@@ -106,6 +109,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket4.setUser(normalUser2);
         long d4 = System.currentTimeMillis();
         ticket4.setDate(new Date(d4));
+        ticket4.setLastRequest(new Date(d4));
         ticket4.setProblem("Darko antwortet nicht schnell genug. Ich finde, dass das nicht in Ordnung ist.");
         ticket4.setStatus(Status.OFFEN);
         ticket4.setTitle("Darko antwortet nicht schnell genug");
@@ -116,6 +120,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket5.setUser(admin);
         long d5 = System.currentTimeMillis();
         ticket5.setDate(new Date(d5));
+        ticket5.setLastRequest(new Date(d5));
         ticket5.setProblem("Darko antwortet nicht schnell genug. Ich finde, dass das nicht in Ordnung ist.");
         ticket5.setStatus(Status.OFFEN);
         ticket5.setTitle("Admin test");
