@@ -124,13 +124,15 @@
         <div id="topRow">Ticket erstellen</div>
         <input type="text" placeholder="Titel" id="ticketTitel" name="ticketTitel">
 
+        <div>
+                <select name="vorkategoriserung" id="vorkategorisierung" required>
+                <option disabled selected value> -- Vorkategorisierung -- </option>
+                <option value="Inaktivität">Inaktivität</option>
+                <option value="Technisch">Technisch</option>
+                <option value="Sonstiges">Sonstiges</option>
+                </select>
+        </div>
 
-        <select name="vorkategoriserung" id="vorkategorisierung" required>
-            <option disabled selected value> -- Vorkategorisierung -- </option>
-            <option value="Inaktivität">Inaktivität</option>
-            <option value="Technisch">Technisch</option>
-            <option value="Sonstiges">Sonstiges</option>
-        </select>
 
         <textarea placeholder="Beschreiben Sie ihr Problem..." id="problembeschreibungTextfeld"
                   name="problembeschreibung"></textarea>

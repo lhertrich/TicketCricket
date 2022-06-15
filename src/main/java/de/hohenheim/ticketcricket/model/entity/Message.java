@@ -1,5 +1,8 @@
 package de.hohenheim.ticketcricket.model.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +20,7 @@ public class Message {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "originTicket_ID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Ticket ticket;
 
     public Message(){
