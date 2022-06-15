@@ -56,22 +56,48 @@ body{
     border-color: black;
     border-width: 1.5px
 }
-#finishedBadge{
+.finishedBadge{
     width: 100px;
     background-color: green
 }
 
-#progressBadge{
+.progressBadge{
     width: 100px;
     background-color: orange
 }
-#openBadge{
+.openBadge{
     width: 100px;
     background-color: Red
 }
 .inactivityBadge{
+    max-width: 150px;
     background-color: deepskyblue;
     opacity: 70%
+}
+
+.technicalBadge{
+    max-width: 150px;
+    background-color: darkorange;
+    opacity: 70%
+}
+
+.elseBadge{
+    max-width: 150px;
+    background-color: dimgray;
+    opacity: 70%
+}
+
+.no-overflow{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.dot {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
 }
 
 
