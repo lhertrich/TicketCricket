@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class DashboardController {
+public class ExpandedTicketController {
 
     @Autowired
     private TicketService ticketService;
@@ -19,31 +19,21 @@ public class DashboardController {
     @Autowired
     private UserService userService;
 
-    /**
-     * Zeigt die Startseite Ihrer Anwendung.
-     *
-     * @param model enthält alle ModelAttribute.
-     * @return home-Seite.
-     */
-    @GetMapping("/")
-    public String showHome(Model model) {
+    @GetMapping("/ticket/expand{id}")
+    public String expandTicket(@RequestParam("id") Integer id, Model model){
         User currentUser = userService.getCurrentUser();
+        model.addAttribute("ticket", ticketService.findTicketById(id));
         if(currentUser.getRoles().contains("ROLE_ADMIN")) {
-            model.addAttribute("tickets", ticketService.findAllTickets());
-            return "admin/dashboard";
+            return "admin/expanded-ticket";
         } else {
-            model.addAttribute("tickets", ticketService.findAllTicketsByUser(currentUser));
-            return "user/dashboard";
+            return "user/expanded-ticket";
         }
     }
 
-    /*@GetMapping("/ticket/expand{id}")
-    public String expandTicket(@RequestParam("id") Integer id, Model model){
-        model.addAttribute("ticket", ticketService.findTicketById(id));
-        return "admin/expanded-ticket";
-    }*/
-
-
-
+    @PostMapping("/ticket/delete{id}")
+    public String deleteTicket(@RequestParam("id") Integer id) {
+        ticketService.deleteTicket(ticketService.findTicketById(id));
+        return "redirect:/";
+    }
 
 }

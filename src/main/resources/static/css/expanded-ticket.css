@@ -69,6 +69,11 @@ body {
     background-color: red
 }
 
+.header-element{
+    color: white;
+    background-color: darkslategray;
+}
+
 #text-input-bar {
     margin-bottom:1em;
     margin-top:1em;
