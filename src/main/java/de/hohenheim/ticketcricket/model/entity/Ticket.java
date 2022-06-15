@@ -14,6 +14,7 @@ public class Ticket {
     @JoinColumn(name = "creatorID")
     private User user;
 
+    
     private String title;
 
     private String problem;

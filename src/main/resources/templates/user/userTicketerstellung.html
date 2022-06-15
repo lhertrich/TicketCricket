@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>Sopra 2020 Demo Project</title>
@@ -28,7 +28,6 @@
             width: 1350px;
             height: 775px;
             top: 10%;
-
 
 
             /* Grau */
@@ -125,22 +124,20 @@
 
         <form name="ticketCreation" th:action="@{/user/createTicket}" th:object="${ticket}" method="post">
 
-        <input type="text" placeholder="Titel" id="ticketTitel" name="ticketTitel" th:field="*{title}">
+            <input type="text" placeholder="Titel" id="ticketTitel" name="ticketTitel" th:field="*{title}"
+                   th:class="${#fields.hasErrors('title')}">
+            <!--<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>-->
+            <select name="vorkategorisierung" id="vorkategorisierung" required th:field="*{category}">
 
-        <select name="vorkategorisierung" id="vorkategorisierung" required th:field="*{category}">
-            <!--<option disabled selected value> -- Vorkategorisierung -- </option>
-            <option th:value="" th:text="Inaktivität"></option>
-            <option value="Technisch">Technisch</option>
-            <option value="Sonstiges">Sonstiges</option>-->
-            <option th:each="category : ${T(de.hohenheim.ticketcricket.model.entity.Category).values()}"
-                    th:value="${category}" th:text="${category.displayValue}"></option>
-        </select>
+                <option th:each="category : ${T(de.hohenheim.ticketcricket.model.entity.Category).values()}"
+                        th:value="${category}" th:text="${category.displayValue}"></option>
+            </select>
 
-        <textarea placeholder="Beschreiben Sie ihr Problem..." id="problembeschreibungTextfeld"
-                  name="problembeschreibung" th:field="*{problem}"></textarea>
+            <textarea placeholder="Beschreiben Sie ihr Problem..." id="problembeschreibungTextfeld"
+                      name="problembeschreibung" th:field="*{problem}"></textarea>
 
-        <button id="ticketErstellenButton" th:text="'Ticket erstellen'" th:type="submit" />
-    </form>
+            <button id="ticketErstellenButton" th:text="'Ticket erstellen'" th:type="submit"/>
+        </form>
 
     </div>
 </div>
