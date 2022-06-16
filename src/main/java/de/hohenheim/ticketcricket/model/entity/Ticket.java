@@ -15,6 +15,9 @@ public class Ticket {
     @JoinColumn(name = "creatorID")
     private User user;
 
+    
+    private String title;
+
     private String problem;
 
     @Enumerated(EnumType.STRING)
@@ -38,6 +41,14 @@ public class Ticket {
 
     public void setTicketID(int ticketID) {
         this.ticketID = ticketID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public User getUser() {
