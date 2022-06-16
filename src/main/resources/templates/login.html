@@ -2,167 +2,60 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link th:href="@{/css/login.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     <title>Sopra 2020 Demo Project</title>
+    <link rel="stylesheet" th:href="@{/css/design.css}">
 
-    <style>
-        body{
-            font-family: 'Nunito';
-            font-style: normal;
-            font-weight: 400;
-        }
-
-        .borderBox{
-
-            display: flex;
-            justify-content: center;
-
-
-        }
-
-        .top-row {
-            height: 100px;
-            background-color: rgba(62, 66, 81, 1);
-        }
-
-        h1 {
-
-            text-align: center;
-            margin-top: 50px;
-
-
-        }
-
-        .rectangle{
-
-            box-sizing: border-box;
-            margin-top: 50px;
-
-
-            position: absolute;
-            width: 514px;
-            height: 377px;
-            display: flex;
-            justify-content: center;
-
-
-            /* Grau */
-            border: 3px solid #3E4251;
-            border-radius: 45px;
-        }
-
-
-
-
-
-        input[type=text]{
-
-            position: absolute;
-            width: 391px;
-            height: 44px;
-            margin-top: auto ;
-            top: 100px;
-            padding-left: 5px;
-
-
-            /* Grau */
-            border: 3px solid #3E4251;
-            border-radius: 45px;
-
-        }
-
-        input[type=password]{
-
-            position: absolute;
-            width: 391px;
-            height: 44px;
-            margin-top: 50px;
-            top: 150px;
-            padding-left: 5px;
-
-            /* Grau */
-            border: 3px solid #3E4251;
-            border-radius: 45px;
-
-        }
-
-        .btn{
-            position: absolute;
-            width: 231px;
-            height: 40px;
-            margin-top: 25px;
-
-
-
-            top: 75%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-
-
-            /* Hellgrau */
-
-            background: #6A718A;
-
-            color: white;
-
-            border: 3px solid #6A718A;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            border-radius: 45px;
-        }
-        #usernameLabel{
-            position: absolute;
-            top:80px;
-        }
-
-        #passwordLabel{
-            position: absolute;
-            top:180px;
-        }
-        .alert{
-            color: red;
-        }
-
-
-    </style>
 </head>
 <body>
-<div>
-    <form name="f" th:action="@{/login}" method="post">
-        <fieldset>
-            <div class="top-row"></div>
-            <h1>Gebrauchtwaren <br/> GmbH</h1>
-            <div class="borderBox">
-                <div class="rectangle">
-                    <div th:if="${param.error}" class="alert alert-error">
-                        Invalid Username or password.
-                    </div>
-                    <label for="username" id="usernameLabel">Username</label>
-                    <input type="text" id="username" name="username"/>
-                    <label for="password" id="passwordLabel">Password</label>
-                    <input type="password" id="password" name="password">
-                    <div class="form-actions">
-                        <button type="submit" class="btn">Log In</button>
-                    </div>
+<div th:insert="fragments/navbarFragments::navbarLogin"></div>
 
-                </div>
-
+<div class="row justify-content-center" style="margin-top: 100px">
+    <div class="col-5">
+        <div class="list-group-item d-flex justify-content-center top-bar-text" style="
+    border-left-color: black;
+    border-right-color: black;
+    border-top-color: black;
+    border-width: 2px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: darkslategray;">
+            <span style="font-weight: bold; color:white;">Login</span>
+        </div>
+        <div class="container-fluid bottom-bar" style="
+        border: 2px solid black;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;">
+            <div id="header" class="row">
             </div>
+            <div id="form" class="row">
+                <div class="col box-border">
+                    <form name="f" th:action="@{/login}" method="post">
+                        <div class="row form-group box-format" style="margin-bottom:2%;">
+                            <label for="username" id="usernameLabel"
+                                   style="overflow:hidden; text-align: center; margin-top:2%;">Username</label>
+                            <input type="text" class="form-control input-field" id="username" name="username"
+                                   placeholder="Username" style="text-align: center;">
+                            <label for="password" id="passwordLabel"
+                                   style="overflow:hidden; text-align: center; margin-top:2%;">Password</label>
+                            <input type="password" class="form-control input-field" id="password" name="password"
+                                   placeholder="Passwort" style="text-align: center;">
+                        </div>
+                        <div class="form-actions d-flex justify-content-center" style="margin-bottom:2%;">
+                            <button th:type="submit" th:text="Login" class="btn btn-success " style="background-color: dimgray; border-radius: 10px; border: 1px solid black">Log In</button>
+                        </div>
 
-
-
-        </fieldset>
-
-
-    </form>
-
-
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 
 </body>
 </html>

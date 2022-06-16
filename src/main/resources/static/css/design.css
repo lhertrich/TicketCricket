@@ -32,9 +32,6 @@
     font-weight:bold;
 }
 
-.box-container-format {
-    padding-top: 100px;
-}
 
 .box-format {
     padding:0.5%;
@@ -45,5 +42,32 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+
+.navbar-distance{
+    padding-top: 100px;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    margin-bottom: 0.5%
+}
+
+.navbar-body{
+    background-color: darkslategray;
+}
+
+.navbar-icon-color{
+    background-color: darkslategray;
+    color: white;
+}
+.burger-color{
+    background-color: darkslategray;
+    color: white;
+    border: none;
+}
+.button-color{
+    background-color: dimgray;
+    border: 1px solid black;
+    border-radius: 10px;
+
 }
 
