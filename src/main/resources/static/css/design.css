@@ -33,7 +33,6 @@
 }
 
 .box-container-format {
-    padding-top: 100px;
 }
 
 .box-format {
@@ -45,5 +44,12 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+}
+
+.navbar-distance{
+    padding-top: 100px;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    margin-bottom: 0.5%
 }
 
