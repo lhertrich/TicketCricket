@@ -93,7 +93,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-2 d-flex flex-column justify-content-center">
+                    <div class="col-2 align-self-center justify-self-center">
                         <th:block th:if="${ticket.lastRequest.before(compareDate)}">
                             <form th:action="@{/ticket/status(id=${ticket.ticketID})}" th:object="${ticket}"
                                   method="post">
@@ -101,9 +101,8 @@
                             </form>
                         </th:block>
                         <th:block th:if="${compareDate.before(ticket.lastRequest)}">
-                            <form>
-                                <button type="button" class="btn btn-secondary no-overflow" disabled>Status anfragen</button>
-                            </form>
+                            <button type="button" class="btn btn-secondary no-overflow" disabled>Status anfragen
+                            </button>
                         </th:block>
                     </div>
                 </div>
@@ -112,12 +111,20 @@
 
 
         <div class="container-fluid d-flex bottomOuterBorder">
-            
-            <form class="input-group align-self-end" id="text-input-bar">
+            <div class="container-fluid">
+                <div th:each="notification: ${notifications}" class="row">
+                    <div th:text="'Status angefragt am ' + ${notification.getDate()}"
+                         class="list-group-item list-group-item-light mb-2"></div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <form class="input-group align-self-end row" id="text-input-bar">
+                    <input id="searchBar" type="text" class="form-control" placeholder="Send message...">
+                </form>
+            </div>
 
-                <input id="searchBar" type="text" class="form-control" placeholder="Send message...">
 
-            </form>
+
         </div>
 
     </div>

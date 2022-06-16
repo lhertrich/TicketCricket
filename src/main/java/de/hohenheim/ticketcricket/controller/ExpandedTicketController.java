@@ -1,9 +1,12 @@
 package de.hohenheim.ticketcricket.controller;
 
+import de.hohenheim.ticketcricket.model.entity.Notification;
 import de.hohenheim.ticketcricket.model.entity.Role;
 import de.hohenheim.ticketcricket.model.entity.User;
+import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +28,16 @@ public class ExpandedTicketController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @GetMapping("/ticket/expand{id}")
     public String expandTicket(@RequestParam("id") Integer id, Model model){
         User currentUser = userService.getCurrentUser();
         Set<Role> roles = currentUser.getRoles();
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
         model.addAttribute("ticket", ticketService.findTicketById(id));
+        model.addAttribute("notifications", notificationService.findAllNotificationsForTicket(id));
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("user", userService.getCurrentUser());
             return "admin/expanded-ticket";
@@ -49,6 +56,12 @@ public class ExpandedTicketController {
     @PostMapping("/ticket/status{id}")
     public String requestStatus(@RequestParam("id") Integer id){
         ticketService.setRequest(id);
+        Notification notification = new Notification();
+        notification.setRequest(true);
+        notification.setTicket(ticketService.findTicketById(id));
+        notification.setUser(userService.getCurrentUser());
+        notification.setDate(new Date());
+        notificationService.saveNotification(notification);
         return "redirect:/ticket/expand?id="+id;
     }
 
