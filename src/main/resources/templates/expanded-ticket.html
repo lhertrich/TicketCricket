@@ -6,13 +6,14 @@
     <title>Expanded Ticket</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/expanded-ticket.css">
+    <!--<link rel="stylesheet" href="/css/ignore/expanded-ticket.css">-->
+    <link rel="stylesheet" href="/css/design.css">
 </head>
 
 <body>
 <th:block th:insert="fragments/navbarFragments::navbarUser" sec:authorize="hasRole('ROLE_USER')"/>
 <th:block th:insert="fragments/navbarFragments::navbarAdmin" sec:authorize="hasRole('ROLE_ADMIN')"/>
-<div th:insert="fragments/expanded-ticket-admin::expanded-ticket-admin" sec:authorize="hasRole('ROLE_ADMIN')"/>
-<div th:insert="fragments/expanded-ticket-user::expanded-ticket-user" sec:authorize="hasRole('ROLE_USER')"/>
+<div th:insert="fragments/expanded-ticket-adminNEW::expanded-ticket-adminNEW" sec:authorize="hasRole('ROLE_ADMIN')"/>
+<div th:insert="fragments/expanded-ticket-userNEW::expanded-ticket-userNEW" sec:authorize="hasRole('ROLE_USER')"/>
 </body>
 </html>

@@ -110,7 +110,10 @@
 
 
         <div class="container-fluid d-flex bottomOuterBorder">
-
+            <div th:each="notification: ${notifications}">
+                <div th:text="'Status angefragt am ' + ${ticket.getLastRequest()}">
+                </div>
+            </div>
             <form class="input-group align-self-end" id="text-input-bar">
 
                 <input id="searchBar" type="text" class="form-control" placeholder="Send message...">
