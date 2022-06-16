@@ -23,8 +23,6 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    private String title;
-
     private Date date;
 
     private Date lastRequest;
@@ -99,11 +97,4 @@ public class Ticket {
         this.status = status;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }
