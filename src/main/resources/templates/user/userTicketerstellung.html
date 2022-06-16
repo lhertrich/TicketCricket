@@ -3,144 +3,79 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+
+
+
+    <link rel="stylesheet" href="/css/design.css">
+
     <title>Sopra 2020 Demo Project</title>
 
-    <style>
-        body {
-            font-family: 'Nunito';
-            font-style: normal;
-            font-weight: 400;
-        }
 
-        #borderBox {
-            display: flex;
-            justify-content: center;
-        }
-
-        #rectangle {
-            box-sizing: border-box;
-
-            position: absolute;
-            width: 1350px;
-            height: 775px;
-            top: 10%;
-
-
-            /* Grau */
-
-            border: 3px solid #3E4251;
-            border-radius: 45px;
-        }
-
-        #topRow {
-            position: absolute;
-            width: 1345px;
-            height: 67px;
-            text-align: center;
-            font-size: xx-large;
-            padding: 10px;
-
-
-            /* Hellgrau */
-
-            background: #6A718A;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            border-radius: 45px 45px 0px 0px;
-        }
-
-        input[type=text] {
-            position: absolute;
-            padding: 10px;
-
-            background: #FFFFFF;
-            /* Grau */
-
-            border: 3px solid #3E4251;
-            border-radius: 45px;
-            margin-left: 3%;
-
-        }
-
-        #ticketTitel {
-            width: 1265px;
-            height: 56px;
-            top: 15%;
-        }
-
-        #problembeschreibungTextfeld {
-            width: 1265px;
-            height: 287px;
-            top: 35%;
-            padding: 10px;
-            position: absolute;
-
-
-            background: #FFFFFF;
-            /* Grau */
-
-            border: 3px solid #3E4251;
-            border-radius: 45px;
-            margin-left: 3%;
-
-        }
-
-        #vorkategorisierung {
-            box-sizing: border-box;
-            text-align: center;
-            position: absolute;
-            width: 300px;
-            height: 56px;
-            top: 25%;
-            margin-left: 3%;
-
-
-            background: #FFFFFF;
-            border: 3px solid #000000;
-            border-radius: 45px;
-        }
-
-        #ticketErstellenButton {
-            position: absolute;
-            width: 300px;
-            height: 55.65px;
-            left: 72%;
-            top: 87%;
-
-            background: #10DB25;
-            border: 3px solid #000000;
-            border-radius: 45px;
-        }
-    </style>
 </head>
 
 <body>
-<div id="borderBox">
-    <div id="rectangle">
-        <div id="topRow">Ticket erstellen</div>
 
-        <form name="ticketCreation" th:action="@{/user/createTicket}" th:object="${ticket}" method="post">
 
-            <input type="text" placeholder="Titel" id="ticketTitel" name="ticketTitel" th:field="*{title}"
-                   th:class="${#fields.hasErrors('title')}">
-            <!--<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>-->
-            <select name="vorkategorisierung" id="vorkategorisierung" required th:field="*{category}">
+<div th:insert="navbarFragments::navbarUser"></div>
 
-                <option th:each="category : ${T(de.hohenheim.ticketcricket.model.entity.Category).values()}"
-                        th:value="${category}" th:text="${category.displayValue}"></option>
-            </select>
+<div class="box-container-format">
+    <div class="list-group-item d-flex justify-content-center top-bar-text" style="
+    border-left-color: black;
+    border-right-color: black;
+    border-top-color: black;
+    border-width: 2px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: darkslategray;">
+        Ticket erstellen
+    </div>
 
-            <textarea placeholder="Beschreiben Sie ihr Problem..." id="problembeschreibungTextfeld"
-                      name="problembeschreibung" th:field="*{problem}"></textarea>
+    <div class="container-fluid bottom-bar">
+        <div id="header" class="row">
+        </div>
+        <div id="form" class="row">
+            <div class="col box-border">
+                <form th:action="@{/user/createTicket}" th:object="${ticket}" method="post">
+                    <div class="row form-group box-format">
+                        <label for="title">Titel</label>
+                        <input type="text" class="form-control input-field" id="title"
+                               placeholder="Geben Sie einen Titel an" th:field="*{title}"
+                             >
+                        <p th:if="${#fields.hasErrors('title')}"  class="error-message" th:errors="*{title}"></p>
+                    </div>
+                    <div class="row form-group box-format">
+                        <label for="vorkategorisierung">Vorkategorisierung</label>
+                        <select id="vorkategorisierung" class="form-control input-field" required th:field="*{category}">
+                            <option th:each="category : ${T(de.hohenheim.ticketcricket.model.entity.Category).values()}"
+                                    th:value="${category}" th:text="${category.displayValue}"></option>
+                        </select>
+                    </div>
+                    <div class="row form-group box-format">
+                        <label for="FormControlTextarea1">Beschreiben Sie ihr Problem...</label>
+                        <textarea class="form-control input-field" id="FormControlTextarea1" rows="3"
+                                  th:field="*{problem}"></textarea>
+                        <p th:if="${#fields.hasErrors('problem')}" class="error-message" th:errors="*{problem}"></p>
+                    </div>
+                    <div class="row justify-content-end form-group box-format">
+                        <div class="col-2">
+                            <button th:type="submit" th:text="'Ticket erstellen'" class="btn btn-primary  float-end no-overflow"/>
+                        </div>
+                    </div>
 
-            <button id="ticketErstellenButton" th:text="'Ticket erstellen'" th:type="submit"/>
-        </form>
-
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+
 </body>
 
 </html>

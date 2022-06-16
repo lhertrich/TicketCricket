@@ -1,0 +1,51 @@
+
+.top-bar{
+    border-left-color: black;
+    border-right-color: black;
+    border-top-color: black;
+    border-width: 2px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: darkslategray;
+}
+
+
+.bottom-bar{
+    border: 2px solid black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.input-field {
+    border-color:black;
+    border-radius:10px;
+}
+
+.error-message {
+    color: red;
+    font-size: small;
+
+}
+
+.top-bar-text {
+    color: white;
+    font-weight:bold;
+}
+
+.box-container-format {
+    margin-top:10%;
+    margin-bottom:10%;
+    padding:0.5%;
+}
+
+.box-format {
+    padding:0.5%;
+}
+
+
+.no-overflow{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
