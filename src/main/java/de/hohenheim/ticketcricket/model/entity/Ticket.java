@@ -1,6 +1,7 @@
 package de.hohenheim.ticketcricket.model.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -22,6 +23,8 @@ public class Ticket {
     private String title;
 
     private Date date;
+
+    private Date lastRequest;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -67,6 +70,14 @@ public class Ticket {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Date getLastRequest() {
+        return lastRequest;
+    }
+
+    public void setLastRequest(Date lastRequest) {
+        this.lastRequest = lastRequest;
     }
 
     public Status getStatus() {
