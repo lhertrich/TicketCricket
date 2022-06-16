@@ -13,7 +13,7 @@
 <body>
 <th:block th:insert="fragments/navbarFragments::navbarUser" sec:authorize="hasRole('ROLE_USER')"/>
 <th:block th:insert="fragments/navbarFragments::navbarAdmin" sec:authorize="hasRole('ROLE_ADMIN')"/>
-<div th:insert="fragments/expanded-ticket-adminNEW::expanded-ticket-adminNEW" sec:authorize="hasRole('ROLE_ADMIN')"/>
-<div th:insert="fragments/expanded-ticket-userNEW::expanded-ticket-userNEW" sec:authorize="hasRole('ROLE_USER')"/>
+<div th:insert="fragments/expanded-ticket-admin::expanded-ticket-adminNEW" sec:authorize="hasRole('ROLE_ADMIN')"/>
+<div th:insert="fragments/expanded-ticket-user::expanded-ticket-userNEW" sec:authorize="hasRole('ROLE_USER')"/>
 </body>
 </html>
