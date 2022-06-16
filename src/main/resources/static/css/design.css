@@ -53,3 +53,17 @@
     margin-bottom: 0.5%
 }
 
+.navbar-body{
+    background-color: darkslategray;
+}
+
+.navbar-icon-color{
+    background-color: darkslategray;
+    color: white;
+}
+.burger-color{
+    background-color: darkslategray;
+    color: white;
+    border: none;
+}
+
