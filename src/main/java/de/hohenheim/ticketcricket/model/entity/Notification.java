@@ -1,5 +1,8 @@
 package de.hohenheim.ticketcricket.model.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,6 +19,7 @@ public class Notification {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ticketID")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Ticket ticket;
 
     private Date date;

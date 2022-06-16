@@ -12,23 +12,19 @@
 
 <body>
 <!-- Navbar -->
-<div>
-    <div th:insert="navbarFragments::navbarAdmin"/>
-
+<div th:fragment="expanded-ticket-user">
     <div>
-
         <div id="topBar" class="list-group-item d-flex justify-content-between">
             <div class="container-fluid">
                 <div class="row align-items-center">
-                    <div class="col-8">
+                    <div class="col-7">
                         <div th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"
                              class="fs-5 fw-bold no-overflow"/>
                     </div>
-                    <div class="col-4">
+                    <div class="col-5">
                         <div class="row justify-content-end">
-                            <button th:if="${user eq ticket.getUser()}" type="button" style="max-width: 190px"
-                                    class="col-6 btn btn-danger no-overflow" data-bs-toggle="modal"
-                                    data-bs-target="#modalSubmitDelete">
+                            <button type="button" style="max-width: 190px" class="col-6 btn btn-danger no-overflow"
+                                    data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
                                 Ticket&nbsp;zurücknehmen
                             </button>
                             <div class="col-3">
@@ -55,7 +51,7 @@
         <div class="d-flex flex-row">
             <div class="container-fluid d-flex flex-column ticket-container" style="border: 2px solid black;">
                 <div class="row">
-                    <div class="col-9">
+                    <div class="col-10">
                         <div class="row">
                             <div class="col fs-10 fw-bold">Datum:
                                 <span th:text="${ticket.date}" style="font-weight:normal"/>
@@ -94,18 +90,19 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="pe-4 col-3 d-flex flex-column justify-content-around align-items-end ">
-                        <div class="row">
-                            <button style="border:none; max-width:150px" class="col badge bg-info no-overflow">Ticket
-                                zuweisen
-                            </button>
-                        </div>
-                        <div class="row">
-                            <button style="border:none; max-width:150px" class="col badge bg-info no-overflow">Status
-                                ändern
-                            </button>
-                        </div>
+                    <div class="col-2 d-flex flex-column justify-content-center">
+                        <th:block th:if="${ticket.lastRequest.before(compareDate)}">
+                            <form th:action="@{/ticket/status(id=${ticket.ticketID})}" th:object="${ticket}"
+                                  method="post">
+                                <button type="submit" class="btn btn-primary no-overflow">Status anfragen</button>
+                            </form>
+                        </th:block>
+                        <th:block th:if="${compareDate.before(ticket.lastRequest)}">
+                            <form>
+                                <button type="button" class="btn btn-secondary no-overflow" disabled>Status anfragen
+                                </button>
+                            </form>
+                        </th:block>
                     </div>
                 </div>
             </div>
@@ -113,7 +110,9 @@
 
 
         <div class="container-fluid d-flex bottomOuterBorder">
+
             <form class="input-group align-self-end" id="text-input-bar">
+
                 <input id="searchBar" type="text" class="form-control" placeholder="Send message...">
 
             </form>
@@ -126,28 +125,28 @@
             integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
             crossorigin="anonymous"></script>
 
-</div>
 
-<!-- Modal for takeback -->
-<div class="modal fade" id="modalSubmitDelete" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header header-element">
-                <h5 class="modal-title" id="exampleModalLongTitle">Sind Sie sich sicher?</h5>
-            </div>
-            <div class="modal-body">
-                <p>Möchten Sie dieses Ticket wirklich zurücknehmen? Der Vorgang kann nicht rückgängig gemacht
-                    werden. </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
-                <form th:action="@{/ticket/delete(id=${ticket.ticketID})}" th:object="${ticket}"
-                      method="post">
-                    <button type="submit" class="btn btn-danger">
-                        Ticket zurücknehmen
-                    </button>
-                </form>
+    <!-- Modal for takeback -->
+    <div class="modal fade" id="modalSubmitDelete" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header header-element">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Sind Sie sich sicher?</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Möchten Sie dieses Ticket wirklich zurücknehmen? Der Vorgang kann nicht rückgängig gemacht
+                        werden. </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                    <form th:action="@{/ticket/delete(id=${ticket.ticketID})}" th:object="${ticket}"
+                          method="post">
+                        <button type="submit" class="btn btn-danger no-overflow">
+                            Ticket zurücknehmen
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
