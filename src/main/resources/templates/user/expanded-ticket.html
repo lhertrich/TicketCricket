@@ -97,11 +97,13 @@
                         <th:block th:if="${ticket.lastRequest.before(compareDate)}">
                             <form th:action="@{/ticket/status(id=${ticket.ticketID})}" th:object="${ticket}"
                                   method="post">
-                                <button type="submit" class="btn btn-secondary no-overflow">Status anfragen</button>
+                                <button type="submit" class="btn btn-primary no-overflow">Status anfragen</button>
                             </form>
                         </th:block>
                         <th:block th:if="${compareDate.before(ticket.lastRequest)}">
-                            <button type="button" class="btn btn-secondary no-overflow">Status anfragen</button>
+                            <form>
+                                <button type="button" class="btn btn-secondary no-overflow" disabled>Status anfragen</button>
+                            </form>
                         </th:block>
                     </div>
                 </div>
@@ -110,7 +112,9 @@
 
 
         <div class="container-fluid d-flex bottomOuterBorder">
+            
             <form class="input-group align-self-end" id="text-input-bar">
+
                 <input id="searchBar" type="text" class="form-control" placeholder="Send message...">
 
             </form>
