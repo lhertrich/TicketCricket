@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 // definiere alle URLs die nur für eine bestimmte Rolle zugänglich sind
                 // selbst definierte URLs
-                .antMatchers("/console/**").hasRole("ADMIN")
+                //.antMatchers("/console/**").hasRole("ADMIN")
                 // ende selbst definierte URLs
                 // Achtung: Spring Security fügt automatisch das Prefix "ROLE_" für die Überprüfung ein. Daher verwenden wir
                 // hier nicht "ROLE_ADMIN", wie bspw. im TestDataLoader angegeben.
