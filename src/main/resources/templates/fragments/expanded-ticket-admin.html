@@ -12,11 +12,8 @@
 
 <body>
 <!-- Navbar -->
-<div>
-    <div th:insert="navbarFragments::navbarAdmin"/>
-
+<div th:fragment="expanded-ticket-admin"  style="padding-top: 100px;">
     <div>
-
         <div id="topBar" class="list-group-item d-flex justify-content-between">
             <div class="container-fluid">
                 <div class="row align-items-center">
@@ -94,6 +91,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-2 d-flex flex-column justify-content-center">
+                        <th:block th:if="${ticket.lastRequest.before(compareDate) and (user eq ticket.getUser())}">
+                            <form th:action="@{/ticket/status(id=${ticket.ticketID})}" th:object="${ticket}"
+                                  method="post">
+                                <button type="submit" class="btn btn-primary no-overflow">Status anfragen</button>
+                            </form>
+                        </th:block>
+                        <th:block th:if="${compareDate.before(ticket.lastRequest) and (user eq ticket.getUser())}">
+                            <form>
+                                <button type="button" class="btn btn-secondary no-overflow" disabled>Status anfragen
+                                </button>
+                            </form>
+                        </th:block>
+                    </div>
 
                     <div class="pe-4 col-3 d-flex flex-column justify-content-around align-items-end ">
                         <div class="row">
@@ -126,32 +137,31 @@
             integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
             crossorigin="anonymous"></script>
 
-</div>
 
-<!-- Modal for takeback -->
-<div class="modal fade" id="modalSubmitDelete" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header header-element">
-                <h5 class="modal-title" id="exampleModalLongTitle">Sind Sie sich sicher?</h5>
-            </div>
-            <div class="modal-body">
-                <p>Möchten Sie dieses Ticket wirklich zurücknehmen? Der Vorgang kann nicht rückgängig gemacht
-                    werden. </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
-                <form th:action="@{/ticket/delete(id=${ticket.ticketID})}" th:object="${ticket}"
-                      method="post">
-                    <button type="submit" class="btn btn-danger">
-                        Ticket zurücknehmen
-                    </button>
-                </form>
+    <!-- Modal for takeback -->
+    <div class="modal fade" id="modalSubmitDelete" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header header-element">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Sind Sie sich sicher?</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Möchten Sie dieses Ticket wirklich zurücknehmen? Der Vorgang kann nicht rückgängig gemacht
+                        werden. </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                    <form th:action="@{/ticket/delete(id=${ticket.ticketID})}" th:object="${ticket}"
+                          method="post">
+                        <button type="submit" class="btn btn-danger">
+                            Ticket zurücknehmen
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>
