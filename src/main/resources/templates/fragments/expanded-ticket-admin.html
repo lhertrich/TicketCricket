@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="" lang="en">
 <head>
     <meta charset="utf-8">
@@ -7,136 +7,115 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/css/expanded-ticket.css">
+    <link rel="stylesheet" href="/css/design.css">
 </head>
 
 <body>
-<!-- Navbar -->
-<div th:fragment="expanded-ticket-admin">
-    <div>
-        <div id="topBar" class="list-group-item d-flex justify-content-between">
-            <div class="container-fluid">
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <div th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"
-                             class="fs-5 fw-bold no-overflow"/>
-                    </div>
-                    <div class="col-4">
-                        <div class="row justify-content-end">
-                            <button th:if="${user eq ticket.getUser()}" type="button" style="max-width: 190px"
-                                    class="col-6 btn btn-danger no-overflow" data-bs-toggle="modal"
-                                    data-bs-target="#modalSubmitDelete">
-                                Ticket&nbsp;zurücknehmen
-                            </button>
-                            <div class="col-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                     fill="currentColor" class="bi bi-person" viewBox="0 0 16 16"
-                                     style="min-width: 32px; min-height: 32px">
-                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                                </svg>
-                            </div>
-                            <a th:href="@{/}" class="col-3 link-dark d-flex justify-content-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                     fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16"
-                                     style="min-width: 32px; min-height: 32px">
-                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
+
+<!-- Navbar  class="col top-bar-text"-->
+<div th:fragment="expanded-ticket-adminNEW" class="box-format">
+    <div class="container-fluid">
+        <!-- Top Bar -->
+        <div id="topBar" class="row top-bar align-items-center top-outer-border p-1">
+            <div id="title" th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"
+                 class="no-overflow col my-2">
+            </div>
+            <div id="topButtons" class="col align-self-center">
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                     fill="currentColor" class="bi bi-x-lg float-end mx-2" viewBox="0 0 16 16"
+                     style="min-width: 32px; min-height: 32px">
+                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                </svg>
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                     fill="currentColor" class="bi bi-person float-end mx-2" viewBox="0 0 16 16"
+                     style="min-width: 32px; min-height: 32px">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                </svg>
+
+                <button th:if="${user eq ticket.getUser()}" type="button" style="max-width: 190px"
+                        class="col-6 btn btn-danger no-overflow float-end mx-2 d-none d-sm-block"
+                        data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
+                    Ticket&nbsp;zurücknehmen
+                </button>
+            </div>
+        </div>
+        <!-- Top Bar end -->
+        <!-- Ticket Info start -->
+        <div id="ticketInfo" class="row mid-outer-border">
+            <!-- Ticket Info left-->
+            <div id="leftInfo" class="col-12 col-sm-10">
+                <div id="date" class="row fs-10 fw-bold p-1">Datum:
+                    <span th:text="${#dates.format(ticket.getDate(), 'dd.MM.yyyy HH:mm')}" style="font-weight:normal"
+                          class="col"/>
+                </div>
+                <div id="problem" class="row fs-10 fw-bold p-1">Problembeschreibung:
+                    <span th:text="${ticket.problem}"
+                          style="font-weight: normal; overflow-wrap: break-word;"/>
+                </div>
+                <div id="status" class="row fs-10 fw-bold p-1">Status:
+                    <span th:if="${ticket.status.getDisplayValue() == 'Offen'}"
+                          class="openBadge badge col">Offen
+                    </span>
+                    <span th:if="${ticket.status.getDisplayValue() == 'In Bearbeitung'}"
+                          class="progressBadge badge col">In Bearbeitung
+                    </span>
+                    <span th:if="${ticket.status.getDisplayValue() == 'Erledigt'}"
+                          class="finishedBadge badge col">Erledigt
+                    </span>
+                </div>
+                <div id="category" class="row fs-10 fw-bold p-1">Kategorie:
+                    <span th:if="${ticket.category.getDisplayValue() == 'Inaktivität'}"
+                          th:text="${ticket.category.displayValue}"
+                          class="inactivityBadge badge rounded-pill"/>
+                    <span th:if="${ticket.category.getDisplayValue() == 'Technisches Problem'}"
+                          th:text="${ticket.category.displayValue}"
+                          class="technicalBadge badge rounded-pill"/>
+                    <span th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}"
+                          th:text="${ticket.category.displayValue}"
+                          class="elseBadge badge rounded-pill"/>
+                </div>
+                <div id="priority" class="row fs-10 fw-bold p-1">Priorität:
+                    <span class="openBadge badge"> Wichtig </span>
+                </div>
+            </div>
+            <!-- Ticket Info right -->
+            <div id="rightButtons" class="col align-self-evenly">
+                <div id="setAdmin" class="row p-2 d-flex justify-content-center">
+                    <button type="button" class="align-self-end btn btn-primary button-width" disabled>Admin&nbsp;zuweisen</button>
+                </div>
+                <div id="setStatus" class="row p-2 d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary button-width" disabled>Status&nbsp;ändern</button>
+                </div>
+                <div id="setCategory" class="row p-2 d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary button-width" disabled>Katgeorie&nbsp;ändern</button>
+                </div>
+                <div id="setPriority" class="row p-2 d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary button-width" disabled>Priorität&nbsp;ändern</button>
+                </div>
+                <div class="row d-flex d-sm-none justify-content-center p-2">
+                    <button type="button" style="max-width: 190px" class="col btn btn-danger no-overflow"
+                            data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
+                        Ticket&nbsp;zurücknehmen
+                    </button>
                 </div>
             </div>
         </div>
-
-
-        <div class="d-flex flex-row">
-            <div class="container-fluid d-flex flex-column ticket-container" style="border: 2px solid black;">
-                <div class="row">
-                    <div class="col-9">
-                        <div class="row">
-                            <div class="col fs-10 fw-bold">Datum:
-                                <span th:text="${ticket.date}" style="font-weight:normal"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col fs-10 fw-bold">Problembeschreibung:
-                                <span th:text="${ticket.problem}"
-                                      style="font-weight: normal; overflow-wrap: break-word;"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col fs-10 fw-bold">Status:
-                                <span th:if="${ticket.status.getDisplayValue() == 'Offen'}"
-                                      class="openBadge badge">Offen
-                                </span>
-                                <span th:if="${ticket.status.getDisplayValue() == 'In Bearbeitung'}"
-                                      class="progressBadge badge">In Bearbeitung
-                                </span>
-                                <span th:if="${ticket.status.getDisplayValue() == 'Erledigt'}"
-                                      class="finishedBadge badge">Erledigt
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col fs-10 fw-bold">Kategorie:
-                                <span th:if="${ticket.category.getDisplayValue() == 'Inaktivität'}"
-                                      th:text="${ticket.category.displayValue}"
-                                      class="inactivityBadge badge rounded-pill text-bg-danger"/>
-                                <span th:if="${ticket.category.getDisplayValue() == 'Technisches Problem'}"
-                                      th:text="${ticket.category.displayValue}"
-                                      class="technicalBadge badge rounded-pill text-bg-danger"/>
-                                <span th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}"
-                                      th:text="${ticket.category.displayValue}"
-                                      class="elseBadge badge rounded-pill text-bg-danger"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2 d-flex flex-column justify-content-center">
-                        <th:block th:if="${ticket.lastRequest.before(compareDate) and (user eq ticket.getUser())}">
-                            <form th:action="@{/ticket/status(id=${ticket.ticketID})}" th:object="${ticket}"
-                                  method="post">
-                                <button type="submit" class="btn btn-primary no-overflow">Status anfragen</button>
-                            </form>
-                        </th:block>
-                        <th:block th:if="${compareDate.before(ticket.lastRequest) and (user eq ticket.getUser())}">
-                            <form>
-                                <button type="button" class="btn btn-secondary no-overflow" disabled>Status anfragen
-                                </button>
-                            </form>
-                        </th:block>
-                    </div>
-
-                    <div class="pe-4 col-3 d-flex flex-column justify-content-around align-items-end ">
-                        <div class="row">
-                            <button style="border:none; max-width:150px" class="col badge bg-info no-overflow">Ticket
-                                zuweisen
-                            </button>
-                        </div>
-                        <div class="row">
-                            <button style="border:none; max-width:150px" class="col badge bg-info no-overflow">Status
-                                ändern
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        <!-- Ticket Info end-->
+        <!-- Chat -->
+        <div id="chatBox" class="row bottom-outer-border chat-height justify-content-center">
+            <div id="messageBox" class="row align-self-end" th:each="notification: ${notifications}">
+                <div th:text="'Status angefragt am ' + ${#dates.format(ticket.getLastRequest(), 'dd.MM.yyyy HH:mm')}"
+                     class="row statusBadge rounded-pill" style="max-width:300px"/>
+            </div>
+            <div id="sendBar" class="row align-self-end">
+                <form class="input-group py-2" id="text-input-bar">
+                    <input id="searchBar" type="text" class="form-control input-field" placeholder="Send message...">
+                </form>
             </div>
         </div>
-
-
-        <div class="container-fluid d-flex bottomOuterBorder">
-            <form class="input-group align-self-end" id="text-input-bar">
-                <input id="searchBar" type="text" class="form-control" placeholder="Send message...">
-
-            </form>
-        </div>
-
     </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-            crossorigin="anonymous"></script>
-
 
     <!-- Modal for takeback -->
     <div class="modal fade" id="modalSubmitDelete" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle"
@@ -154,7 +133,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
                     <form th:action="@{/ticket/delete(id=${ticket.ticketID})}" th:object="${ticket}"
                           method="post">
-                        <button type="submit" class="btn btn-danger">
+                        <button type="submit" class="btn btn-danger no-overflow">
                             Ticket zurücknehmen
                         </button>
                     </form>
@@ -162,6 +141,7 @@
             </div>
         </div>
     </div>
+
 </div>
 </body>
 </html>

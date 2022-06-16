@@ -1,3 +1,11 @@
+body {
+    padding-top: 80px;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
 
 .top-bar{
     border-left-color: black;
@@ -6,7 +14,32 @@
     border-width: 2px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+    color: white;
+    font-weight: bold;
     background-color: darkslategray;
+}
+
+.chat-height {
+    min-height: 300px;
+}
+
+.bottom-outer-border{
+    border: 2px solid black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.top-outer-border{
+    border: 2px solid black;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: none;
+}
+
+.mid-outer-border{
+    border: 2px solid black;
+    background-color: white;
+    border-bottom: none;
 }
 
 
@@ -42,10 +75,73 @@
     padding:0.5%;
 }
 
-
 .no-overflow{
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
 }
 
+.finishedBadge{
+    width: 100px;
+    max-width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: green
+}
+
+.progressBadge{
+    width: 100px;
+    max-width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: orange
+}
+
+.openBadge{
+    width: 100px;
+    max-width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: red
+}
+
+.inactivityBadge{
+    background-color: deepskyblue;
+    max-width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    opacity: 70%;
+    text-align: center;
+}
+
+.technicalBadge{
+    background-color: darkorange;
+    max-width: 150px;
+    margin-right: 10px;
+    margin-left: 10px;
+    opacity: 70%;
+    text-align: center;
+}
+
+.elseBadge{
+    background-color: dimgray;
+    max-width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    opacity: 70%;
+    justify-content: center;
+}
+
+.statusBadge{
+    background-color: dimgray;
+    color: white;
+    font-size: small;
+    margin-right: 10px;
+    margin-left: 10px;
+    max-width: 280px;
+    text-align: center;
+}
+
+.button-width{
+    max-width: 190px;
+}
