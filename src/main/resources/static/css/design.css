@@ -32,8 +32,6 @@
     font-weight:bold;
 }
 
-.box-container-format {
-}
 
 .box-format {
     padding:0.5%;
@@ -65,5 +63,11 @@
     background-color: darkslategray;
     color: white;
     border: none;
+}
+.button-color{
+    background-color: dimgray;
+    border: 1px solid black;
+    border-radius: 10px;
+
 }
 
