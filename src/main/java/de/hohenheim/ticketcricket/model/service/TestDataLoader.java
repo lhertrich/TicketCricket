@@ -127,6 +127,20 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket5.setTitle("Admin test");
         ticketService.saveTicket(ticket5);
 
+        //create 50 tickets
+        for (int i = 0; i < 50; i++) {
+            Ticket ticket6 = new Ticket();
+            ticket6.setCategory(Category.INAKTIVITÄT);
+            ticket6.setUser(normalUser);
+            long d6 = System.currentTimeMillis();
+            ticket6.setDate(new Date(d6));
+            ticket6.setLastRequest(new Date(d6));
+            ticket6.setProblem("Darko antwortet nicht schnell genug. Ich finde, dass das nicht in Ordnung ist.");
+            ticket6.setStatus(Status.OFFEN);
+            ticket6.setTitle("Darko antwortet nicht schnell genug");
+            ticketService.saveTicket(ticket6);
+        }
+
         Message message = new Message();
         message.setMessage("Darko wollte mir sein Fahrrad für 100€ verkaufen, ich habe 3€ geboten und jetzt antwortet er nicht mehr");
         message.setUser(normalUser);

@@ -8,12 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -33,11 +31,11 @@ public class ExpandedTicketController {
         model.addAttribute("ticket", ticketService.findTicketById(id));
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("user", userService.getCurrentUser());
-            return "admin/expanded-ticket";
+            model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
         } else {
             model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
-            return "user/expanded-ticket";
         }
+        return "expanded-ticket";
     }
 
     @PostMapping("/ticket/delete{id}")
