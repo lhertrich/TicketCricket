@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -36,23 +35,16 @@ public class TicketController {
         binder.setValidator(ticketValidator);
     }
 
-    @GetMapping("/user/ticketForm")
-    public String showUserTicketForm(Model model){
+    @GetMapping("/ticket-form")
+    public String showTicketForm(Model model){
         model.addAttribute("ticket", new Ticket());
-        return "user/userTicketerstellung";
+        return "ticketerstellung";
     }
-
-    @GetMapping("/admin/ticketForm")
-    public String showAdminTicketForm(Model model){
-        model.addAttribute("ticket", new Ticket());
-        return "user/userTicketerstellung";
-    }
-
-    @PostMapping("/user/createTicket")
-    public String createUserTicket(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result, Model model){
+    @PostMapping("/create-ticket")
+    public String createTicket(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result, Model model){
         if(result.hasErrors()){
             model.addAttribute("ticket", ticket);
-            return "user/userTicketerstellung";
+            return "ticketerstellung";
         }
         ticket.setStatus(Status.OFFEN);
         ticket.setUser(userService.getCurrentUser());
@@ -63,14 +55,4 @@ public class TicketController {
         return "redirect:/";
     }
 
-    @PostMapping("/admin/createTicket")
-    public String createAdminTicket(@ModelAttribute("ticket") Ticket ticket){
-        ticket.setStatus(Status.OFFEN);
-        ticket.setUser(userService.getCurrentUser());
-        Date currentDate = new Date(System.currentTimeMillis());
-        ticket.setDate(currentDate);
-        ticket.setLastRequest(currentDate);
-        ticketService.saveTicket(ticket);
-        return "redirect:/";
-    }
 }
