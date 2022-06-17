@@ -1,41 +1,43 @@
 body{
+    background-color: #E8E9F3;
 }
 
 #bottomOuterBorder{
-    border: 2px solid black;
+    border: 2px solid #272635;
     border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px
+    border-bottom-right-radius: 10px;
+    background-color: #E8E9F3;
 }
 #topBar{
-    border-left-color: black;
-    border-right-color: black;
-    border-top-color: black;
+    border-left-color: #272635;
+    border-right-color: #272635;
+    border-top-color: #272635;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     border-width: 1.5px;
-    background-color: darkslategray;
+    background-color: #272635;
 }
 
 #searchBar{
     border-color: black;
     border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px
+    border-bottom-left-radius: 10px;
 }
 
 #search{
-    background-color: dimgray;
+    background-color: #A6A6A8;
     color: white;
     border-color: black;
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px
 }
 #filter{
-    background-color: dimgray;
+    background-color: #A6A6A8;
     color: white;
     border-color: black;
 }
 #dropdownMenuButton1{
-    background-color: dimgray;
+    background-color: #A6A6A8;
     border-bottom-left-radius: 10px;
     border-top-left-radius: 10px;
     border-bottom-right-radius: 0px;
@@ -43,7 +45,7 @@ body{
     border-color: black;
 }
 #dropdownMenuButton2{
-    background-color: dimgray;
+    background-color: #A6A6A8;
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
     border-bottom-right-radius: 10px;
@@ -53,38 +55,33 @@ body{
 #ticketBox{
     border-radius: 10px;
     margin-top: 10px;
-    border-color: black;
-    border-width: 1.5px
 }
 .finishedBadge{
     width: 100px;
-    background-color: green
+    background-color: #2a6749
 }
 
 .progressBadge{
     width: 100px;
-    background-color: orange
+    background-color: #fec004
 }
 .openBadge{
     width: 100px;
-    background-color: Red
+    background-color: #ef3b08
 }
 .inactivityBadge{
     max-width: 150px;
-    background-color: deepskyblue;
-    opacity: 70%
+    background-color: #75B9BE;
 }
 
 .technicalBadge{
     max-width: 150px;
-    background-color: darkorange;
-    opacity: 70%
+    background-color: #EE7674;
 }
 
 .elseBadge{
     max-width: 150px;
-    background-color: dimgray;
-    opacity: 70%
+    background-color: #987284;
 }
 
 .no-overflow{
