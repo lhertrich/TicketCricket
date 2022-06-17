@@ -34,6 +34,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     /**
      * Diese Methode wird zum Aufsetzen von Testdaten für die Datenbank verwendet werden. Die Methode wird immer dann
      * ausgeführt, wenn der Spring Kontext initialisiert wurde, d.h. wenn Sie Ihren Server (neu-)starten.
@@ -104,39 +107,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket2.setStatus(Status.IN_BEARBEITUNG);
         ticket2.setTitle("Ihr seid nicht so schön");
         ticketService.saveTicket(ticket2);
-
-        Ticket ticket3 = new Ticket();
-        ticket3.setCategory(Category.TECHNISCHE_PROBLEME);
-        ticket3.setUser(normalUser);
-        long d3 = System.currentTimeMillis();
-        ticket3.setDate(new Date(d3));
-        ticket3.setLastRequest(new Date(d3-432000000));
-        ticket3.setProblem("Technisches Problem gefunden");
-        ticket3.setStatus(Status.ERLEDIGT);
-        ticket3.setTitle("Technisches Problem gefunden");
-        ticketService.saveTicket(ticket3);
-
-        Ticket ticket4 = new Ticket();
-        ticket4.setCategory(Category.INAKTIVITÄT);
-        ticket4.setUser(normalUser2);
-        long d4 = System.currentTimeMillis();
-        ticket4.setDate(new Date(d4));
-        ticket4.setLastRequest(new Date(d4));
-        ticket4.setProblem("Darko antwortet nicht schnell genug. Ich finde, dass das nicht in Ordnung ist.");
-        ticket4.setStatus(Status.OFFEN);
-        ticket4.setTitle("Darko antwortet nicht schnell genug");
-        ticketService.saveTicket(ticket4);
-
-        Ticket ticket5 = new Ticket();
-        ticket5.setCategory(Category.INAKTIVITÄT);
-        ticket5.setUser(admin);
-        long d5 = System.currentTimeMillis();
-        ticket5.setDate(new Date(d5));
-        ticket5.setLastRequest(new Date(d5));
-        ticket5.setProblem("Darko antwortet nicht schnell genug. Ich finde, dass das nicht in Ordnung ist.");
-        ticket5.setStatus(Status.OFFEN);
-        ticket5.setTitle("Admin test");
-        ticketService.saveTicket(ticket5);
 
         //create 50 tickets
         for (int i = 0; i < 50; i++) {
