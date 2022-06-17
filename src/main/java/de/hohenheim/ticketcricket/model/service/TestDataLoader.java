@@ -72,6 +72,17 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         admin.setRoles(adminRoles);
         userService.saveUser(admin);
 
+        Ticket tticket = new Ticket();
+        tticket.setCategory(Category.TECHNISCHE_PROBLEME);
+        tticket.setUser(normalUser);
+        long du = System.currentTimeMillis();
+        tticket.setDate(new Date(du));
+        tticket.setLastRequest(new Date(du-100000000));
+        tticket.setProblem("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        tticket.setStatus(Status.OFFEN);
+        tticket.setTitle("Test Ticket");
+        ticketService.saveTicket(tticket);
+
         Ticket ticket = new Ticket();
         ticket.setCategory(Category.INAKTIVITÄT);
         ticket.setUser(normalUser);
