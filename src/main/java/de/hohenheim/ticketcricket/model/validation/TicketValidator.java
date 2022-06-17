@@ -20,30 +20,17 @@ public class TicketValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Ticket ticket = (Ticket) target;
 
-        //Check that User Inputs are not empty
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "titleEmpty", "Title can not be empty");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "problem", "problemEmpty", "Problem can not be empty");
-
-        //Check that User Inputs are not null
-        if(Objects.isNull(ticket.getTitle())){
-            errors.rejectValue("title", "noTitle", "There has to be a title");
-        }
-
-        if(Objects.isNull(ticket.getProblem())){
-            errors.rejectValue("problem", "noProblem", "There has to be a problem");
-        }
-
         if(Objects.isNull(ticket.getCategory())){
-            errors.rejectValue("category", "noCategory", "There has to be a category selected");
+            errors.rejectValue("category", "noCategory", "Bitte wählen Sie eine Kategorie aus.");
         }
 
         //Check that User Inputs offer value and are not to long
         if((ticket.getTitle().length()>50) || ticket.getTitle().length()<5){
-            errors.rejectValue("title", "wrongTitleSize", "Title should be between 5 and 50 Characters long");
+            errors.rejectValue("title", "wrongTitleSize", "Bitte geben Sie einen Titel mit einer Länge von 5 bis 50 Zeichen an.");
         }
 
-        if((ticket.getProblem().length()>500) || ticket.getProblem().length()<10){
-            errors.rejectValue("problem", "wrongProblemSize", "Problem should be between 10 and 500 Characters long");
+        if((ticket.getProblem().length()>250) || ticket.getProblem().length()<10){
+            errors.rejectValue("problem", "wrongProblemSize", "Bitte geben Sie eine Problemlänge von 10 bis 250 Zeichen an.");
         }
     }
 }
