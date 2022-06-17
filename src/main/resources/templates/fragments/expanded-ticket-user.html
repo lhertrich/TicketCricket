@@ -35,7 +35,7 @@
                 </svg>
 
                 <button type="button" style="max-width: 190px"
-                        class="col-6 btn btn-danger no-overflow float-end mx-2 d-none d-sm-block"
+                        class="col-6 btn btn-danger no-overflow float-end mx-2 d-none d-sm-block our-button-takeback"
                         data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
                     Ticket&nbsp;zurücknehmen
                 </button>
@@ -86,12 +86,12 @@
                     <th:block th:if="${ticket.lastRequest.before(compareDate)}">
                         <form th:action="@{/ticket/status(id=${ticket.ticketID})}" th:object="${ticket}"
                               method="post" class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary no-overflow">Status anfragen</button>
+                            <button type="submit" class="btn no-overflow our-button">Status anfragen</button>
                         </form>
                     </th:block>
                     <th:block th:if="${compareDate.before(ticket.lastRequest)}">
                         <form class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-secondary no-overflow" disabled>Status anfragen
+                            <button type="button" class="btn no-overflow our-button" disabled>Status anfragen
                             </button>
                         </form>
                     </th:block>
