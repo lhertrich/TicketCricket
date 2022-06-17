@@ -85,7 +85,7 @@
                 <div class="row">
                     <th:block th:if="${ticket.lastRequest.before(compareDate)}">
                         <form th:action="@{/ticket/status(id=${ticket.ticketID})}" th:object="${ticket}"
-                              method="post" class="d-flex justify-content-center">
+                              method="post" class="d-flex justify-content-start">
                             <button type="submit" class="btn no-overflow our-button">Status anfragen</button>
                         </form>
                     </th:block>
@@ -96,7 +96,7 @@
                         </form>
                     </th:block>
                 </div>
-                <div class="row d-flex d-sm-none justify-content-center p-2">
+                <div class="row d-flex d-sm-none justify-content-start p-2">
                     <button type="button" style="max-width: 190px" class="col btn btn-danger no-overflow"
                             data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
                         Ticket&nbsp;zurücknehmen
