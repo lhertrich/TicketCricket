@@ -11,8 +11,7 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/design.css">
-    <title>Sopra 2020 Demo Project</title>
-
+    <title>Ticket System - Ticket Erstellen</title>
 
 </head>
 
@@ -20,7 +19,7 @@
 <th:block th:insert="fragments/navbarFragments::navbarUser" sec:authorize="hasRole('ROLE_USER')"/>
 <th:block th:insert="fragments/navbarFragments::navbarAdmin" sec:authorize="hasRole('ROLE_ADMIN')"/>
 
-<div class="box-container-format">
+<div class="navbar-distance">
     <div class="list-group-item d-flex justify-content-center top-bar-text" style="
     border-left-color: black;
     border-right-color: black;
@@ -60,7 +59,7 @@
                     </div>
                     <div class="row justify-content-end form-group box-format">
                         <div class="col-2">
-                            <button th:type="submit" th:text="'Ticket erstellen'" class="btn btn-primary  float-end no-overflow"/>
+                            <button th:type="submit" th:text="'Ticket erstellen'" class="btn btn-primary  float-end no-overflow button-color"/>
                         </div>
                     </div>
 

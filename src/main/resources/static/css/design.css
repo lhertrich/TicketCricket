@@ -1,6 +1,3 @@
-body {
-    padding-top: 80px;
-}
 
 html, body {
     max-width: 100%;
@@ -65,11 +62,6 @@ html, body {
     font-weight:bold;
 }
 
-.box-container-format {
-    margin-top:10%;
-    margin-bottom:10%;
-    padding:0.5%;
-}
 
 .box-format {
     padding:0.5%;
@@ -87,6 +79,12 @@ html, body {
     margin-right: 10px;
     margin-left: 10px;
     background-color: green
+}
+.navbar-distance{
+    padding-top: 100px;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    margin-bottom: 0.5%
 }
 
 .progressBadge{
@@ -144,4 +142,27 @@ html, body {
 
 .button-width{
     max-width: 190px;
+}
+.navbar-body{
+    background-color: darkslategray;
+}
+
+.navbar-icon-color{
+    background-color: darkslategray;
+    color: white;
+}
+.burger-color{
+    background-color: darkslategray;
+    color: white;
+    border: none;
+}
+.button-color{
+    background-color: dimgray;
+    border: 1px solid black;
+    border-radius: 10px;
+
+}
+
+select{
+    -webkit-appearance:listbox !important;
 }
