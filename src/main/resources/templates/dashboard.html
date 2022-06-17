@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns="">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -89,25 +90,29 @@
                             </div>
 
                             <div th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"
-                                 class="col-8 fw-bold text-center no-overflow"/>
+                                 class="col-7 fw-bold text-center no-overflow"></div>
 
                             <!-- Mobile category dots -->
                             <div th:if="${ticket.category.getDisplayValue() == 'Inaktivität'}"
-                                 class="d-inline col-2 d-sm-none align-self-end dot inactivityBadge"></div>
+                                 class="d-inline col-2 d-md-none align-self-end dot inactivityBadge"></div>
                             <div th:if="${ticket.category.getDisplayValue() == 'Technisches Problem'}"
-                                 class="d-inline col-2 d-sm-none align-self-end dot technicalBadge"></div>
+                                 class="d-inline col-2 d-md-none align-self-end dot technicalBadge"></div>
                             <div th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}"
-                                 class="d-inline col-2 d-sm-none align-self-end dot elseBadge"></div>
+                                 class="d-inline col-2 d-md-none align-self-end dot elseBadge"></div>
+
                             <!-- Desktop categories -->
                             <div th:if="${ticket.category.getDisplayValue() == 'Inaktivität'}"
                                  th:text="${ticket.category.displayValue}"
-                                 class="col-2 d-none d-sm-inline align-self-end badge rounded-pill inactivityBadge"/>
+                                 class="col-2 d-none d-md-inline align-self-end badge rounded-pill inactivityBadge"></div>
                             <div th:if="${ticket.category.getDisplayValue() == 'Technisches Problem'}"
                                  th:text="${ticket.category.displayValue}"
-                                 class="col-2 d-none d-sm-inline align-self-end badge rounded-pill technicalBadge no-overflow"/>
+                                 class="col-2 d-none d-md-inline align-self-end badge rounded-pill technicalBadge no-overflow"></div>
                             <div th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}"
                                  th:text="${ticket.category.displayValue}"
-                                 class="col-2 d-none d-sm-inline align-self-end badge rounded-pill elseBadge"/>
+                                 class="col-2 d-none d-md-inline align-self-end badge rounded-pill elseBadge"></div>
+
+
+
                         </div>
                     </div>
                 </div>
