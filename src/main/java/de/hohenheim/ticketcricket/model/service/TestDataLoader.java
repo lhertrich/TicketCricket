@@ -34,8 +34,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     @Autowired
     private NotificationService notificationService;
 
-    @Autowired
-    private NotificationService notificationService;
+
 
     /**
      * Diese Methode wird zum Aufsetzen von Testdaten für die Datenbank verwendet werden. Die Methode wird immer dann
