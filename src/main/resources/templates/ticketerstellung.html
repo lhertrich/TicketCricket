@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/design.css">
+    <title>Ticket System - Ticket Erstellen</title>
+
+</head>
+
+<body>
+<th:block th:insert="fragments/navbarFragments::navbarUser" sec:authorize="hasRole('ROLE_USER')"/>
+<th:block th:insert="fragments/navbarFragments::navbarAdmin" sec:authorize="hasRole('ROLE_ADMIN')"/>
+
+<div class="navbar-distance">
+    <div class="list-group-item d-flex justify-content-center top-bar-text" style="
+    border-left-color: #272635;
+    border-right-color: #272635;
+    border-top-color: #272635;
+    border-width: 2px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;">
+        Ticket erstellen
+    </div>
+
+    <div class="container-fluid bottom-bar">
+        <div id="header" class="row">
+        </div>
+        <div id="form" class="row">
+            <div class="col box-border">
+                <form th:action="@{/create-ticket}" th:object="${ticket}" method="post">
+                    <div class="row form-group box-format">
+                        <label for="title">Titel</label>
+                        <input type="text" class="form-control input-field" id="title"
+                               placeholder="Geben Sie einen Titel an" th:field="*{title}"
+                             >
+                        <p th:if="${#fields.hasErrors('title')}"  class="error-message" th:errors="*{title}"></p>
+                    </div>
+                    <div class="row form-group box-format">
+                        <label for="vorkategorisierung">Vorkategorisierung</label>
+                        <select id="vorkategorisierung" class="form-control input-field" required th:field="*{category}">
+                            <option th:each="category : ${T(de.hohenheim.ticketcricket.model.entity.Category).values()}"
+                                    th:value="${category}" th:text="${category.displayValue}"></option>
+                        </select>
+                    </div>
+                    <div class="row form-group box-format">
+                        <label for="FormControlTextarea1">Beschreiben Sie ihr Problem...</label>
+                        <textarea class="form-control input-field" id="FormControlTextarea1" rows="3"
+                                  th:field="*{problem}"></textarea>
+                        <p th:if="${#fields.hasErrors('problem')}" class="error-message" th:errors="*{problem}"></p>
+                    </div>
+                    <div class="row justify-content-end form-group box-format">
+                        <div class="col-2">
+                            <button th:type="submit" th:text="'Ticket erstellen'" class="btn button-color float-end no-overflow"/>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
