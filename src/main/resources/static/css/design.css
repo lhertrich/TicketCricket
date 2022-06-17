@@ -78,7 +78,7 @@ html, body {
     max-width: 100px;
     margin-right: 10px;
     margin-left: 10px;
-    background-color: green
+    background-color: green;
 }
 .navbar-distance{
     padding-top: 100px;
@@ -136,7 +136,7 @@ html, body {
     font-size: small;
     margin-right: 10px;
     margin-left: 10px;
-    max-width: 280px;
+    max-width: 250px;
     text-align: center;
 }
 
