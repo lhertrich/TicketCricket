@@ -122,7 +122,7 @@
 
 
 <div th:fragment="navbarLogin" style="font-size: 1.2em">
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-body" style="background-color: darkslategrey; height: 70px">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-body" style="background-color: #272635; height: 70px">
         <div class="container-fluid">
             <a class="navbar-brand">
                 <!--Placeholder-->
@@ -219,7 +219,7 @@
                     <p>Sind Sie sich sicher, dass sie sich abmelden wollen?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn" data-bs-dismiss="modal">Abbrechen</button>
                     <form th:action="@{/logout}" method="post">
                         <button type="submit" class="btn btn-danger no-overflow">
                             Abmelden

@@ -35,7 +35,7 @@
                 </svg>
 
                 <button type="button" style="max-width: 190px"
-                        class="col-6 btn btn-danger no-overflow float-end mx-2 d-none d-sm-block"
+                        class="col-6 btn btn-danger no-overflow float-end mx-2 d-none d-sm-block our-button-takeback"
                         data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
                     Ticket&nbsp;zurücknehmen
                 </button>
@@ -56,28 +56,28 @@
                 </div>
                 <div id="status" class="row fs-10 fw-bold p-1">Status:
                     <span th:if="${ticket.status.getDisplayValue() == 'Offen'}"
-                          class="openBadge badge col">Offen
+                          class="openBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Offen
                     </span>
                     <span th:if="${ticket.status.getDisplayValue() == 'In Bearbeitung'}"
-                          class="progressBadge badge col">In Bearbeitung
+                          class="progressBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">In Bearbeitung
                     </span>
                     <span th:if="${ticket.status.getDisplayValue() == 'Erledigt'}"
-                          class="finishedBadge badge col">Erledigt
+                          class="finishedBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Erledigt
                     </span>
                 </div>
                 <div id="category" class="row fs-10 fw-bold p-1">Kategorie:
                     <span th:if="${ticket.category.getDisplayValue() == 'Inaktivität'}"
                           th:text="${ticket.category.displayValue}"
-                          class="inactivityBadge badge rounded-pill"/>
+                          class="inactivityBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
                     <span th:if="${ticket.category.getDisplayValue() == 'Technisches Problem'}"
                           th:text="${ticket.category.displayValue}"
-                          class="technicalBadge badge rounded-pill"/>
+                          class="technicalBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
                     <span th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}"
                           th:text="${ticket.category.displayValue}"
-                          class="elseBadge badge rounded-pill"/>
+                          class="elseBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
                 </div>
                 <div id="priority" class="row fs-10 fw-bold p-1">Priorität:
-                    <span class="openBadge badge"> Wichtig </span>
+                    <span class="openBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"> Wichtig </span>
                 </div>
             </div>
             <!-- Ticket Info right -->
@@ -85,18 +85,18 @@
                 <div class="row">
                     <th:block th:if="${ticket.lastRequest.before(compareDate)}">
                         <form th:action="@{/ticket/status(id=${ticket.ticketID})}" th:object="${ticket}"
-                              method="post" class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary no-overflow">Status anfragen</button>
+                              method="post" class="d-flex justify-content-start">
+                            <button type="submit" class="btn no-overflow our-button">Status anfragen</button>
                         </form>
                     </th:block>
                     <th:block th:if="${compareDate.before(ticket.lastRequest)}">
                         <form class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-secondary no-overflow" disabled>Status anfragen
+                            <button type="button" class="btn no-overflow our-button" disabled>Status anfragen
                             </button>
                         </form>
                     </th:block>
                 </div>
-                <div class="row d-flex d-sm-none justify-content-center p-2">
+                <div class="row d-flex d-sm-none justify-content-start p-2">
                     <button type="button" style="max-width: 190px" class="col btn btn-danger no-overflow"
                             data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
                         Ticket&nbsp;zurücknehmen
@@ -107,9 +107,9 @@
         <!-- Ticket Info end-->
         <!-- Chat -->
         <div id="chatBox" class="row bottom-outer-border chat-height justify-content-center">
-            <div id="messageBox" class="row align-self-end" th:each="notification: ${notifications}">
-                <div th:text="'Status angefragt am ' + ${#dates.format(ticket.getLastRequest(), 'dd.MM.yyyy HH:mm')}"
-                     class="row statusBadge rounded-pill" style="max-width:300px"/>
+            <div id="messageBox" class="row align-content-center justify-content-center" th:each="notification: ${notifications}">
+                <div th:if="${notification.isRequest()}" th:text="'Status angefragt am ' + ${#dates.format(notification.getDate(), 'dd.MM.yyyy HH:mm')}"
+                     class="row statusBadge rounded-pill d-inline-flex align-items-center justify-content-center" style="max-width:300px"/>
             </div>
             <div id="sendBar" class="row align-self-end">
                 <form class="input-group py-2" id="text-input-bar">
@@ -132,7 +132,7 @@
                         werden. </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
                     <form th:action="@{/ticket/delete(id=${ticket.ticketID})}" th:object="${ticket}"
                           method="post">
                         <button type="submit" class="btn btn-danger no-overflow">
