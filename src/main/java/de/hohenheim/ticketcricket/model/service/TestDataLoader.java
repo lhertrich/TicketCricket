@@ -34,8 +34,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     @Autowired
     private NotificationService notificationService;
 
-    @Autowired
-    private NotificationService notificationService;
+
 
     /**
      * Diese Methode wird zum Aufsetzen von Testdaten für die Datenbank verwendet werden. Die Methode wird immer dann
@@ -76,7 +75,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         userService.saveUser(normalUser3);
 
         User admin1 = new User();
-        admin1.setUsername("admin");
+        admin1.setUsername("admin1");
         admin1.setPassword(passwordEncoder.encode("admin1"));
         admin1.setRoles(adminRoles);
         userService.saveUser(admin1);
