@@ -90,9 +90,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         Ticket ticket = new Ticket();
         ticket.setCategory(Category.TECHNISCHE_PROBLEME);
         ticket.setUser(normalUser1);
-        long du = System.currentTimeMillis();
-        ticket.setDate(new Date(du));
-        ticket.setLastRequest(new Date(du-100000000));
+        long du = System.currentTimeMillis() ;
+        ticket.setDate(new Date(du-50400000));
+        ticket.setLastRequest(new Date(du-46800000));
         ticket.setProblem("Bei mir erscheint ein Black Screen wenn ich einen Artikel inseriere!");
         ticket.setStatus(Status.OFFEN);
         ticket.setTitle("Black Screen");
@@ -102,8 +102,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket1.setCategory(Category.TECHNISCHE_PROBLEME);
         ticket1.setUser(normalUser1);
         long d = System.currentTimeMillis();
-        ticket1.setDate(new Date(d));
-        ticket1.setLastRequest(new Date(d));
+        ticket1.setDate(new Date(d-50400000));
+        ticket1.setLastRequest(new Date(d-46800000));
         ticket1.setProblem("Ich kann keine Artikel suchen!");
         ticket1.setStatus(Status.IN_BEARBEITUNG);
         ticket1.setTitle("Artikelsuche");
@@ -113,8 +113,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket2.setCategory(Category.INAKTIVITÄT);
         ticket2.setUser(normalUser1);
         long d2 = System.currentTimeMillis();
-        ticket2.setDate(new Date(d2));
-        ticket2.setLastRequest(new Date(d2-100000000));
+        ticket2.setDate(new Date(d2-50400000));
+        ticket2.setLastRequest(new Date(d2-46800000));
         ticket2.setProblem("Der User LukasB antwortet mir wiederholt nicht auf meine Messages");
         ticket2.setStatus(Status.OFFEN);
         ticket2.setTitle("User LukasB antwortet nicht");
@@ -125,7 +125,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket3.setUser(normalUser1);
         long d3 = System.currentTimeMillis();
         ticket3.setDate(new Date(d3));
-        ticket3.setLastRequest(new Date(d3-432000000));
+        ticket3.setLastRequest(new Date());
         ticket3.setProblem("User SilasScheu hat mich mehrfach beleidigt im Chat");
         ticket3.setStatus(Status.OFFEN);
         ticket3.setTitle("Beleidigung in Direct Message");
@@ -223,7 +223,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         Notification notification1 = new Notification();
         notification1.setUser(normalUser1);
-        notification1.setTicket(ticket1);
+        notification1.setTicket(ticket3);
         long nd1 = System.currentTimeMillis();
         notification1.setDate(new Date(nd1));
         notification1.setRequest(true);
@@ -231,7 +231,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         Notification notification2 = new Notification();
         notification2.setUser(normalUser1);
-        notification2.setTicket(ticket2);
+        notification2.setTicket(ticket4);
         long nd2 = System.currentTimeMillis();
         notification2.setDate(new Date(nd2));
         notification2.setRequest(true);
