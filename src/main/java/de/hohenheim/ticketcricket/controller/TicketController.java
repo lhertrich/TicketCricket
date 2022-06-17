@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Date;
@@ -41,7 +42,7 @@ public class TicketController {
         return "ticketerstellung";
     }
     @PostMapping("/create-ticket")
-    public String createTicket(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result, Model model){
+    public String createTicket(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result, Model model, RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
             model.addAttribute("ticket", ticket);
             return "ticketerstellung";
@@ -52,6 +53,7 @@ public class TicketController {
         ticket.setDate(currentDate);
         ticket.setLastRequest(currentDate);
         ticketService.saveTicket(ticket);
+        redirectAttributes.addFlashAttribute("successNotification", "Ticket wurde erstellt");
         return "redirect:/";
     }
 
