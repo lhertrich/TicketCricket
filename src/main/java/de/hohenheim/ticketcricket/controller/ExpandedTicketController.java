@@ -62,5 +62,4 @@ public class ExpandedTicketController {
         notificationService.saveNotification(notification);
         return "redirect:/ticket/expand?id="+id;
     }
-
 }
