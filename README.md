@@ -8,6 +8,10 @@ Mit folgenden Credentials kann sich in die verschiedenen Accounts eingeloggt wer
 User: (user1, user1), (user2, user2), (user3, user3)
 Admins: (admin1, admin1), (admin2, admin2)
 
+Die Tickets [#8], [#9] und [#10] erlauben eine Demo der Statusanfrage.
+
+Funktionen die für die Abgabe nicht implementiert werden mussten sind ausgegraut oder disabled.
+
 ## Namenszuordnung
 
  - **ItsSiMio** - Sidney Strasser
