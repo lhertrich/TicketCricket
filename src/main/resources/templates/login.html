@@ -45,6 +45,12 @@
                                    style="overflow:hidden; text-align: center; margin-top:2%;">Passwort</label>
                             <input type="password" class="form-control input-field" id="password" name="password"
                                    placeholder="" style="text-align: center;">
+                            <div th:if="${param.error}" >
+                                <p  class="alert alert-danger text-center my-3" style="overflow: hidden;" th:text="'Login fehlgeschlagen.'"></p>
+                            </div>
+                            <div th:if="${param.logout}">
+                                <p class="alert alert-success text-center my-3 " style="overflow: hidden;" th:text="'Logout erfolgreich.'"></p>
+                            </div>
                         </div>
                         <div class="form-actions d-flex justify-content-center" style="margin-bottom:2%;">
                             <button th:type="submit" th:text="Login" class="btn" style="background-color: #A6A6A8;border-color: #A6A6A8;border-radius: 10px;color: white;">Log In</button>
