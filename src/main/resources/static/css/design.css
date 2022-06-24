@@ -174,3 +174,8 @@ html, body {
 select{
     -webkit-appearance:listbox !important;
 }
+
+.notification-dropdown{
+    max-height: 220px;
+    overflow-y: auto;
+}

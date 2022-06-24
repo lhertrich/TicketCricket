@@ -236,5 +236,14 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         notification2.setDate(new Date(nd2));
         notification2.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notificationService.saveNotification(notification2);
+
+        for(int i=0; i<50; i++){
+            Notification notification = new Notification();
+            notification.setUser(normalUser1);
+            notification.setTicket(ticket4);
+            notification.setDate(new Date(nd2));
+            notification.setNotificationType(NotificationType.NACHRICHT);
+            notificationService.saveNotification(notification);
+        }
     }
 }
