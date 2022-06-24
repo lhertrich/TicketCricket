@@ -37,7 +37,7 @@
                 </svg>
 
                 <button th:if="${user eq ticket.getUser()}" type="button" style="max-width: 190px"
-                        class="col-6 btn btn-danger no-overflow float-end mx-2 d-none d-sm-block"
+                        class="col-6 btn btn-danger no-overflow float-end mx-2 d-none d-sm-block our-button-takeback"
                         data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
                     Ticket&nbsp;zurücknehmen
                 </button>
@@ -84,20 +84,20 @@
             </div>
             <!-- Ticket Info right -->
             <div id="rightButtons" class="col align-self-evenly">
-                <div id="setAdmin" class="row p-2 d-flex justify-content-center">
-                    <button type="button" class="align-self-end btn btn-primary button-width" disabled>Admin&nbsp;zuweisen</button>
+                <div id="setAdmin" class="row p-2 d-flex justify-content-start">
+                    <button type="button" class="align-self-end btn our-button" disabled>Admin&nbsp;zuweisen</button>
                 </div>
-                <div id="setStatus" class="row p-2 d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary button-width" disabled>Status&nbsp;ändern</button>
+                <div id="setStatus" class="row p-2 d-flex justify-content-start">
+                    <button type="button" class="btn our-button" disabled>Status&nbsp;ändern</button>
                 </div>
-                <div id="setCategory" class="row p-2 d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary button-width" disabled>Katgeorie&nbsp;ändern</button>
+                <div id="setCategory" class="row p-2 d-flex justify-content-start">
+                    <button type="button" class="btn our-button" disabled>Katgeorie&nbsp;ändern</button>
                 </div>
-                <div id="setPriority" class="row p-2 d-flex justify-content-center">
-                    <button type="button" class="btn btn-primary button-width" disabled>Priorität&nbsp;ändern</button>
+                <div id="setPriority" class="row p-2 d-flex justify-content-sart">
+                    <button type="button" class="btn our-button" disabled>Priorität&nbsp;ändern</button>
                 </div>
                 <div class="row d-flex d-sm-none justify-content-center p-2">
-                    <button type="button" style="max-width: 190px" class="col btn btn-danger no-overflow"
+                    <button th:if="${user eq ticket.getUser()}" type="button" style="max-width: 190px" class="col btn btn-danger no-overflow"
                             data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
                         Ticket&nbsp;zurücknehmen
                     </button>
@@ -113,7 +113,7 @@
             </div>
             <div id="sendBar" class="row align-self-end">
                 <form class="input-group py-2" id="text-input-bar">
-                    <input id="searchBar" type="text" class="form-control input-field" placeholder="Send message...">
+                    <input id="searchBar" type="text" class="form-control input-field" placeholder="Send message..." disabled>
                 </form>
             </div>
         </div>

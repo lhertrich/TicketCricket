@@ -15,7 +15,7 @@
 <body>
 <div th:insert="fragments/navbarFragments::navbarLogin"></div>
 
-<div class="row justify-content-center" style="margin-top: 100px">
+<div class="row justify-content-center" style=" margin-top: 100px">
     <div class="col-5">
         <div class="list-group-item d-flex justify-content-center top-bar-text" style="
     border-left-color: black;
@@ -24,7 +24,7 @@
     border-width: 2px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    background-color: darkslategray;">
+    background-color: #272635;">
             <span style="font-weight: bold; color:white;">Login</span>
         </div>
         <div class="container-fluid bottom-bar" style="
@@ -45,9 +45,15 @@
                                    style="overflow:hidden; text-align: center; margin-top:2%;">Passwort</label>
                             <input type="password" class="form-control input-field" id="password" name="password"
                                    placeholder="" style="text-align: center;">
+                            <div th:if="${param.error}" >
+                                <p  class="alert alert-danger text-center my-3" style="overflow: hidden;" th:text="'Login fehlgeschlagen.'"></p>
+                            </div>
+                            <div th:if="${param.logout}">
+                                <p class="alert alert-success text-center my-3 " style="overflow: hidden;" th:text="'Logout erfolgreich.'"></p>
+                            </div>
                         </div>
                         <div class="form-actions d-flex justify-content-center" style="margin-bottom:2%;">
-                            <button th:type="submit" th:text="Login" class="btn btn-success " style="background-color: dimgray; border-radius: 10px; border: 1px solid black">Log In</button>
+                            <button th:type="submit" th:text="Login" class="btn" style="background-color: #A6A6A8;border-color: #A6A6A8;border-radius: 10px;color: white;">Log In</button>
                         </div>
 
                     </form>

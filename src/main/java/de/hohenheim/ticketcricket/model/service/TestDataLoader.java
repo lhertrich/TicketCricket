@@ -32,10 +32,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     private TicketService ticketService;
 
     @Autowired
-    private MessageService messageService;
-
-    @Autowired
     private NotificationService notificationService;
+
+
 
     /**
      * Diese Methode wird zum Aufsetzen von Testdaten für die Datenbank verwendet werden. Die Methode wird immer dann
@@ -57,75 +56,185 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
 
-        User normalUser = new User();
-        normalUser.setUsername("user");
-        normalUser.setPassword(passwordEncoder.encode("1234"));
-        normalUser.setRoles(userRoles);
-        userService.saveUser(normalUser);
+        User normalUser1 = new User();
+        normalUser1.setUsername("user1");
+        normalUser1.setPassword(passwordEncoder.encode("user1"));
+        normalUser1.setRoles(userRoles);
+        userService.saveUser(normalUser1);
 
         User normalUser2 = new User();
         normalUser2.setUsername("user2");
-        normalUser2.setPassword(passwordEncoder.encode("1234"));
+        normalUser2.setPassword(passwordEncoder.encode("user2"));
         normalUser2.setRoles(userRoles);
         userService.saveUser(normalUser2);
 
-        User admin = new User();
-        admin.setUsername("admin");
-        admin.setPassword(passwordEncoder.encode("admin"));
-        admin.setRoles(adminRoles);
-        userService.saveUser(admin);
+        User normalUser3 = new User();
+        normalUser3.setUsername("user3");
+        normalUser3.setPassword(passwordEncoder.encode("user3"));
+        normalUser3.setRoles(userRoles);
+        userService.saveUser(normalUser3);
 
-        Ticket tticket = new Ticket();
-        tticket.setCategory(Category.TECHNISCHE_PROBLEME);
-        tticket.setUser(normalUser);
-        long du = System.currentTimeMillis();
-        tticket.setDate(new Date(du));
-        tticket.setLastRequest(new Date(du-100000000));
-        tticket.setProblem("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        tticket.setStatus(Status.OFFEN);
-        tticket.setTitle("Test Ticket");
-        ticketService.saveTicket(tticket);
+        User admin1 = new User();
+        admin1.setUsername("admin1");
+        admin1.setPassword(passwordEncoder.encode("admin1"));
+        admin1.setRoles(adminRoles);
+        userService.saveUser(admin1);
+
+        User admin2 = new User();
+        admin2.setUsername("admin2");
+        admin2.setPassword(passwordEncoder.encode("admin2"));
+        admin2.setRoles(adminRoles);
+        userService.saveUser(admin2);
+
 
         Ticket ticket = new Ticket();
-        ticket.setCategory(Category.INAKTIVITÄT);
-        ticket.setUser(normalUser);
-        long d = System.currentTimeMillis();
-        ticket.setDate(new Date(d));
-        ticket.setLastRequest(new Date(d));
-        ticket.setProblem("Darko antwortet nicht");
+        ticket.setCategory(Category.TECHNISCHE_PROBLEME);
+        ticket.setUser(normalUser1);
+        long du = System.currentTimeMillis() ;
+        ticket.setDate(new Date(du-50400000));
+        ticket.setLastRequest(new Date(du-46800000));
+        ticket.setProblem("Bei mir erscheint ein Black Screen wenn ich einen Artikel inseriere!");
         ticket.setStatus(Status.OFFEN);
-        ticket.setTitle("Darko antwortet nicht");
+        ticket.setTitle("Black Screen");
         ticketService.saveTicket(ticket);
 
+        Ticket ticket1 = new Ticket();
+        ticket1.setCategory(Category.TECHNISCHE_PROBLEME);
+        ticket1.setUser(normalUser1);
+        long d = System.currentTimeMillis();
+        ticket1.setDate(new Date(d-50400000));
+        ticket1.setLastRequest(new Date(d-46800000));
+        ticket1.setProblem("Ich kann keine Artikel suchen!");
+        ticket1.setStatus(Status.IN_BEARBEITUNG);
+        ticket1.setTitle("Artikelsuche");
+        ticketService.saveTicket(ticket1);
+
         Ticket ticket2 = new Ticket();
-        ticket2.setCategory(Category.SONSTIGES);
-        ticket2.setUser(normalUser);
+        ticket2.setCategory(Category.INAKTIVITÄT);
+        ticket2.setUser(normalUser1);
         long d2 = System.currentTimeMillis();
-        ticket2.setDate(new Date(d2));
-        ticket2.setLastRequest(new Date(d2-100000000));
-        ticket2.setProblem("Ihr seid nicht so schön");
-        ticket2.setStatus(Status.IN_BEARBEITUNG);
-        ticket2.setTitle("Ihr seid nicht so schön");
+        ticket2.setDate(new Date(d2-50400000));
+        ticket2.setLastRequest(new Date(d2-46800000));
+        ticket2.setProblem("Der User LukasB antwortet mir wiederholt nicht auf meine Messages");
+        ticket2.setStatus(Status.OFFEN);
+        ticket2.setTitle("User LukasB antwortet nicht");
         ticketService.saveTicket(ticket2);
 
-        //create 50 tickets
-        for (int i = 0; i < 50; i++) {
-            Ticket ticket6 = new Ticket();
-            ticket6.setCategory(Category.INAKTIVITÄT);
-            ticket6.setUser(normalUser);
-            long d6 = System.currentTimeMillis();
-            ticket6.setDate(new Date(d6));
-            ticket6.setLastRequest(new Date(d6));
-            ticket6.setProblem("Darko antwortet nicht schnell genug. Ich finde, dass das nicht in Ordnung ist.");
-            ticket6.setStatus(Status.OFFEN);
-            ticket6.setTitle("Darko antwortet nicht schnell genug");
-            ticketService.saveTicket(ticket6);
-        }
+        Ticket ticket3 = new Ticket();
+        ticket3.setCategory(Category.SONSTIGES);
+        ticket3.setUser(normalUser1);
+        long d3 = System.currentTimeMillis();
+        ticket3.setDate(new Date(d3));
+        ticket3.setLastRequest(new Date());
+        ticket3.setProblem("User SilasScheu hat mich mehrfach beleidigt im Chat");
+        ticket3.setStatus(Status.OFFEN);
+        ticket3.setTitle("Beleidigung in Direct Message");
+        ticketService.saveTicket(ticket3);
 
-        Message message = new Message();
-        message.setMessage("Darko wollte mir sein Fahrrad für 100€ verkaufen, ich habe 3€ geboten und jetzt antwortet er nicht mehr");
-        message.setUser(normalUser);
-        message.setTicket(ticket);
-        messageService.saveMessage(message);
+        Ticket ticket4 = new Ticket();
+        ticket4.setCategory(Category.SONSTIGES);
+        ticket4.setUser(normalUser1);
+        long d4 = System.currentTimeMillis();
+        ticket4.setDate(new Date(d4));
+        ticket4.setLastRequest(new Date(d4));
+        ticket4.setProblem("User ErikSaalfeld schickt Spam Links im Chat");
+        ticket4.setStatus(Status.ERLEDIGT);
+        ticket4.setTitle("Spam Links in Direct Message");
+        ticketService.saveTicket(ticket4);
+
+        Ticket ticket5 = new Ticket();
+        ticket5.setCategory(Category.TECHNISCHE_PROBLEME);
+        ticket5.setUser(normalUser1);
+        long d5 = System.currentTimeMillis();
+        ticket5.setDate(new Date(d5));
+        ticket5.setLastRequest(new Date(d5));
+        ticket5.setProblem("Die Seite lädt sehr langsam und funktioniert manchmal nicht");
+        ticket5.setStatus(Status.OFFEN);
+        ticket5.setTitle("Seite lädt nicht");
+        ticketService.saveTicket(ticket5);
+
+        Ticket ticket6 = new Ticket();
+        ticket6.setCategory(Category.TECHNISCHE_PROBLEME);
+        ticket6.setUser(normalUser1);
+        long d6 = System.currentTimeMillis();
+        ticket6.setDate(new Date(d6));
+        ticket6.setLastRequest(new Date(d6));
+        ticket6.setProblem("Der Impressum-Button kann nicht gedrückt werden");
+        ticket6.setStatus(Status.OFFEN);
+        ticket6.setTitle("Button funktioniert nicht");
+        ticketService.saveTicket(ticket6);
+
+        Ticket ticket7 = new Ticket();
+        ticket7.setCategory(Category.INAKTIVITÄT);
+        ticket7.setUser(normalUser2);
+        long d7 = System.currentTimeMillis();
+        ticket7.setDate(new Date(d7));
+        ticket7.setLastRequest(new Date(d7));
+        ticket7.setProblem("User MoritzKöhler antwortet nicht auf Messages obwohl er einem Verkauf schon zugestimmt hat");
+        ticket7.setStatus(Status.ERLEDIGT);
+        ticket7.setTitle("User antwortet nicht");
+        ticketService.saveTicket(ticket7);
+
+        Ticket ticket8 = new Ticket();
+        ticket8.setCategory(Category.INAKTIVITÄT);
+        ticket8.setUser(normalUser2);
+        long d8 = System.currentTimeMillis();
+        ticket8.setDate(new Date(d8));
+        ticket8.setLastRequest(new Date(d8));
+        ticket8.setProblem("User DominikRau hat eingewilligt mir sein Hantelset zu verkaufen aber nach wiederholtem Anschreiben meldet" +
+                "er sich nicht mehr");
+        ticket8.setStatus(Status.IN_BEARBEITUNG);
+        ticket8.setTitle("User antwortet nicht Verkauf");
+        ticketService.saveTicket(ticket8);
+
+        Ticket ticket9 = new Ticket();
+        ticket9.setCategory(Category.TECHNISCHE_PROBLEME);
+        ticket9.setUser(normalUser2);
+        long d9 = System.currentTimeMillis();
+        ticket9.setDate(new Date(d9));
+        ticket9.setLastRequest(new Date(d9));
+        ticket9.setProblem("Wenn ich einen Artikel inseriere crasht die Seite oft.");
+        ticket9.setStatus(Status.ERLEDIGT);
+        ticket9.setTitle("Seite crasht beim Inserieren");
+        ticketService.saveTicket(ticket9);
+
+        Ticket ticket10 = new Ticket();
+        ticket10.setCategory(Category.TECHNISCHE_PROBLEME);
+        ticket10.setUser(admin1);
+        long d10 = System.currentTimeMillis();
+        ticket10.setDate(new Date(d10));
+        ticket10.setLastRequest(new Date(d10));
+        ticket10.setProblem("Home Button in der Navbar funktioniert nicht");
+        ticket10.setStatus(Status.OFFEN);
+        ticket10.setTitle("Home Button Funktion");
+        ticketService.saveTicket(ticket10);
+
+        Ticket ticket11 = new Ticket();
+        ticket11.setCategory(Category.SONSTIGES);
+        ticket11.setUser(admin2);
+        long d11 = System.currentTimeMillis();
+        ticket11.setDate(new Date(d11));
+        ticket11.setLastRequest(new Date(d11));
+        ticket11.setProblem("Viele User verbreiten Fake Artikel");
+        ticket11.setStatus(Status.IN_BEARBEITUNG);
+        ticket11.setTitle("Fake Artikel");
+        ticketService.saveTicket(ticket11);
+
+
+        Notification notification1 = new Notification();
+        notification1.setUser(normalUser1);
+        notification1.setTicket(ticket3);
+        long nd1 = System.currentTimeMillis();
+        notification1.setDate(new Date(nd1));
+        notification1.setRequest(true);
+        notificationService.saveNotification(notification1);
+
+        Notification notification2 = new Notification();
+        notification2.setUser(normalUser1);
+        notification2.setTicket(ticket4);
+        long nd2 = System.currentTimeMillis();
+        notification2.setDate(new Date(nd2));
+        notification2.setRequest(true);
+        notificationService.saveNotification(notification2);
     }
 }
