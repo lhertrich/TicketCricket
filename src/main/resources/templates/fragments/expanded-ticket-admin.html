@@ -107,8 +107,8 @@
         <!-- Ticket Info end-->
         <!-- Chat -->
         <div id="chatBox" class="row bottom-outer-border chat-height justify-content-center">
-            <div id="messageBox" class="row align-content-center justify-content-center overflow-auto" th:each="notification: ${notifications}">
-                <div th:if="${notification.isRequest()}" th:text="'Status angefragt am ' + ${#dates.format(notification.getDate(), 'dd.MM.yyyy HH:mm')}"
+            <div id="messageBox" class="row align-content-center justify-content-center overflow-auto" th:each="chatNotification: ${chatNotifications}">
+                <div th:if="${chatNotification.getNotificationType() == T(de.hohenheim.ticketcricket.model.entity.NotificationType).STATUS_ANFRAGE}" th:text="'Status angefragt am ' + ${#dates.format(chatNotification.getDate(), 'dd.MM.yyyy HH:mm')}"
                      class="row statusBadge rounded-pill d-inline-flex align-items-center justify-content-center" style="max-width:300px"/>
             </div>
             <div id="sendBar" class="row align-self-end">

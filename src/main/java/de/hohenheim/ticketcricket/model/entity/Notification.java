@@ -24,7 +24,8 @@ public class Notification {
 
     private Date date;
 
-    private boolean isRequest;
+    @Enumerated(EnumType.STRING)
+    private NotificationType notificationType;
 
     public Notification(){}
 
@@ -60,11 +61,11 @@ public class Notification {
         this.date = date;
     }
 
-    public boolean isRequest() {
-        return isRequest;
+    public NotificationType getNotificationType() {
+        return notificationType;
     }
 
-    public void setRequest(boolean request) {
-        isRequest = request;
+    public void setNotificationType(NotificationType notificationType) {
+        this.notificationType = notificationType;
     }
 }

@@ -3,6 +3,7 @@ package de.hohenheim.ticketcricket.controller;
 import de.hohenheim.ticketcricket.model.entity.Role;
 
 import de.hohenheim.ticketcricket.model.entity.User;
+import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class DashboardController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private NotificationService notificationService;
 
     @GetMapping("/")
     public String showHome(Model model) {
@@ -31,8 +34,10 @@ public class DashboardController {
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("tickets", ticketService.findAllTickets());
+            model.addAttribute("notifications", notificationService.findAllNotifications());
         } else {
             model.addAttribute("tickets", ticketService.findAllTicketsByUser(currentUser));
+            model.addAttribute("notifications", notificationService.findAllNotificationsForUser(currentUser));
         }
         return "dashboard";
     }

@@ -1,7 +1,10 @@
 package de.hohenheim.ticketcricket.controller;
 
+import de.hohenheim.ticketcricket.model.entity.Role;
 import de.hohenheim.ticketcricket.model.entity.Status;
 import de.hohenheim.ticketcricket.model.entity.Ticket;
+import de.hohenheim.ticketcricket.model.entity.User;
+import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
 import de.hohenheim.ticketcricket.model.validation.TicketValidator;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.Set;
 
 @Controller
 public class TicketController {
@@ -30,6 +34,9 @@ public class TicketController {
     @Autowired
     private TicketValidator ticketValidator;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @InitBinder("ticket")
     public void initBinder(WebDataBinder binder){
         binder.setValidator(ticketValidator);
@@ -38,6 +45,14 @@ public class TicketController {
     @GetMapping("/ticket-form")
     public String showTicketForm(Model model){
         model.addAttribute("ticket", new Ticket());
+        User currentUser = userService.getCurrentUser();
+        Set<Role> roles = currentUser.getRoles();
+        Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
+        if(roleNames.contains("ROLE_ADMIN")) {
+            model.addAttribute("notifications", notificationService.findAllNotifications());
+        } else {
+            model.addAttribute("notifications", notificationService.findAllNotificationsForUser(currentUser));
+        }
         return "ticketerstellung";
     }
     @PostMapping("/create-ticket")

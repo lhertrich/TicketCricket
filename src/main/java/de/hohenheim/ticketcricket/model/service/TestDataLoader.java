@@ -226,7 +226,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         notification1.setTicket(ticket3);
         long nd1 = System.currentTimeMillis();
         notification1.setDate(new Date(nd1));
-        notification1.setRequest(true);
+        notification1.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notificationService.saveNotification(notification1);
 
         Notification notification2 = new Notification();
@@ -234,7 +234,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         notification2.setTicket(ticket4);
         long nd2 = System.currentTimeMillis();
         notification2.setDate(new Date(nd2));
-        notification2.setRequest(true);
+        notification2.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notificationService.saveNotification(notification2);
     }
 }
