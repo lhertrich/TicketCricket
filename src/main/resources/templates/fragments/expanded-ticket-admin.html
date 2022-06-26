@@ -116,18 +116,15 @@
                     <button type="button" class="btn btn-secondary our-button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                         Status ändern
                     </button>
-                    <form class="dropdown-menu p-4 width-drop">
+                    <form class="dropdown-menu p-4 width-drop" th:action="@{/ticket/expand/setStatus(id=${ticket.ticketID})}" th:object="${ticket}" method="post">
                         <div class="mb-3">
                             <label for="statusOptions" class="form-label">Status auswählen</label>
-                            <select class="form-control" id="statusOptions">
-                                <option value="offen">Offen</option>
-                                <option value="bearbeitung">In Bearbeitung</option>
-                                <option value="erledigt">Erledigt</option>
+                            <select class="form-control" id="statusOptions" th:field="*{status}">
+                               <option th:each="status : ${T(de.hohenheim.ticketcricket.model.entity.Status).values()}"
+                               th:value="${status}" th:text="${status.getDisplayValue()}"></option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                        </div>
-                        <button type="submit" class="btn our-button">Anwenden</button>
+                        <button th:type="submit"  th:text="Anwenden" class="btn our-button"></button>
                     </form>
                 </div>
                 <!--<div id="setCategory" class="row p-2 d-flex justify-content-start">

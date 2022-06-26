@@ -1,5 +1,7 @@
 package de.hohenheim.ticketcricket.model.service;
 
+import de.hohenheim.ticketcricket.model.entity.Category;
+import de.hohenheim.ticketcricket.model.entity.Status;
 import de.hohenheim.ticketcricket.model.entity.Ticket;
 import de.hohenheim.ticketcricket.model.entity.User;
 import de.hohenheim.ticketcricket.model.repository.TicketRepository;
@@ -47,6 +49,24 @@ public class TicketService {
     public void setRequest(int id){
         Ticket ticketToUpdate = ticketRepository.getById(id);
         ticketToUpdate.setLastRequest(new Date(System.currentTimeMillis()));
+        ticketRepository.save(ticketToUpdate);
+    }
+
+    public void setStatus(Status status, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.setStatus(status);
+        ticketRepository.save(ticketToUpdate);
+    }
+
+    public void setCategory(Category category, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.setCategory(category);
+        ticketRepository.save(ticketToUpdate);
+    }
+
+    public void setPriority(Category category, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.setCategory(category);
         ticketRepository.save(ticketToUpdate);
     }
 }
