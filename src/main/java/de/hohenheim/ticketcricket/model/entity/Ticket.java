@@ -15,6 +15,9 @@ public class Ticket {
     @JoinColumn(name = "creatorID")
     private User user;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "adminID")
+    private User admin;
     
     private String title;
 
@@ -29,6 +32,9 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
 
     public Ticket(){
     }
@@ -97,4 +103,19 @@ public class Ticket {
         this.status = status;
     }
 
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public User getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(User admin) {
+        this.admin = admin;
+    }
 }

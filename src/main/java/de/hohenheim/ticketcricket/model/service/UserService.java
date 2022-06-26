@@ -1,6 +1,8 @@
 package de.hohenheim.ticketcricket.model.service;
 
+import de.hohenheim.ticketcricket.model.entity.Priority;
 import de.hohenheim.ticketcricket.model.entity.Role;
+import de.hohenheim.ticketcricket.model.entity.Ticket;
 import de.hohenheim.ticketcricket.model.entity.User;
 import de.hohenheim.ticketcricket.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +89,19 @@ public class UserService implements UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRolename()));
         }
         return grantedAuthorities;
+    }
+
+    public Set<User> getAdmins(){
+        HashSet<User> admins = new HashSet<>();
+        List<User> users = userRepository.findAll();
+        for (User user: users){
+            for (Role role: user.getRoles()) {
+                if (role.getRolename()=="ROLE_ADMIN"){
+                    admins.add(user);
+                }
+            }
+        }
+        return admins;
     }
 
 }

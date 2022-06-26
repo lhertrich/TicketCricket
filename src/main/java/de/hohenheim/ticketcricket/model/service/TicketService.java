@@ -1,17 +1,12 @@
 package de.hohenheim.ticketcricket.model.service;
 
-import de.hohenheim.ticketcricket.model.entity.Category;
-import de.hohenheim.ticketcricket.model.entity.Status;
-import de.hohenheim.ticketcricket.model.entity.Ticket;
-import de.hohenheim.ticketcricket.model.entity.User;
+import de.hohenheim.ticketcricket.model.entity.*;
 import de.hohenheim.ticketcricket.model.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TicketService {
@@ -64,9 +59,16 @@ public class TicketService {
         ticketRepository.save(ticketToUpdate);
     }
 
-    public void setPriority(Category category, int id){
+    public void setPriority(Priority priority, int id){
         Ticket ticketToUpdate = ticketRepository.getById(id);
-        ticketToUpdate.setCategory(category);
+        ticketToUpdate.setPriority(priority);
         ticketRepository.save(ticketToUpdate);
     }
+
+    public void setAdmin(User admin, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.setAdmin(admin);
+        ticketRepository.save(ticketToUpdate);
+    }
+
 }

@@ -79,7 +79,15 @@
                           class="elseBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
                 </div>
                 <div id="priority" class="row fs-10 fw-bold p-1">Priorität:
-                    <span class="openBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"> Wichtig </span>
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig'}"
+                          th:text="${ticket.priority.displayValue}"
+                          class="inactivityBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
+                          th:text="${ticket.priority.displayValue}"
+                          class="technicalBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
+                          th:text="${ticket.priority.displayValue}"
+                          class="elseBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
                 </div>
             </div>
             <!-- Ticket Info right -->
@@ -92,19 +100,14 @@
                         Admin zuweisen
                     </button>
 
-                    <form class="dropdown-menu p-4 width-drop">
+                    <form class="dropdown-menu p-4 width-drop" th:action="@{/ticket/expand/setAdmin(id=${ticket.ticketID})}" th:object="${ticket}" method="post">
                         <div class="mb-3">
                             <label for="dataListSetAdmin" class="form-label">Admin auswählen</label>
                             <input type="username" class="form-control" list="datalistOptions" id="dataListSetAdmin">
-                            <datalist id="datalistOptions">
-                                <option value="Admin1"></option>
-                                <option value="Admin2"></option>
-                                <option value="Admin3"></option>
-                                <option value="Admin4"></option>
-                                <option value="User5"></option>
+                            <datalist id="datalistOptions" th:field="*{admin}">
+                                <option th:each="admin : ${admins}"
+                                        th:value="${admin.getUsername()}" th:text="${admin.getUsername()}"></option>
                             </datalist>
-                        </div>
-                        <div class="mb-3">
                         </div>
                         <button type="submit" class="btn our-button">Zuweisen</button>
                     </form>
@@ -134,18 +137,15 @@
                     <button type="button" class="btn btn-secondary our-button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                         Kategorie ändern
                     </button>
-                    <form class="dropdown-menu p-4 width-drop">
+                    <form class="dropdown-menu p-4 width-drop" th:action="@{/ticket/expand/setCategory(id=${ticket.ticketID})}" th:object="${ticket}" method="post">
                         <div class="mb-3">
-                            <label for="categoryOptions" class="form-label">Kategorie Auswählen</label>
-                            <select class="form-control" id="categoryOptions">
-                                <option value="technisch">Technisches Problem </option>
-                                <option value="inaktivität">Inaktivität</option>
-                                <option value="sontiges">Sonstiges</option>
+                            <label for="statusOptions" class="form-label">Status auswählen</label>
+                            <select class="form-control" id="categoryOptions" th:field="*{category}">
+                                <option th:each="category : ${T(de.hohenheim.ticketcricket.model.entity.Category).values()}"
+                                        th:value="${category}" th:text="${category.getDisplayValue()}"></option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                        </div>
-                        <button type="submit" class="btn our-button">Anwenden</button>
+                        <button th:type="submit"  th:text="Anwenden" class="btn our-button"></button>
                     </form>
                 </div>
                 <!--<div id="setPriority" class="row p-2 d-flex justify-content-sart">
@@ -155,18 +155,15 @@
                     <button type="button" class="btn btn-secondary our-button " data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
                         Priorität ändern
                     </button>
-                    <form class="dropdown-menu p-4 width-drop">
+                    <form class="dropdown-menu p-4 width-drop" th:action="@{/ticket/expand/setPriority(id=${ticket.ticketID})}" th:object="${ticket}" method="post">
                         <div class="mb-3">
-                            <label for="priorityOptions" class="form-label">Priorität ändern</label>
-                            <select class="form-control" id="priorityOptions">
-                                <option value="wichtig">Wichtig</option>
-                                <option value="mittel">Mittel</option>
-                                <option value="unwichtig">Unwichtig</option>
+                            <label for="statusOptions" class="form-label">Status auswählen</label>
+                            <select class="form-control" id="priorityOptions" th:field="*{priority}">
+                                <option th:each="priority : ${T(de.hohenheim.ticketcricket.model.entity.Priority).values()}"
+                                        th:value="${priority}" th:text="${priority.getDisplayValue()}"></option>
                             </select>
                         </div>
-                        <div class="mb-3">
-                        </div>
-                        <button type="submit" class="btn our-button">Anwenden</button>
+                        <button th:type="submit"  th:text="Anwenden" class="btn our-button"></button>
                     </form>
                 </div>
                 <div class="row d-flex d-sm-none justify-content-center p-2">
