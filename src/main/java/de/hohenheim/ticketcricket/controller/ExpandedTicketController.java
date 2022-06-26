@@ -40,10 +40,12 @@ public class ExpandedTicketController {
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("user", userService.getCurrentUser());
             model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
-            model.addAttribute("notifications", notificationService.findAllNotifications());
+            model.addAttribute("currentNotifications", notificationService.findAllCurrentNotifications());
+            model.addAttribute("oldNotifications", notificationService.findAllOldNotifications());
         } else {
             model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
-            model.addAttribute("notifications", notificationService.findAllNotificationsForUser(currentUser));
+            model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificatinsForUser(currentUser));
+            model.addAttribute("oldNotifications", notificationService.findAllOldNotficiationsForUser(currentUser));
         }
         return "expanded-ticket";
     }

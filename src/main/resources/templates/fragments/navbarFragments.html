@@ -59,8 +59,30 @@
                             </a>
                             <ul class="dropdown-menu notification-dropdown dropdown-menu-lg-end"
                                 aria-labelledby="notificationAdmin">
-                                <li th:each="notification: ${notifications}">
+                                <!-- Aktuelle Notifications -->
+                                <li style="text-align: center">
+                                    <strong>Diese Woche</strong>
                                     <hr class="dropdown-divider">
+                                </li>
+                                <li th:if="${currentNotifications.isEmpty()} ">
+                                    <p style="text-align: center">Keine Mitteilungen</p>
+                                </li>
+                                <li th:if="${!currentNotifications.isEmpty()}" th:each="notification: ${currentNotifications}">
+
+                                    <a class="dropdown-item" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
+                                       th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
+                                </li>
+                                <!-- Alte Notifications -->
+                                <li style="text-align: center">
+                                    <hr class="dropdown-divider">
+                                    <strong>Älter</strong>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li th:if="${oldNotifications.isEmpty()} ">
+                                    <p style="text-align: center">Keine Mitteilungen</p>
+                                </li>
+                                <li th:if="${!oldNotifications.isEmpty()}" th:each="notification: ${oldNotifications}">
+
                                     <a class="dropdown-item" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
                                        th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
                                 </li>
@@ -164,8 +186,30 @@
                                 </a>
                                 <ul class="dropdown-menu notification-dropdown dropdown-menu-end"
                                     aria-labelledby="notification">
-                                    <li th:each="notification: ${notifications}">
+                                    <!-- Aktuelle Notifications -->
+                                    <li style="text-align: center">
+                                        <strong>Diese Woche</strong>
                                         <hr class="dropdown-divider">
+                                    </li>
+                                    <li th:if="${currentNotifications.isEmpty()}">
+                                        <p style="text-align: center">Keine Mitteilungen</p>
+                                    </li>
+                                    <li th:if="${!currentNotifications.isEmpty()}" th:each="notification: ${currentNotifications}">
+
+                                        <a class="dropdown-item" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
+                                           th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
+                                    </li>
+                                    <!-- Alte Notifications -->
+                                    <li style="text-align: center">
+                                        <hr class="dropdown-divider">
+                                        <strong>Älter</strong>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li th:if="${oldNotifications.isEmpty()} ">
+                                        <p style="text-align: center">Keine Mitteilungen</p>
+                                    </li>
+                                    <li th:if="${!oldNotifications.isEmpty()}" th:each="notification: ${oldNotifications}">
+
                                         <a class="dropdown-item" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
                                            th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
                                     </li>
