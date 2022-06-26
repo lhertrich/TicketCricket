@@ -1,0 +1,176 @@
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    background-color: #E8E9F3;
+}
+
+.top-bar{
+    border-left-color: #272635;
+    border-right-color: #272635;
+    border-top-color: #272635;
+    border-width: 2px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    color: white;
+    font-weight: bold;
+    background-color: #272635;
+}
+
+.chat-height {
+    min-height: 300px;
+}
+
+.bottom-outer-border{
+    border: 2px solid #272635;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: #E8E9F3;
+}
+
+.top-outer-border{
+    border: 2px solid #272635;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom: none;
+}
+
+.mid-outer-border{
+    border: 2px solid #272635;
+    border-bottom: none;
+    background-color: #E8E9F3;
+}
+
+
+.bottom-bar{
+    border: 2px solid #272635;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.input-field {
+    border-color:black;
+    border-radius:10px;
+}
+
+.error-message {
+    color: red;
+    font-size: small;
+
+}
+
+.top-bar-text {
+    color: white;
+    font-weight:bold;
+    background-color: #272635
+}
+
+
+.box-format {
+    padding:0.5%;
+}
+
+.no-overflow{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.finishedBadge{
+    width: 100px;
+    max-width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: #2a6749
+}
+.navbar-distance{
+    padding-top: 100px;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    margin-bottom: 0.5%
+}
+
+.progressBadge{
+    width: 100px;
+    max-width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: #fec004
+}
+
+.openBadge{
+    width: 100px;
+    max-width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    background-color: #ef3b08
+}
+
+.inactivityBadge{
+    background-color: #75B9BE;
+    max-width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+.technicalBadge{
+    background-color: #EE7674;
+    max-width: 150px;
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+.elseBadge{
+    background-color: #987284;
+    max-width: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    justify-content: center;
+}
+
+.statusBadge{
+    background-color: dimgray;
+    color: white;
+    font-size: small;
+    margin-right: 10px;
+    margin-left: 10px;
+    max-width: 250px;
+    text-align: center;
+}
+
+.our-button{
+    max-width: 190px;
+    background-color: #A6A6A8;
+    border-color: #A6A6A8;
+    border-radius: 10px;
+    color: white;
+}
+.our-button-takeback {
+    border-radius: 10px;
+}
+.navbar-body{
+    background-color: #272635;
+}
+
+.navbar-icon-color{
+    background-color: #272635;
+    color: white;
+}
+.burger-color{
+    background-color: #272635;
+    color: white;
+    border: none;
+}
+.button-color{
+    background-color: #A6A6A8;
+    border-color: #A6A6A8;
+    border-radius: 10px;
+    color: white;
+
+}
+
+select{
+    -webkit-appearance:listbox !important;
+}

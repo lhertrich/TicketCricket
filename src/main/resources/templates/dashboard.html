@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/design.css">
+    <title>Ticketsystem - Dashboard</title>
+</head>
+<body>
+<!-- Navbar -->
+<th:block th:insert="fragments/navbarFragments::navbarUser"  sec:authorize="hasRole('ROLE_USER')"/>
+<th:block th:insert="fragments/navbarFragments::navbarAdmin"  sec:authorize="hasRole('ROLE_ADMIN')"/>
+
+<!-- Tickets -->
+
+<div th:fragment="innerWindow" class="navbar-distance">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('dropdown-toggle').dropdown()
+        });
+    </script>
+
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <li id="topBar" class="list-group-item">
+        <div class="d-flex justify-content-between">
+            <form class="input-group" style="width: 20%">
+                <input id="searchBar" type="text" class="form-control" placeholder="..." disabled>
+                <button id="search" type="submit" class="btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+            </form>
+            <div>
+                <div class="dropdown btn-group" role="group">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                        Filtern
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                        Gruppieren
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <div id="bottomOuterBorder" class="container-fluid">
+        <div th:each="ticket: ${tickets}">
+            <a th:href="@{/ticket/expand(id=${ticket.ticketID})}" id="ticketBox" href="#"
+               class="list-group-item list-group-item-action list-group-item-light mb-2">
+                <div class="d-flex justify-content-between">
+                    <div class="container-fluid">
+                        <div class="row justify-content-evenly">
+                            <!-- Mobile status dots -->
+                            <div th:if="${ticket.status.getDisplayValue() == 'Offen'}"
+                                 class="d-inline col-2 d-md-none align-self-start dot openBadge"></div>
+                            <div th:if="${ticket.status.getDisplayValue() == 'In Bearbeitung'}"
+                                 class="d-inline col-2 d-md-none align-self-start dot progressBadge"></div>
+                            <div th:if="${ticket.status.getDisplayValue() == 'Erledigt'}"
+                                 class="d-inline col-2 d-md-none align-self-start dot finishedBadge"></div>
+                            <!-- Desktop status -->
+                            <div th:if="${ticket.status.getDisplayValue() == 'Offen'}"
+                                 class="col-2 d-none d-md-inline align-self-start openBadge badge">Offen
+                            </div>
+                            <div th:if="${ticket.status.getDisplayValue() == 'In Bearbeitung'}"
+                                 class="col-2 d-none d-md-inline align-self-start progressBadge badge">In Bearbeitung
+                            </div>
+                            <div th:if="${ticket.status.getDisplayValue() == 'Erledigt'}"
+                                 class="col-2 d-none d-md-inline align-self-start finishedBadge badge">Erledigt
+                            </div>
+
+                            <div th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"
+                                 class="col-7 fw-bold text-center no-overflow"></div>
+
+                            <!-- Mobile category dots -->
+                            <div th:if="${ticket.category.getDisplayValue() == 'Inaktivität'}"
+                                 class="d-inline col-2 d-md-none align-self-end dot inactivityBadge"></div>
+                            <div th:if="${ticket.category.getDisplayValue() == 'Technisches Problem'}"
+                                 class="d-inline col-2 d-md-none align-self-end dot technicalBadge"></div>
+                            <div th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}"
+                                 class="d-inline col-2 d-md-none align-self-end dot elseBadge"></div>
+
+                            <!-- Desktop categories -->
+                            <div th:if="${ticket.category.getDisplayValue() == 'Inaktivität'}"
+                                 th:text="${ticket.category.displayValue}"
+                                 class="col-2 d-none d-md-inline align-self-end badge rounded-pill inactivityBadge"></div>
+                            <div th:if="${ticket.category.getDisplayValue() == 'Technisches Problem'}"
+                                 th:text="${ticket.category.displayValue}"
+                                 class="col-2 d-none d-md-inline align-self-end badge rounded-pill technicalBadge no-overflow"></div>
+                            <div th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}"
+                                 th:text="${ticket.category.displayValue}"
+                                 class="col-2 d-none d-md-inline align-self-end badge rounded-pill elseBadge"></div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
