@@ -100,16 +100,26 @@
                         Admin zuweisen
                     </button>
 
-                    <form class="dropdown-menu p-4 width-drop" th:action="@{/ticket/expand/setAdmin(id=${ticket.ticketID})}" th:object="${ticket}" method="post">
+                    <!--<form class="dropdown-menu p-4 width-drop" th:action="@{/ticket/expand/setAdmin(id=${ticket.ticketID})}" th:object="${ticket}" method="post">
                         <div class="mb-3">
                             <label for="dataListSetAdmin" class="form-label">Admin auswählen</label>
                             <input type="username" class="form-control" list="datalistOptions" id="dataListSetAdmin">
                             <datalist id="datalistOptions" th:field="*{admin}">
                                 <option th:each="admin : ${admins}"
-                                        th:value="${admin.getUsername()}" th:text="${admin.getUsername()}"></option>
+                                        th:value="${admin}" th:text="${admin.getUsername()}"></option>
                             </datalist>
                         </div>
                         <button type="submit" class="btn our-button">Zuweisen</button>
+                    </form>-->
+                    <form class="dropdown-menu p-4 width-drop" th:action="@{/ticket/expand/setAdmin(id=${ticket.ticketID})}" th:object="${ticket}" method="post">
+                        <div class="mb-3">
+                            <label for="adminOptions" class="form-label">Admin auswählen</label>
+                            <select class="form-control" id="adminOptions" th:field="*{admin}">
+                                <option th:each="admin : ${admins}"
+                                        th:value="${admin.getUserId()}" th:text="${admin.getUsername()}"></option>
+                            </select>
+                        </div>
+                        <button th:type="submit"  th:text="Anwenden" class="btn our-button"></button>
                     </form>
                 </div>
                 <!--<div id="setStatus" class="row p-2 d-flex justify-content-start">

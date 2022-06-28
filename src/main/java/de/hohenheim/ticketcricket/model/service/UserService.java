@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -91,7 +92,7 @@ public class UserService implements UserDetailsService {
         return grantedAuthorities;
     }
 
-    public Set<User> getAdmins(){
+    public Set<User> getAdminIds(){
         HashSet<User> admins = new HashSet<>();
         List<User> users = userRepository.findAll();
         for (User user: users){
@@ -103,5 +104,4 @@ public class UserService implements UserDetailsService {
         }
         return admins;
     }
-
 }

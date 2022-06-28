@@ -111,9 +111,7 @@ public class Ticket {
         this.priority = priority;
     }
 
-    public User getAdmin() {
-        return admin;
-    }
+    public User getAdmin() {return admin;}
 
     public void setAdmin(User admin) {
         this.admin = admin;

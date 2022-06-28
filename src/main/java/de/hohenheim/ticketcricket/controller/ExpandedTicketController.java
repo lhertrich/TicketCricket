@@ -35,7 +35,7 @@ public class ExpandedTicketController {
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
         model.addAttribute("ticket", ticketService.findTicketById(id));
         model.addAttribute("notifications", notificationService.findAllNotificationsForTicket(id));
-        model.addAttribute("admins", userService.getAdmins());
+        model.addAttribute("admins", userService.getAdminIds());
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("user", userService.getCurrentUser());
             model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
