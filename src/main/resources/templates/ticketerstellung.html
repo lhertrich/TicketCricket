@@ -43,12 +43,21 @@
                              >
                         <p th:if="${#fields.hasErrors('title')}"  class="error-message" th:errors="*{title}"></p>
                     </div>
-                    <div class="row form-group box-format">
+                    <div class="row form-group">
+                    <div class="p-2">
                         <label for="vorkategorisierung">Vorkategorisierung</label>
-                        <select id="vorkategorisierung" class="form-control input-field" required th:field="*{category}">
+                        <select id="vorkategorisierung" class="form-control input-field" required th:field="*{category}" style="width: 300px">
                             <option th:each="category : ${T(de.hohenheim.ticketcricket.model.entity.Category).values()}"
                                     th:value="${category}" th:text="${category.displayValue}"></option>
                         </select>
+                    </div>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')" class="p-2">
+                            <label for="adminOptions">Zuständigen Admin auswählen</label>
+                            <select class="form-control input-field" id="adminOptions" th:field="*{admin}" style="width: 300px;">
+                                <option th:each="admin : ${admins}"
+                                        th:value="${admin.getUserId()}" th:text="${admin.getUsername()}"></option>
+                            </select>
+                        </div>
                     </div>
                     <div class="row form-group box-format">
                         <label for="FormControlTextarea1">Beschreiben Sie ihr Problem...</label>
