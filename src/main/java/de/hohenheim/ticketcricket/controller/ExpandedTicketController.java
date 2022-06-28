@@ -1,8 +1,6 @@
 package de.hohenheim.ticketcricket.controller;
 
-import de.hohenheim.ticketcricket.model.entity.Notification;
-import de.hohenheim.ticketcricket.model.entity.Role;
-import de.hohenheim.ticketcricket.model.entity.User;
+import de.hohenheim.ticketcricket.model.entity.*;
 import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
@@ -11,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,6 +35,7 @@ public class ExpandedTicketController {
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
         model.addAttribute("ticket", ticketService.findTicketById(id));
         model.addAttribute("notifications", notificationService.findAllNotificationsForTicket(id));
+        model.addAttribute("admins", userService.getAdminIds());
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("user", userService.getCurrentUser());
             model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
@@ -49,6 +49,28 @@ public class ExpandedTicketController {
     public String deleteTicket(@RequestParam("id") Integer id) {
         ticketService.deleteTicket(ticketService.findTicketById(id));
         return "redirect:/";
+    }
+    @PostMapping("/ticket/expand/setStatus{id}")
+    public String setStatus(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
+        ticketService.setStatus(ticket.getStatus(), id);
+        return "redirect:/ticket/expand?id="+id;
+    }
+    @PostMapping("/ticket/expand/setCategory{id}")
+    public String setCategory(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
+        ticketService.setCategory(ticket.getCategory(), id);
+        return "redirect:/ticket/expand?id="+id;
+    }
+
+    @PostMapping("/ticket/expand/setPriority{id}")
+    public String setPriority(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
+        ticketService.setPriority(ticket.getPriority(), id);
+        return "redirect:/ticket/expand?id="+id;
+    }
+
+    @PostMapping("/ticket/expand/setAdmin{id}")
+    public String setAdmin(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
+        ticketService.setAdmin(ticket.getAdmin(), id);
+        return "redirect:/ticket/expand?id="+id;
     }
 
     @PostMapping("/ticket/status{id}")

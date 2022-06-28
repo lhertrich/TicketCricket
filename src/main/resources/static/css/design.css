@@ -170,6 +170,14 @@ html, body {
     color: white;
 
 }
+.width-drop{
+    width: 350px;
+}
+.arrow-drop{
+    -webkit-appearance: none; !important;
+    -moz-appearance: none; !important;
+    appearance: none; !important;
+}
 
 select{
     -webkit-appearance:listbox !important;
