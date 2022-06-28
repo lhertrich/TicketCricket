@@ -92,7 +92,7 @@ public class UserService implements UserDetailsService {
         return grantedAuthorities;
     }
 
-    public Set<User> getAdminIds(){
+    public Set<User> getAdmins(){
         HashSet<User> admins = new HashSet<>();
         List<User> users = userRepository.findAll();
         for (User user: users){
@@ -102,6 +102,6 @@ public class UserService implements UserDetailsService {
                 }
             }
         }
-        return admins;
+        return admins.stream().sorted(Comparator.comparing(User::getUsername)).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 }
