@@ -79,9 +79,18 @@
                           class="elseBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
                 </div>
                 <div id="priority" class="row fs-10 fw-bold p-1">Priorität:
-                    <span class="openBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"> Wichtig </span>
+                        <span th:if="${ticket.priority.getDisplayValue() == 'Sehr wichtig'}"
+                              class="openBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center col">Sehr wichtig
+                    </span>
+                        <span th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
+                              class="progressBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center col">Wichtig
+                    </span>
+                        <span th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
+                              class="finishedBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center col">Unwichtig
+                    </span>
+                    </div>
                 </div>
-            </div>
+
             <!-- Ticket Info right -->
             <div id="rightButtons" class="col align-self-evenly">
                 <div id="setAdmin" class="row p-2 d-flex justify-content-start">

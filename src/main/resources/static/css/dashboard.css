@@ -84,6 +84,13 @@ body{
     background-color: #987284;
 }
 
+.priorityBadge{
+    color: red;
+}
+.mobilePriorityBadge{
+    color: red;
+}
+
 .no-overflow{
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -104,4 +111,24 @@ body{
 
 #deny:hover {
     cursor: pointer;
+}
+
+
+
+.tooltiptext{
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.priorityBadge:hover .tooltiptext {
+    visibility: visible;
 }
