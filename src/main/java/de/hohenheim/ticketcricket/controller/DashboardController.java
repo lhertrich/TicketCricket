@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Set;
 
@@ -32,14 +31,13 @@ public class DashboardController {
         User currentUser = userService.getCurrentUser();
         Set<Role> roles = currentUser.getRoles();
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
+        model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
+        model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
+        model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("tickets", ticketService.findAllTickets());
-            model.addAttribute("currentNotifications", notificationService.findAllCurrentNotifications());
-            model.addAttribute("oldNotifications", notificationService.findAllOldNotifications());
         } else {
             model.addAttribute("tickets", ticketService.findAllTicketsByUser(currentUser));
-            model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificatinsForUser(currentUser));
-            model.addAttribute("oldNotifications", notificationService.findAllOldNotficiationsForUser(currentUser));
         }
         return "dashboard";
     }

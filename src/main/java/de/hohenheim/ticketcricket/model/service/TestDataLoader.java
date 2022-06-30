@@ -220,7 +220,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket11.setTitle("Fake Artikel");
         ticketService.saveTicket(ticket11);
 
-
         Notification notification1 = new Notification();
         notification1.setUser(normalUser1);
         notification1.setTicket(ticket3);

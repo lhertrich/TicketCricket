@@ -46,15 +46,9 @@ public class TicketController {
     public String showTicketForm(Model model){
         model.addAttribute("ticket", new Ticket());
         User currentUser = userService.getCurrentUser();
-        Set<Role> roles = currentUser.getRoles();
-        Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
-        if(roleNames.contains("ROLE_ADMIN")) {
-            model.addAttribute("currentNotifications", notificationService.findAllCurrentNotifications());
-            model.addAttribute("oldNotifications", notificationService.findAllOldNotifications());
-        } else {
-            model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificatinsForUser(currentUser));
-            model.addAttribute("oldNotifications", notificationService.findAllOldNotficiationsForUser(currentUser));
-        }
+        model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
+        model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
+        model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
         return "ticketerstellung";
     }
     @PostMapping("/create-ticket")

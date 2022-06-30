@@ -1,7 +1,7 @@
 package de.hohenheim.ticketcricket.model.entity;
 
 public enum NotificationType {
-    STATUS_ANFRAGE("Status angefragt"), STATUS_ÄNDERUNG("Status geändert"), NACHRICHT("Neue Nachricht");
+    STATUS_ANFRAGE("Status angefragt"), TICKET_ZUGEWIESEN("Ticket zugewiesen"), NACHRICHT("Neue Nachricht"), STATUS_ÄNDERUNG("Status geändert"), KATEGORIE_ÄNDERUNG("Kategorie geändert");
 
     private final String displayValue;
 

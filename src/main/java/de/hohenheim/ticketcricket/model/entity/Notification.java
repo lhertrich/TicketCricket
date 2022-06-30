@@ -27,6 +27,8 @@ public class Notification {
     @Enumerated(EnumType.STRING)
     private NotificationType notificationType;
 
+    private boolean isNew = true;
+
     public Notification(){}
 
     public int getNotificationId() {
@@ -67,5 +69,13 @@ public class Notification {
 
     public void setNotificationType(NotificationType notificationType) {
         this.notificationType = notificationType;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
     }
 }
