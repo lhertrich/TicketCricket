@@ -28,6 +28,9 @@ public class Ticket {
     private Date lastRequest;
 
     @Enumerated(EnumType.STRING)
+    private Priority priority;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public Ticket(){
@@ -96,5 +99,9 @@ public class Ticket {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public void setPriority(Priority priority) {this.priority = priority;}
+
+    public Priority getPriority() {return priority;}
 
 }
