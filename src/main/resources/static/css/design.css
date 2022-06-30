@@ -178,6 +178,14 @@ html, body {
     -moz-appearance: none; !important;
     appearance: none; !important;
 }
+.admin-badge{
+    background-color: #3babf8;
+    font-size: large;
+}
+
+.margin-top-bar{
+    margin-right: 25px;
+}
 
 select{
     -webkit-appearance:listbox !important;

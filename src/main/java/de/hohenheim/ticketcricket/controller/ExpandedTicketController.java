@@ -35,6 +35,8 @@ public class ExpandedTicketController {
         model.addAttribute("ticket", ticketService.findTicketById(id));
         model.addAttribute("notifications", notificationService.findAllNotificationsForTicket(id));
         model.addAttribute("admins", userService.getAdmins());
+        model.addAttribute("responsibleAdminChar", Character.toUpperCase(ticketService.findTicketById(id).getAdmin().getUsername().charAt(0)));
+        model.addAttribute("responsibleAdmin", ticketService.findTicketById(id).getAdmin().getUsername());
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("user", userService.getCurrentUser());
             model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
