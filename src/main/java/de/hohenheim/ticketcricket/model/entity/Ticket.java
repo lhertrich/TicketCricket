@@ -30,6 +30,8 @@ public class Ticket {
 
     private Date lastRequest;
 
+    private boolean bookmark;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -115,5 +117,13 @@ public class Ticket {
 
     public void setAdmin(User admin) {
         this.admin = admin;
+    }
+
+    public boolean isBookmark() {
+        return bookmark;
+    }
+
+    public void setBookmark(boolean bookmark) {
+        this.bookmark = bookmark;
     }
 }
