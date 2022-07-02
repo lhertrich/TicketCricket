@@ -96,6 +96,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket.setProblem("Bei mir erscheint ein Black Screen wenn ich einen Artikel inseriere!");
         ticket.setStatus(Status.OFFEN);
         ticket.setTitle("Black Screen");
+        ticket.setPriority(Priority.WICHTIG);
+        ticket.setAdmin(admin1);
         ticketService.saveTicket(ticket);
 
         Ticket ticket1 = new Ticket();
@@ -107,6 +109,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket1.setProblem("Ich kann keine Artikel suchen!");
         ticket1.setStatus(Status.IN_BEARBEITUNG);
         ticket1.setTitle("Artikelsuche");
+        ticket1.setPriority(Priority.WICHTIG);
+        ticket1.setAdmin(admin1);
         ticketService.saveTicket(ticket1);
 
         Ticket ticket2 = new Ticket();
@@ -118,6 +122,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket2.setProblem("Der User LukasB antwortet mir wiederholt nicht auf meine Messages");
         ticket2.setStatus(Status.OFFEN);
         ticket2.setTitle("User LukasB antwortet nicht");
+        ticket2.setPriority(Priority.WICHTIG);
+        ticket2.setAdmin(admin1);
         ticketService.saveTicket(ticket2);
 
         Ticket ticket3 = new Ticket();
@@ -129,6 +135,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket3.setProblem("User SilasScheu hat mich mehrfach beleidigt im Chat");
         ticket3.setStatus(Status.OFFEN);
         ticket3.setTitle("Beleidigung in Direct Message");
+        ticket3.setPriority(Priority.WICHTIG);
+        ticket3.setAdmin(admin1);
         ticketService.saveTicket(ticket3);
 
         Ticket ticket4 = new Ticket();
@@ -140,6 +148,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket4.setProblem("User ErikSaalfeld schickt Spam Links im Chat");
         ticket4.setStatus(Status.ERLEDIGT);
         ticket4.setTitle("Spam Links in Direct Message");
+        ticket4.setPriority(Priority.WICHTIG);
+        ticket4.setAdmin(admin1);
         ticketService.saveTicket(ticket4);
 
         Ticket ticket5 = new Ticket();
@@ -151,6 +161,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket5.setProblem("Die Seite lädt sehr langsam und funktioniert manchmal nicht");
         ticket5.setStatus(Status.OFFEN);
         ticket5.setTitle("Seite lädt nicht");
+        ticket5.setPriority(Priority.WICHTIG);
+        ticket5.setAdmin(admin1);
         ticketService.saveTicket(ticket5);
 
         Ticket ticket6 = new Ticket();
@@ -162,6 +174,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket6.setProblem("Der Impressum-Button kann nicht gedrückt werden");
         ticket6.setStatus(Status.OFFEN);
         ticket6.setTitle("Button funktioniert nicht");
+        ticket6.setPriority(Priority.WICHTIG);
+        ticket6.setAdmin(admin1);
         ticketService.saveTicket(ticket6);
 
         Ticket ticket7 = new Ticket();
@@ -173,6 +187,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket7.setProblem("User MoritzKöhler antwortet nicht auf Messages obwohl er einem Verkauf schon zugestimmt hat");
         ticket7.setStatus(Status.ERLEDIGT);
         ticket7.setTitle("User antwortet nicht");
+        ticket7.setPriority(Priority.WICHTIG);
+        ticket7.setAdmin(admin1);
         ticketService.saveTicket(ticket7);
 
         Ticket ticket8 = new Ticket();
@@ -185,6 +201,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
                 "er sich nicht mehr");
         ticket8.setStatus(Status.IN_BEARBEITUNG);
         ticket8.setTitle("User antwortet nicht Verkauf");
+        ticket8.setPriority(Priority.WICHTIG);
+        ticket8.setAdmin(admin1);
         ticketService.saveTicket(ticket8);
 
         Ticket ticket9 = new Ticket();
@@ -196,6 +214,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket9.setProblem("Wenn ich einen Artikel inseriere crasht die Seite oft.");
         ticket9.setStatus(Status.ERLEDIGT);
         ticket9.setTitle("Seite crasht beim Inserieren");
+        ticket9.setPriority(Priority.WICHTIG);
+        ticket9.setAdmin(admin1);
         ticketService.saveTicket(ticket9);
 
         Ticket ticket10 = new Ticket();
@@ -207,6 +227,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket10.setProblem("Home Button in der Navbar funktioniert nicht");
         ticket10.setStatus(Status.OFFEN);
         ticket10.setTitle("Home Button Funktion");
+        ticket10.setPriority(Priority.WICHTIG);
+        ticket10.setAdmin(admin1);
         ticketService.saveTicket(ticket10);
 
         Ticket ticket11 = new Ticket();
@@ -218,6 +240,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket11.setProblem("Viele User verbreiten Fake Artikel");
         ticket11.setStatus(Status.IN_BEARBEITUNG);
         ticket11.setTitle("Fake Artikel");
+        ticket11.setPriority(Priority.WICHTIG);
+        ticket11.setAdmin(admin1);
         ticketService.saveTicket(ticket11);
 
 
