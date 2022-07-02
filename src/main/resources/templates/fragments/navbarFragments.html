@@ -61,47 +61,45 @@
                                style="background:none; border:none; color: white">
                                 <!-- Notification Bell -->
                                 <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
-                                     class="bi bi-bell-fill" viewBox="0 0 16 16">
+                                     class="bi bi-bell-fill" viewBox="0 0 16 16" id="newNotificationAdmin">
                                     <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                                     <span th:if="${!newNotifications.isEmpty()}" class="position-absolute top-5 start-200 translate-middle badge rounded-pill bg-danger" style="font-size: xx-small" th:text="${newNotifications.size()}"/>
                                 </svg>
                             </a>
-                            <ul class="dropdown-menu notification-dropdown dropdown-menu-lg-end"
+                            <ul class="dropdown-menu notification-dropdown dropdown-menu-lg-end dd-outer"
                                 aria-labelledby="notificationAdmin">
                                 <!-- Aktuelle Notifications -->
                                 <li th:if="${!newNotifications.isEmpty()}" style="text-align: center">
                                     <strong>Neu</strong>
-                                    <hr class="dropdown-divider">
                                 </li>
-                                <li th:each="notification: ${newNotifications}">
-                                    <a class="dropdown-item" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
+                                <li th:if="${!newNotifications.isEmpty()}" class="dropdown-divider dd-divider"/>
+                                <li th:if="${!newNotifications.isEmpty()}" th:each="notification: ${newNotifications}" class="dd-item">
+                                    <a class="dropdown-item dd-text" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
                                        th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
                                 </li>
+                                <li th:if="${!newNotifications.isEmpty()}" class="dropdown-divider dd-divider"/>
                                 <li style="text-align: center">
-                                    <hr class="dropdown-divider">
                                     <strong>Diese Woche</strong>
-                                    <hr class="dropdown-divider">
                                 </li>
+                                <li class="dropdown-divider dd-divider"/>
                                 <li th:if="${currentNotifications.isEmpty()} ">
                                     <p style="text-align: center">Keine Mitteilungen</p>
                                 </li>
-                                <li th:if="${!currentNotifications.isEmpty()}" th:each="notification: ${currentNotifications}">
-
-                                    <a class="dropdown-item" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
+                                <li th:if="${!currentNotifications.isEmpty()}" th:each="notification: ${currentNotifications}" class="dd-item">
+                                    <a class="dropdown-item dd-text" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
                                        th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
                                 </li>
                                 <!-- Alte Notifications -->
+                                <li class="dropdown-divider dd-divider"/>
                                 <li style="text-align: center">
-                                    <hr class="dropdown-divider">
                                     <strong>Älter</strong>
-                                    <hr class="dropdown-divider">
                                 </li>
-                                <li th:if="${oldNotifications.isEmpty()} ">
+                                <li class="dropdown-divider dd-divider"/>
+                                <li th:if="${oldNotifications.isEmpty()}">
                                     <p style="text-align: center">Keine Mitteilungen</p>
                                 </li>
-                                <li th:if="${!oldNotifications.isEmpty()}" th:each="notification: ${oldNotifications}">
-
-                                    <a class="dropdown-item" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
+                                <li th:if="${!oldNotifications.isEmpty()}" th:each="notification: ${oldNotifications}" class="dd-item">
+                                    <a class="dropdown-item dd-text" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
                                        th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
                                 </li>
                             </ul>
@@ -162,6 +160,11 @@
 </div>
 
 <div th:fragment="navbarUser" style="font-size: 1.2em">
+
+    <!-- Jquery import und Notification js import -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/js/NotificationBell.js"></script>
+
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-body">
         <div class="container-fluid">
             <a class="navbar-brand" href="#" th:href="@{/}">
@@ -191,26 +194,26 @@
                         <div>
                             <li class="nav-item dropdown">
                                 <a class="nav-link"
-                                   href="#" id="notification"
+                                   href="#" id="notificationUser"
                                    role="button" data-bs-toggle="dropdown"
                                    aria-expanded="false"
                                    style="background:none; border:none; color: white">
                                     <!-- Notification Bell -->
                                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
-                                         class="bi bi-bell-fill" viewBox="0 0 16 16">
+                                         class="bi bi-bell-fill" viewBox="0 0 16 16" id="newNotificationUser">
                                         <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                                         <span th:if="${!newNotifications.isEmpty()}" class="position-absolute top-5 start-200 translate-middle badge rounded-pill bg-danger" style="font-size: xx-small" th:text="${newNotifications.size()}"/>
                                     </svg>
                                 </a>
-                                <ul class="dropdown-menu notification-dropdown dropdown-menu-end"
+                                <ul class="dropdown-menu notification-dropdown dropdown-menu-end dd-outer"
                                     aria-labelledby="notification">
                                     <!-- Aktuelle Notifications -->
                                     <li th:if="${!newNotifications.isEmpty()}" style="text-align: center">
                                         <strong>Neu</strong>
-                                        <hr class="dropdown-divider">
+                                        <hr class="dropdown-divider dd-divider">
                                     </li>
-                                    <li th:each="notification: ${newNotifications}">
-                                        <a class="dropdown-item" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
+                                    <li th:each="notification: ${newNotifications}" class="dd-item">
+                                        <a class="dropdown-item dd-text" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
                                            th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
                                     </li>
                                     <li style="text-align: center">
@@ -220,23 +223,21 @@
                                     <li th:if="${currentNotifications.isEmpty()}">
                                         <p style="text-align: center">Keine Mitteilungen</p>
                                     </li>
-                                    <li th:if="${!currentNotifications.isEmpty()}" th:each="notification: ${currentNotifications}">
-
-                                        <a class="dropdown-item" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
+                                    <li th:if="${!currentNotifications.isEmpty()}" th:each="notification: ${currentNotifications}" class="dd-item">
+                                        <a class="dropdown-item dd-text" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
                                            th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
                                     </li>
                                     <!-- Alte Notifications -->
                                     <li style="text-align: center">
-                                        <hr class="dropdown-divider">
+                                        <hr class="dropdown-divider dd-divider">
                                         <strong>Älter</strong>
-                                        <hr class="dropdown-divider">
+                                        <hr class="dropdown-divider dd-divider">
                                     </li>
                                     <li th:if="${oldNotifications.isEmpty()} ">
                                         <p style="text-align: center">Keine Mitteilungen</p>
                                     </li>
-                                    <li th:if="${!oldNotifications.isEmpty()}" th:each="notification: ${oldNotifications}">
-
-                                        <a class="dropdown-item" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
+                                    <li th:if="${!oldNotifications.isEmpty()}" th:each="notification: ${oldNotifications}" class="dd-item">
+                                        <a class="dropdown-item dd-text" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
                                            th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
                                     </li>
                                 </ul>
@@ -269,7 +270,7 @@
                     <p>Sind Sie sich sicher, dass sie sich abmelden wollen?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
                     <form th:action="@{/logout}" method="post">
                         <button type="submit" class="btn btn-danger no-overflow">
                             Abmelden

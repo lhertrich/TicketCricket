@@ -1,4 +1,9 @@
 $(document).ready(function(){
-    var url = "/ajax/setNotificationsRead";
-    $.ajax(url);
+    $("#notificationUser").click(function (){
+        $("#notificationUser").load("/ajax/set-notificationsRead");
+    });
+
+    $("#notificationAdmin").click(function (){
+        $("#notificationAdmin").load("/ajax/set-notificationsRead");
+    });
 });

@@ -81,4 +81,14 @@ public class NotificationService {
         }
         return allOldNotificationsForUser;
     }
+
+    public void setNotificationsReadForUser(User user){
+        List<Notification> allNotifications = findAllNotifications();
+        for (Notification notification : allNotifications){
+            if(notification.getUser().equals(user)){
+                notification.setNew(false);
+                notificationRepository.save(notification);
+            }
+        }
+    }
 }

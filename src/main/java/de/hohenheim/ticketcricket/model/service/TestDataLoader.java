@@ -9,9 +9,12 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 @Component
@@ -236,13 +239,44 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         notification2.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notificationService.saveNotification(notification2);
 
-        for(int i=0; i<50; i++){
-            Notification notification = new Notification();
-            notification.setUser(normalUser1);
-            notification.setTicket(ticket4);
-            notification.setDate(new Date(nd2));
-            notification.setNotificationType(NotificationType.NACHRICHT);
-            notificationService.saveNotification(notification);
+       Notification notification3 = new Notification();
+       notification3.setUser(admin1);
+       notification3.setTicket(ticket4);
+       notification3.setDate(new Date());
+       notification3.setNew(false);
+       notification3.setNotificationType(NotificationType.NACHRICHT);
+       notificationService.saveNotification(notification3);
+
+        Notification notification4 = new Notification();
+        notification4.setUser(admin1);
+        notification4.setTicket(ticket4);
+        notification4.setDate(new Date());
+        notification4.setNotificationType(NotificationType.NACHRICHT);
+        notificationService.saveNotification(notification4);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+        String dateInString = "7-Jun-2022";
+        String dateInString2 = "31-Jun-2022";
+        try {
+            Date date1 = formatter.parse(dateInString);
+            Date date2 = formatter.parse(dateInString2);
+
+            Notification notification5 = new Notification();
+            notification5.setUser(admin1);
+            notification5.setTicket(ticket4);
+            notification5.setDate(date1);
+            notification5.setNotificationType(NotificationType.NACHRICHT);
+            notificationService.saveNotification(notification5);
+
+            Notification notification6 = new Notification();
+            notification6.setUser(admin1);
+            notification6.setTicket(ticket4);
+            notification6.setDate(date2);
+            notification6.setNotificationType(NotificationType.NACHRICHT);
+            notificationService.saveNotification(notification6);
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
     }
 }

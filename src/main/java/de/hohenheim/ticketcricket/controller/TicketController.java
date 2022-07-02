@@ -53,8 +53,12 @@ public class TicketController {
     }
     @PostMapping("/create-ticket")
     public String createTicket(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result, Model model){
+        User currentUser = userService.getCurrentUser();
         if(result.hasErrors()){
             model.addAttribute("ticket", ticket);
+            model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
+            model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
+            model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
             return "ticketerstellung";
         }
         ticket.setStatus(Status.OFFEN);
