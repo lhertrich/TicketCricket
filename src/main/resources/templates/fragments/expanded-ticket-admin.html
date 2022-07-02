@@ -23,16 +23,13 @@
             $('.selectAdmin').select2({
                dropdownParent: $('#parentDropdown'),
                dropdownAutoWidth : false,
-                placeholder: "Suchen...",
                 width: 'resolve',
                 "language": {
                     "noResults": function(){
                         return "Keine Ergebnisse gefunden...";
                     }
                 },
-                escapeMarkup: function (markup) {
-                    return markup;
-                }
+
             }).on('select2:opening', function(e) {
                 $(this).data('select2').$dropdown.find(':input.select2-search__field').attr('placeholder', 'Suchen...')
             });
