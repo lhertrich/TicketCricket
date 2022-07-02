@@ -131,7 +131,7 @@
                     <form id="parentDropdown" class="dropdown-menu p-4 width-drop" th:action="@{/ticket/expand/setAdmin(id=${ticket.ticketID})}" th:object="${ticket}" method="post">
                         <div class="mb-3">
                             <label for="adminOptions" class="form-label">Admin auswählen </label>
-                                <select class="selectAdmin form-control dropdown-width" id="adminOptions">
+                                <select class="selectAdmin form-control dropdown-width" id="adminOptions" th:field="*{admin}">
                                     <option th:each="admin : ${admins}"
                                         th:value="${admin.getUserId()}" th:text="${admin.getUsername()}"></option>
                                  </select>
