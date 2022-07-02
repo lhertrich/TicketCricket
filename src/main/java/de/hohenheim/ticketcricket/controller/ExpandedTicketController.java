@@ -1,12 +1,12 @@
 package de.hohenheim.ticketcricket.controller;
 
 import de.hohenheim.ticketcricket.model.entity.Notification;
+import de.hohenheim.ticketcricket.model.entity.NotificationType;
 import de.hohenheim.ticketcricket.model.entity.Role;
 import de.hohenheim.ticketcricket.model.entity.User;
 import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +35,10 @@ public class ExpandedTicketController {
         Set<Role> roles = currentUser.getRoles();
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
         model.addAttribute("ticket", ticketService.findTicketById(id));
-        model.addAttribute("notifications", notificationService.findAllNotificationsForTicket(id));
+        model.addAttribute("chatNotifications", notificationService.findAllNotificationsForTicket(id));
+        model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
+        model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
+        model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("user", userService.getCurrentUser());
             model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
@@ -55,7 +58,7 @@ public class ExpandedTicketController {
     public String requestStatus(@RequestParam("id") Integer id){
         ticketService.setRequest(id);
         Notification notification = new Notification();
-        notification.setRequest(true);
+        notification.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notification.setTicket(ticketService.findTicketById(id));
         notification.setUser(userService.getCurrentUser());
         notification.setDate(new Date());
