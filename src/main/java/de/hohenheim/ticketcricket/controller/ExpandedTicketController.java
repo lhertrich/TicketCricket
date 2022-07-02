@@ -35,6 +35,7 @@ public class ExpandedTicketController {
         model.addAttribute("ticket", ticketService.findTicketById(id));
         model.addAttribute("notifications", notificationService.findAllNotificationsForTicket(id));
         model.addAttribute("admins", userService.getAdmins());
+        model.addAttribute("bookmark", ticketService.findTicketById(id).isBookmark());
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("user", userService.getCurrentUser());
             model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
@@ -81,6 +82,12 @@ public class ExpandedTicketController {
         notification.setUser(userService.getCurrentUser());
         notification.setDate(new Date());
         notificationService.saveNotification(notification);
+        return "redirect:/ticket/expand?id="+id;
+    }
+
+    @PostMapping("/ticket/expand/setBookmark{id}")
+    public String setBookmark(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
+        ticketService.setBookmark(!ticketService.findTicketById(id).isBookmark(),id);
         return "redirect:/ticket/expand?id="+id;
     }
 }
