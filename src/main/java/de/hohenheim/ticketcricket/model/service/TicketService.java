@@ -61,6 +61,9 @@ public class TicketService {
         } else {
             allTicketsSearch = allTickets;
         }
+        System.out.print("Suchstring: "+searchString+" Ticket: ");
+        allTicketsSearch.stream().map(Ticket::getTitle).forEach(System.out::print);
+        System.out.println("");
         return allTicketsSearch;
     }
 

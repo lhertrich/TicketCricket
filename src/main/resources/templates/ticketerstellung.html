@@ -39,8 +39,7 @@
                     <div class="row form-group box-format">
                         <label for="title">Titel</label>
                         <input type="text" class="form-control input-field" id="title"
-                               placeholder="Geben Sie einen Titel an" th:field="*{title}"
-                             >
+                               placeholder="Geben Sie einen Titel an" th:field="*{title}">
                         <p th:if="${#fields.hasErrors('title')}"  class="error-message" th:errors="*{title}"></p>
                     </div>
                     <div class="row form-group box-format">
