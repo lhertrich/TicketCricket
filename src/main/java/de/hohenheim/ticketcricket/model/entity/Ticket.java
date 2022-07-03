@@ -3,6 +3,8 @@ package de.hohenheim.ticketcricket.model.entity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Ticket {
@@ -30,7 +32,8 @@ public class Ticket {
 
     private Date lastRequest;
 
-    private boolean bookmark;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<User> bookmark;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -119,11 +122,10 @@ public class Ticket {
         this.admin = admin;
     }
 
-    public boolean isBookmark() {
+    public List<User> getBookmark() {
         return bookmark;
     }
-
-    public void setBookmark(boolean bookmark) {
+    public void setBookmark(List<User> bookmark) {
         this.bookmark = bookmark;
     }
 }

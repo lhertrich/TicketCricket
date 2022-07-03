@@ -29,6 +29,7 @@ public class DashboardController {
         User currentUser = userService.getCurrentUser();
         Set<Role> roles = currentUser.getRoles();
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
+        model.addAttribute("currentUser", userService.getCurrentUser());
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("tickets", ticketService.findAllTickets());
         } else {
