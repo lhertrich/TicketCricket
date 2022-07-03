@@ -7,15 +7,17 @@ import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.Set;
 
 @Controller
 public class DashboardController {
-
 
     @Autowired
     private TicketService ticketService;
@@ -40,6 +42,20 @@ public class DashboardController {
             model.addAttribute("tickets", ticketService.findAllTicketsByUser(currentUser));
         }
         return "dashboard";
+    }
+
+    @GetMapping("/ajax/updateHome{searchString}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String updateHome(Model model, @RequestParam("searchString") String searchString){
+        User currentUser = userService.getCurrentUser();
+        Set<Role> roles = currentUser.getRoles();
+        Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
+        if(roleNames.contains("ROLE_ADMIN")) {
+            model.addAttribute("tickets", ticketService.findAllTicketsByUserSearch(searchString, currentUser));
+        } else {
+            model.addAttribute("tickets", ticketService.findAllTicketsByUserSearch(searchString, currentUser));
+        }
+        return "dashboard :: #innerWindowTickets";
     }
 
 }

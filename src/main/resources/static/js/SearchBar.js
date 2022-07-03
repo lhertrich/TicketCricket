@@ -5,11 +5,10 @@ $(function () {
 });
 
 $(document).ready(function(){
-    $("#notificationUser").click(function (){
-        $("#notificationUser").load("/ajax/set-notificationsRead");
-    });
-
-    $("#notificationAdmin").click(function (){
-        $("#notificationAdmin").load("/ajax/set-notificationsRead");
+    var searchString;
+    $("#searchBar").keyup(function (){
+        searchString = $("#searchBar").val();
+        console.log(searchString);
+        $("#bottomOuterBorder").load("/ajax/updateHome?searchString=" + searchString);
     });
 });

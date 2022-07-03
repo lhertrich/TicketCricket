@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/design.css">
@@ -17,7 +19,7 @@
 
 <!-- Tickets -->
 
-<div th:fragment="innerWindow" class="navbar-distance">
+<div th:fragment="innerWindow" class="navbar-distance" id="innerWindowFragment">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -25,12 +27,13 @@
     <script type="text/javascript">
             $( ".dropdown-toggle" ).dropdown();
     </script>
+    <script src="/js/SearchBar.js"></script>
 
     <link rel="stylesheet" href="/css/dashboard.css">
     <li id="topBar" class="list-group-item">
         <div class="d-flex justify-content-between">
             <form class="input-group" style="width: 20%">
-                <input id="searchBar" type="text" class="form-control" placeholder="..." disabled>
+                <input id="searchBar" type="text" class="form-control" placeholder="...">
                 <button id="search" type="submit" class="btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-search" viewBox="0 0 16 16">
@@ -63,8 +66,8 @@
         </div>
     </li>
 
-    <div id="bottomOuterBorder" class="container-fluid">
-        <div th:each="ticket: ${tickets}">
+    <div th:fragment="innerWindowTickets" id="bottomOuterBorder" class="container-fluid">
+        <div th:each="ticket: ${tickets}" id="innerWindowTickets">
             <a th:href="@{/ticket/expand(id=${ticket.ticketID})}" id="ticketBox" href="#"
                class="list-group-item list-group-item-action list-group-item-light mb-2">
                 <div class="d-flex justify-content-between">
@@ -109,9 +112,6 @@
                             <div th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}"
                                  th:text="${ticket.category.displayValue}"
                                  class="col-2 d-none d-md-inline align-self-end badge rounded-pill elseBadge"></div>
-
-
-
                         </div>
                     </div>
                 </div>

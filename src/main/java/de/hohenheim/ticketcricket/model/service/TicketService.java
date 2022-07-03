@@ -1,5 +1,6 @@
 package de.hohenheim.ticketcricket.model.service;
 
+import de.hohenheim.ticketcricket.model.entity.Role;
 import de.hohenheim.ticketcricket.model.entity.Ticket;
 import de.hohenheim.ticketcricket.model.entity.User;
 import de.hohenheim.ticketcricket.model.repository.TicketRepository;
@@ -10,6 +11,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketService {
@@ -42,6 +45,23 @@ public class TicketService {
             }
         }
         return userTickets;
+    }
+
+    public List<Ticket> findAllTicketsByUserSearch(String searchString, User user){
+        List<Ticket> allTickets;
+        Set<String> userRolenames = user.getRoles().stream().map(Role::getRolename).collect(Collectors.toSet());
+        if(userRolenames.contains("ROLE_ADMIN")){
+            allTickets = findAllTickets();
+        } else {
+            allTickets = findAllTicketsByUser(user);
+        }
+        List<Ticket> allTicketsSearch;
+        if(searchString != null){
+            allTicketsSearch = allTickets.stream().filter(x -> x.getTitle().toLowerCase().contains(searchString.toLowerCase())).collect(Collectors.toList());
+        } else {
+            allTicketsSearch = allTickets;
+        }
+        return allTicketsSearch;
     }
 
     public void setRequest(int id){
