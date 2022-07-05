@@ -78,14 +78,15 @@
                 <div class="row">
                     <th:block th:if="${ticket.lastRequest.before(compareDate)}">
                         <form th:action="@{/ticket/status(id=${ticket.ticketID})}" th:object="${ticket}"
-                              method="post" class="d-flex justify-content-start">
+                              method="post" class="d-flex justify-content-center">
                             <button type="submit" class="btn no-overflow our-button">Status anfragen</button>
                         </form>
                     </th:block>
                     <th:block th:if="${compareDate.before(ticket.lastRequest)}">
                         <form class="d-flex justify-content-center">
-                            <button type="button" class="btn no-overflow our-button" disabled>Status anfragen
-                            </button>
+                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Der Status kann nur alle zwölf Stunden angefragt werden">
+                                <button type="button" class="btn no-overflow our-button" disabled>Status anfragen</button>
+                            </span>
                         </form>
                     </th:block>
                 </div>
