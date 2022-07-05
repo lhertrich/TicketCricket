@@ -241,11 +241,17 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         notificationService.saveNotification(notification2);
 
         Message message1 = new Message();
-        message1.setTicket(ticket9);
+        message1.setTicket(ticket);
         message1.setUser(normalUser1);
         message1.setDate(new Date(System.currentTimeMillis()));
-        message1.setMessage("Hallo, ich bin ein Testuser und ich möchte einen Verkauf zu Ihrem Hantelset anbieten. " +
-                "Bitte bestätigen Sie mich damit. Danke!");
+        message1.setMessage("Test von user1");
         messageService.saveMessage(message1);
+
+        Message message2 = new Message();
+        message2.setTicket(ticket);
+        message2.setUser(admin1);
+        message2.setDate(new Date(System.currentTimeMillis()));
+        message2.setMessage("Test von admin1");
+        messageService.saveMessage(message2);
     }
 }

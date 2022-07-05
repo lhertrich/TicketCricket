@@ -76,4 +76,12 @@ public class ExpandedTicketController {
         return message;
     }
 
+    @GetMapping("/ticket/load-messages{id}")
+    @ResponseBody
+    public List<Message> loadMessages(@RequestParam("id") Integer id) {
+        List<Message> messages = messageService.findAllMessages();
+        List<Message> filteredMessages = messages.stream().filter(m -> m.getTicket().getTicketID() == id).collect(java.util.stream.Collectors.toList());
+        return filteredMessages;
+    }
+
 }

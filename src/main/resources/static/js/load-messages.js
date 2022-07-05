@@ -7,36 +7,25 @@ $(function () {
 });
 
 $(document).ready(function () {
-    console.log("ready");
-    $("#text-input-bar").submit(function (e) {
-        console.log("submit");
-        e.preventDefault();
-        var messageData = $("#sendBar").val();
-        var dateData = new Date();
-        var userData = user;
-        var ticketData = ticket;
-        var data = {
-            "message": messageData,
-            "date": dateData,
-            "user": userData,
-            "ticket": ticketData
-        };
+    console.log("ready to load messages");
+    setInterval(function () {
         $.ajax({
-            type: "POST",
-            url: "/ticket/send-message?id=" + ticket.ticketID,
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function(data) {
-                console.log(data);
-                $("#sendBar").val("");
-                $("#messageBox").append(createMessage(data, true));
-            },
-            error: function() {
-                console.log("error");
+            type: "GET",
+            url: "/ticket/load-messages?id=" + ticket.ticketID,
+            success: function (data) {
+                $("#messageBox").empty();
+                for (message of data) {
+                    if (message.user.userId == user.userId) {
+                        $("#messageBox").append(createMessage(message, true));
+                    } else {
+                        $("#messageBox").append(createMessage(message, false));
+                    }
+                }
+                messages = data;
             }
-        });
-    });
+        })
+
+    }, 100);
 });
 
 function createMessage(message, self) {
