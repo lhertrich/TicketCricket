@@ -19,11 +19,5 @@ $(document).ready(function(){
         $("#bottomOuterBorder").load("/ajax/updateHome?searchString=" + searchString);
     });
 
-    $(document).on('keypress',function(e) {
-        if(e.which == 13) {
-            searchString = $("#searchBar").val().replace(/\s+/g, '-');
-            console.log(searchString);
-            $("#bottomOuterBorder").load("/ajax/updateHome?searchString=" + searchString);
-        }
-    });
+
 });

@@ -52,11 +52,17 @@ public class DashboardController {
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
         searchString = searchString.replace("-", " ");
         System.out.println("Controller Suchstring: "+searchString);
-        if(roleNames.contains("ROLE_ADMIN")) {
-            model.addAttribute("tickets", ticketService.findAllTicketsByUserSearch(searchString, currentUser));
-        } else {
-            model.addAttribute("tickets", ticketService.findAllTicketsByUserSearch(searchString, currentUser));
-        }
+        model.addAttribute("tickets", ticketService.findAllTicketsByUserSearch(searchString, currentUser));
+        return "dashboard :: #innerWindowTickets";
+    }
+
+    @GetMapping("/ajax/filter{filterString}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String filterHome(Model model, @RequestParam("filterString") String filterString){
+        User currentUser = userService.getCurrentUser();
+        Set<Role> roles = currentUser.getRoles();
+        Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
+        model.addAttribute("tickets", ticketService.findAllTicketsByUserFilter(filterString, currentUser));
         return "dashboard :: #innerWindowTickets";
     }
 

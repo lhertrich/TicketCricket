@@ -28,6 +28,7 @@
         $(".dropdown-toggle").dropdown();
     </script>
     <script src="/js/SearchBar.js"></script>
+    <script src="/js/Filter.js"></script>
 
     <link rel="stylesheet" href="/css/dashboard.css">
     <li id="topBar" class="list-group-item">
@@ -58,7 +59,30 @@
                 </a>
                 <ul class="dropdown-menu notification-dropdown dropdown-menu-lg-end dd-outer"
                     aria-labelledby="filterIcon">
-                    
+                    <li class="dd-item">
+                            <label for="statusInput"> <strong>Status</strong> </label>
+                            <div id="statusInput" th:each="status: ${T(de.hohenheim.ticketcricket.model.entity.Status).values()}">
+                                <input id="statusCheckbox" type="checkbox" th:value="${status}">
+                                <label for="statusCheckbox" th:text="${status.getDisplayValue()}"></label>
+                            </div>
+                    </li>
+                    <li class="dropdown-divider dd-divider"/>
+                    <li class="dd-item">
+                        <form id="categoryData">
+                            <label for="categoryInput"> <strong>Kategorie</strong> </label>
+                            <div id="categoryInput" th:each="category: ${T(de.hohenheim.ticketcricket.model.entity.Category).values()}">
+                                <input id="categoryCheckbox" type="checkbox" th:value="${category}">
+                                <label for="categoryCheckbox" th:text="${category.getDisplayValue()}"></label>
+                            </div>
+                        </form>
+                    </li>
+                    <li class="dropdown-divider dd-divider" />
+                    <li>
+                        <div id="filterButtons">
+                        <button id="filterResetButton" type="reset" class="btn button-color float-end no-overflow" style="margin: 5px"> Zurücksetzen </button>
+                        <button id="filterSubmitButton" type="button" class="btn button-color float-end no-overflow" style="margin: 5px"> Anwenden </button>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
