@@ -90,7 +90,7 @@
                             </div>
 
                             <div th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"
-                                 class="col-7 fw-bold text-center no-overflow"></div>
+                                 class="col-6 fw-bold text-center no-overflow"></div>
 
                             <!-- Mobile category dots -->
                             <div th:if="${ticket.category.getDisplayValue() == 'Inaktivität'}"
@@ -113,27 +113,42 @@
 
 
 
-                                    <!--- Desktop priority -->
-                                    <div th:if="${ticket.priority.getDisplayValue() == 'Sehr wichtig' }"
-                                         class="d-inline col-1 d-none d-md-inline align-self-start dot priorityBadge" sec:authorize="hasRole('ROLE_ADMIN')">!!!
-                                        <span class="tooltiptext">Sehr Wichtig</span></div>
-                                    <div th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
-                                         class="d-inline col-1 d-none d-md-inline align-self-start dot priorityBadge " sec:authorize="hasRole('ROLE_ADMIN')">!!
-                                        <span class="tooltiptext">Wichtig</span></div>
-                                    <div th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
-                                         class="d-inline col-1 d-none d-md-inline align-self-start dot priorityBadge " sec:authorize="hasRole('ROLE_ADMIN')">!
-                                        <span class="tooltiptext">Unwichtig</span></div>
+                            <!--- Desktop priority -->
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Sehr wichtig' }"
+                                 style="font-weight:bold"
+                                 class="d-inline col-1 d-none d-md-inline align-self-start  " sec:authorize="hasRole('ROLE_ADMIN')">Hoch
+                                </div>
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
+                                 style="font-weight:bold"
+                                 class="d-inline col-1 d-none d-md-inline align-self-start   " sec:authorize="hasRole('ROLE_ADMIN')">Mittel
+                                </div>
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
+                                 style="font-weight:bold;"
+                                 class="d-inline col-1 d-none d-md-inline align-self-start   " sec:authorize="hasRole('ROLE_ADMIN')">Niedrig
+                                </div>
 
-                                    <!--- Mobile Priority Dots -->
-                                    <div th:if="${ticket.priority.getDisplayValue() == 'Sehr wichtig'}"
-                                         class="d-inline col-1 d-md-none align-self-start dot mobilePriorityBadge " sec:authorize="hasRole('ROLE_ADMIN')">!!!
-                                    </div>
-                                    <div th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
-                                         class="d-inline col-1 d-md-none align-self-start dot mobilePriorityBadge " sec:authorize="hasRole('ROLE_ADMIN')">!!
-                                    </div>
-                                    <div th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
-                                         class="d-inline col-1 d-md-none align-self-start dot mobilePriorityBadge " sec:authorize="hasRole('ROLE_ADMIN')">!
-                                    </div>
+                            <!--- Mobile Priority Triangles -->
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Sehr wichtig'}"
+                                 style="font-weight:bold"
+                                 class="d-inline col-1 d-md-none align-self-start   " sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up" viewBox="0 0 16 16">
+                                        <path d="M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
+                                    </svg>
+                            </div>
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
+                                 style="font-weight:bold"
+                                 class="d-inline col-1 d-md-none align-self-start   " sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+                                        <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
+                                    </svg>
+                            </div>
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
+                                 style="font-weight:bold"
+                                 class="d-inline col-1 d-md-none align-self-start   " sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                                        <path d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
+                                    </svg>
+                            </div>
 
 
 
