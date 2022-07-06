@@ -208,10 +208,8 @@
                                  class="col-2 d-none d-md-inline align-self-end badge rounded-pill elseBadge"></div>
 
 
-
-
                             <!--- Mobile Priority Triangles -->
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Sehr wichtig'}"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig'}"
                                  style="font-weight:bold"
                                  class="d-inline col-1 d-md-none align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')"
                                  title="Hoch">
@@ -237,7 +235,7 @@
                             </div>
 
                             <!--- Desktop priority -->
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Sehr wichtig' }"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig' }"
                                  style="font-weight:bold"
                                  class="d-inline col-1 d-none d-md-inline align-self-end " sec:authorize="hasRole('ROLE_ADMIN')">Hoch
                                 </div>
