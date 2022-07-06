@@ -31,6 +31,9 @@ public class Ticket {
     private Date lastRequest;
 
     @Enumerated(EnumType.STRING)
+    private Priority priority;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Enumerated(EnumType.STRING)
