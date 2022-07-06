@@ -1,5 +1,6 @@
 package de.hohenheim.ticketcricket.controller;
 
+import de.hohenheim.ticketcricket.model.entity.Priority;
 import de.hohenheim.ticketcricket.model.entity.Status;
 import de.hohenheim.ticketcricket.model.entity.Ticket;
 import de.hohenheim.ticketcricket.model.service.TicketService;
@@ -48,6 +49,7 @@ public class TicketController {
         }
         ticket.setStatus(Status.OFFEN);
         ticket.setUser(userService.getCurrentUser());
+        ticket.setPriority(Priority.SEHR_WICHTIG);
         Date currentDate = new Date(System.currentTimeMillis());
         ticket.setDate(currentDate);
         ticket.setLastRequest(currentDate);

@@ -8,6 +8,9 @@ body{
     border-bottom-right-radius: 10px;
     background-color: #E8E9F3;
 }
+
+
+
 #topBar{
     border-left-color: #272635;
     border-right-color: #272635;
@@ -56,6 +59,22 @@ body{
     border-radius: 10px;
     margin-top: 10px;
 }
+
+#info-bar {
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.info-status-badge {
+    width: 100px;
+    background-color: #A6A6A8;
+}
+
+.info-category-badge {
+    max-width: 150px;
+    background-color: #A6A6A8;
+}
+
 .finishedBadge{
     width: 100px;
     background-color: #2a6749
@@ -69,6 +88,9 @@ body{
     width: 100px;
     background-color: #ef3b08
 }
+
+
+
 .inactivityBadge{
     max-width: 150px;
     background-color: #75B9BE;
