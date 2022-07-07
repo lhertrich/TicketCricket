@@ -36,10 +36,12 @@ public class Ticket {
     private List<User> bookmark;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Priority priority;
 
     @Enumerated(EnumType.STRING)
-    private Priority priority;
+    private Status status;
+
+
 
     public Ticket(){
     }
