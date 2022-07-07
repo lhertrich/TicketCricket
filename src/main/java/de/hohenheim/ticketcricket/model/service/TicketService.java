@@ -55,7 +55,7 @@ public class TicketService {
         }
         List<Ticket> allTicketsSearch;
         if(searchString != null){
-            allTicketsSearch = allTickets.stream().filter(x -> x.getTitle().toLowerCase().contains(searchString.toLowerCase())).collect(Collectors.toList());
+            allTicketsSearch = allTickets.stream().filter(x -> x.getTitle().replaceAll("\s", "").toLowerCase().contains(searchString.toLowerCase())).collect(Collectors.toList());
         } else {
             allTicketsSearch = allTickets;
         }

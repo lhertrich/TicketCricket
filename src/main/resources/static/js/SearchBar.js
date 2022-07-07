@@ -8,13 +8,13 @@ $(document).ready(function(){
 
     var searchString;
     $("#searchBar").keyup(function (){
-        searchString = $("#searchBar").val().replace(/\s+/g, '-');
+        searchString = $("#searchBar").val().replace(/\s+/g, '');
         console.log(searchString);
         $("#bottomOuterBorder").load("/ajax/updateHome?searchString=" + searchString);
     });
 
     $("#search").click(function (){
-        searchString = $("#searchBar").val().replace(/\s+/g, '-');
+        searchString = $("#searchBar").val().replace(/\s+/g, '');
         console.log(searchString);
         $("#bottomOuterBorder").load("/ajax/updateHome?searchString=" + searchString);
     });
