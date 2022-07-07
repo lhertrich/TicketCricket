@@ -25,7 +25,6 @@ public class JSController {
     @GetMapping("/ajax/set-notificationsRead")
     @ResponseStatus(value = HttpStatus.OK)
     public String setNotificationsRead(Model model){
-        System.out.println("success");
         User currentUser = userService.getCurrentUser();
         Set<Role> roles = currentUser.getRoles();
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());

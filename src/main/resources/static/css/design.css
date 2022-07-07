@@ -197,6 +197,7 @@ select{
     border-color: white;
     border-radius: 10px;
     margin: 5px;
+    padding: 5px;
 }
 
 .dd-text{
