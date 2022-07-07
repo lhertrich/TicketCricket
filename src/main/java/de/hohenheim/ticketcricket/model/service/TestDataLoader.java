@@ -10,9 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -50,6 +48,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         roleService.saveRole(userRole);
         roleService.saveRole(adminRole);
 
+        List<User> allBookmarked = userService.findAllUsers();
+        List<User> bookmarkedTicket8 = new ArrayList<>();
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
 
@@ -86,6 +86,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         admin2.setRoles(adminRoles);
         userService.saveUser(admin2);
 
+        bookmarkedTicket8.add(admin1);
+        bookmarkedTicket8.add(admin2);
 
         Ticket ticket = new Ticket();
         ticket.setCategory(Category.TECHNISCHE_PROBLEME);
@@ -98,6 +100,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket.setTitle("Black Screen");
         ticket.setPriority(Priority.WICHTIG);
         ticket.setAdmin(admin1);
+        ticket.setBookmark(allBookmarked);
         ticketService.saveTicket(ticket);
 
         Ticket ticket1 = new Ticket();
@@ -111,6 +114,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket1.setTitle("Artikelsuche");
         ticket1.setPriority(Priority.WICHTIG);
         ticket1.setAdmin(admin1);
+        ticket1.setBookmark(allBookmarked);
         ticketService.saveTicket(ticket1);
 
         Ticket ticket2 = new Ticket();
@@ -124,6 +128,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket2.setTitle("User LukasB antwortet nicht");
         ticket2.setPriority(Priority.WICHTIG);
         ticket2.setAdmin(admin1);
+        ticket2.setBookmark(new ArrayList<User>());
         ticketService.saveTicket(ticket2);
 
         Ticket ticket3 = new Ticket();
@@ -137,6 +142,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket3.setTitle("Beleidigung in Direct Message");
         ticket3.setPriority(Priority.WICHTIG);
         ticket3.setAdmin(admin1);
+        ticket3.setBookmark(new ArrayList<User>());
         ticketService.saveTicket(ticket3);
 
         Ticket ticket4 = new Ticket();
@@ -150,6 +156,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket4.setTitle("Spam Links in Direct Message");
         ticket4.setPriority(Priority.WICHTIG);
         ticket4.setAdmin(admin1);
+        ticket4.setBookmark(new ArrayList<User>());
         ticketService.saveTicket(ticket4);
 
         Ticket ticket5 = new Ticket();
@@ -163,6 +170,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket5.setTitle("Seite lädt nicht");
         ticket5.setPriority(Priority.WICHTIG);
         ticket5.setAdmin(admin1);
+        ticket5.setBookmark(allBookmarked);
         ticketService.saveTicket(ticket5);
 
         Ticket ticket6 = new Ticket();
@@ -176,6 +184,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket6.setTitle("Button funktioniert nicht");
         ticket6.setPriority(Priority.WICHTIG);
         ticket6.setAdmin(admin1);
+        ticket6.setBookmark(new ArrayList<>());
         ticketService.saveTicket(ticket6);
 
         Ticket ticket7 = new Ticket();
@@ -189,6 +198,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket7.setTitle("User antwortet nicht");
         ticket7.setPriority(Priority.WICHTIG);
         ticket7.setAdmin(admin1);
+        ticket7.setBookmark(allBookmarked);
         ticketService.saveTicket(ticket7);
 
         Ticket ticket8 = new Ticket();
@@ -203,6 +213,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket8.setTitle("User antwortet nicht Verkauf");
         ticket8.setPriority(Priority.WICHTIG);
         ticket8.setAdmin(admin1);
+        ticket8.setBookmark(bookmarkedTicket8);
         ticketService.saveTicket(ticket8);
 
         Ticket ticket9 = new Ticket();
@@ -216,6 +227,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket9.setTitle("Seite crasht beim Inserieren");
         ticket9.setPriority(Priority.WICHTIG);
         ticket9.setAdmin(admin1);
+        ticket9.setBookmark(allBookmarked);
         ticketService.saveTicket(ticket9);
 
         Ticket ticket10 = new Ticket();
@@ -229,6 +241,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket10.setTitle("Home Button Funktion");
         ticket10.setPriority(Priority.WICHTIG);
         ticket10.setAdmin(admin1);
+        ticket10.setBookmark(new ArrayList<>());
         ticketService.saveTicket(ticket10);
 
         Ticket ticket11 = new Ticket();
@@ -242,6 +255,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket11.setTitle("Fake Artikel");
         ticket11.setPriority(Priority.WICHTIG);
         ticket11.setAdmin(admin1);
+        ticket11.setBookmark(new ArrayList<>());
         ticketService.saveTicket(ticket11);
 
 
