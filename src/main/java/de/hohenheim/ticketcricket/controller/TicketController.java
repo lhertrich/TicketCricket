@@ -50,7 +50,7 @@ public class TicketController {
         }
         ticket.setStatus(Status.OFFEN);
         ticket.setUser(userService.getCurrentUser());
-        ticket.setAdmin(ticket.getAdmin());
+        ticket.setAdmin(userService.getUserByUsername("admin1"));
         Date currentDate = new Date(System.currentTimeMillis());
         ticket.setDate(currentDate);
         ticket.setLastRequest(currentDate);

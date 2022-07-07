@@ -70,5 +70,15 @@ public class TicketService {
         ticketToUpdate.setAdmin(admin);
         ticketRepository.save(ticketToUpdate);
     }
+    public void setBookmark(User bookmark, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.getBookmark().add(bookmark);
+        ticketRepository.save(ticketToUpdate);
+    }
 
+    public void removeBookmark(User bookmark, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.getBookmark().remove(bookmark);
+        ticketRepository.save(ticketToUpdate);
+    }
 }
