@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class ExpandedTicketController {
@@ -37,6 +39,8 @@ public class ExpandedTicketController {
         model.addAttribute("admins", userService.getAdmins());
         model.addAttribute("responsibleAdminChar", Character.toUpperCase(ticketService.findTicketById(id).getAdmin().getUsername().charAt(0)));
         model.addAttribute("responsibleAdmin", ticketService.findTicketById(id).getAdmin().getUsername());
+        model.addAttribute("bookmark", ticketService.findTicketById(id).getBookmark());
+        model.addAttribute("currentUser", userService.getCurrentUser());
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("user", userService.getCurrentUser());
             model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
@@ -83,6 +87,17 @@ public class ExpandedTicketController {
         notification.setUser(userService.getCurrentUser());
         notification.setDate(new Date());
         notificationService.saveNotification(notification);
+        return "redirect:/ticket/expand?id="+id;
+    }
+
+    @PostMapping("/ticket/expand/setBookmark{id}")
+    public String setBookmark(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
+        List <User> userBookmark = ticketService.findTicketById(id).getBookmark();
+        if (userBookmark.contains(userService.getCurrentUser())){
+         ticketService.removeBookmark(userService.getCurrentUser(),id);
+        }else{
+           ticketService.setBookmark(userService.getCurrentUser(), id);
+        }
         return "redirect:/ticket/expand?id="+id;
     }
 }
