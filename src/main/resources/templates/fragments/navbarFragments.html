@@ -75,7 +75,7 @@
                                 <li th:if="${!newNotifications.isEmpty()}" class="dropdown-divider dd-divider"/>
                                 <li th:if="${!newNotifications.isEmpty()}" th:each="notification: ${newNotifications}" class="dd-item">
                                     <a class="dropdown-item dd-text" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
-                                       th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
+                                       th:href="@{/notification-clicked-ticket(notificationId=${notification.getNotificationId()})}"/>
                                 </li>
                                 <li th:if="${!newNotifications.isEmpty()}" class="dropdown-divider dd-divider"/>
                                 <li style="text-align: center">
@@ -87,7 +87,7 @@
                                 </li>
                                 <li th:if="${!currentNotifications.isEmpty()}" th:each="notification: ${currentNotifications}" class="dd-item">
                                     <a class="dropdown-item dd-text" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
-                                       th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
+                                       th:href="@{/notification-clicked-ticket(notificationId=${notification.getNotificationId()})}"/>
                                 </li>
                                 <!-- Alte Notifications -->
                                 <li class="dropdown-divider dd-divider"/>
@@ -100,7 +100,7 @@
                                 </li>
                                 <li th:if="${!oldNotifications.isEmpty()}" th:each="notification: ${oldNotifications}" class="dd-item">
                                     <a class="dropdown-item dd-text" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
-                                       th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
+                                       th:href="@{/notification-clicked-ticket(notificationId=${notification.getNotificationId()})}"/>
                                 </li>
                             </ul>
                         </li>

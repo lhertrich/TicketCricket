@@ -256,7 +256,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
         String dateInString = "7-Jun-2022";
-        String dateInString2 = "31-Jun-2022";
+        String dateInString2 = "4-Jul-2022";
         try {
             Date date1 = formatter.parse(dateInString);
             Date date2 = formatter.parse(dateInString2);

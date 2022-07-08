@@ -32,6 +32,14 @@ public class NotificationService {
         return notifications;
     }
 
+    public Notification findNotificiationById(int id){
+        return notificationRepository.getById(id);
+    }
+
+    public void deleteNotification(Notification notification){
+        notificationRepository.delete(notification);
+    }
+
     public List<Notification> findAllNotificationsForTicket(int ticketId){
         List<Notification> allNotifications = findAllNotifications();
         List<Notification> ticketNotifications = new ArrayList<>();
