@@ -35,7 +35,10 @@ public class ExpandedTicketController {
         Set<Role> roles = currentUser.getRoles();
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
         model.addAttribute("ticket", ticketService.findTicketById(id));
-        model.addAttribute("notifications", notificationService.findAllNotificationsForTicket(id));
+        model.addAttribute("chatNotifications", notificationService.findAllNotificationsForTicket(id));
+        model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
+        model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
+        model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
         model.addAttribute("admins", userService.getAdmins());
         model.addAttribute("responsibleAdminChar", Character.toUpperCase(ticketService.findTicketById(id).getAdmin().getUsername().charAt(0)));
         model.addAttribute("responsibleAdmin", ticketService.findTicketById(id).getAdmin().getUsername());
@@ -82,7 +85,7 @@ public class ExpandedTicketController {
     public String requestStatus(@RequestParam("id") Integer id){
         ticketService.setRequest(id);
         Notification notification = new Notification();
-        notification.setRequest(true);
+        notification.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notification.setTicket(ticketService.findTicketById(id));
         notification.setUser(userService.getCurrentUser());
         notification.setDate(new Date());
@@ -99,5 +102,12 @@ public class ExpandedTicketController {
            ticketService.setBookmark(userService.getCurrentUser(), id);
         }
         return "redirect:/ticket/expand?id="+id;
+    }
+
+    @GetMapping("/notification-clicked-ticket{notificationId}")
+    public String deleteNotification(@RequestParam("notificationId") Integer id){
+        int ticketId = notificationService.findNotificiationById(id).getTicket().getTicketID();
+        notificationService.deleteNotification(notificationService.findNotificiationById(id));
+        return "redirect:/ticket/expand?id="+ticketId;
     }
 }
