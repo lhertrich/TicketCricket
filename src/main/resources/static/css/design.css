@@ -237,6 +237,7 @@ margin: 3px;
 .dd-text{
     color: #636464;
 }
+
 [class^='select2'] {
     border-radius: 10px !important;
 }

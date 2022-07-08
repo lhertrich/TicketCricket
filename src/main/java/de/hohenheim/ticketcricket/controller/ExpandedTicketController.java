@@ -106,9 +106,7 @@ public class ExpandedTicketController {
 
     @GetMapping("/notification-clicked-ticket{notificationId}")
     public String deleteNotification(@RequestParam("notificationId") Integer id){
-        System.out.println("called");
         int ticketId = notificationService.findNotificiationById(id).getTicket().getTicketID();
-        System.out.println("ticketid: "+ticketId);
         notificationService.deleteNotification(notificationService.findNotificiationById(id));
         return "redirect:/ticket/expand?id="+ticketId;
     }

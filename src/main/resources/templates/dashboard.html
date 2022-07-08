@@ -178,7 +178,7 @@
             </div>
         </div>
 
-        <div th:each="ticket: ${tickets}">
+        <div th:each="ticket: ${tickets}" id="innerWindowTickets">
             <a th:href="@{/ticket/expand(id=${ticket.ticketID})}" id="ticketBox" href="#"
                class="list-group-item list-group-item-action list-group-item-light mb-2">
                 <div class="d-flex justify-content-between">
