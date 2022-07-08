@@ -214,7 +214,7 @@
                                     </li>
                                     <li th:each="notification: ${newNotifications}" class="dd-item">
                                         <a class="dropdown-item dd-text" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
-                                           th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
+                                           th:href="@{/notification-clicked-ticket(notificationId=${notification.getNotificationId()})}"/>
                                     </li>
                                     <li style="text-align: center">
                                         <strong>Diese Woche</strong>
@@ -225,7 +225,7 @@
                                     </li>
                                     <li th:if="${!currentNotifications.isEmpty()}" th:each="notification: ${currentNotifications}" class="dd-item">
                                         <a class="dropdown-item dd-text" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
-                                           th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
+                                           th:href="@{/notification-clicked-ticket(notificationId=${notification.getNotificationId()})}"/>
                                     </li>
                                     <!-- Alte Notifications -->
                                     <li style="text-align: center">
@@ -238,7 +238,7 @@
                                     </li>
                                     <li th:if="${!oldNotifications.isEmpty()}" th:each="notification: ${oldNotifications}" class="dd-item">
                                         <a class="dropdown-item dd-text" href="#" th:text="'Ticket #'+${notification.getTicket().getTicketID}+': '+${notification.getNotificationType().displayValue}"
-                                           th:href="@{/ticket/expand(id=${notification.getTicket().getTicketID()})}"/>
+                                           th:href="@{/notification-clicked-ticket(notificationId=${notification.getNotificationId()})}"/>
                                     </li>
                                 </ul>
                             <li>
