@@ -209,6 +209,34 @@ margin: 3px;
     text-align: left;
 }
 
+.notification-dropdown{
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.dd-outer{
+    border-color: #272635;
+    border-width: 3px;
+    border-radius: 10px;
+    background-color: #E8E9F3;
+}
+
+.dd-divider{
+    border-color: #272635;
+    border-width: 1px;
+}
+
+.dd-item{
+    background-color: white;
+    border-color: white;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.dd-text{
+    color: #636464;
+}
 [class^='select2'] {
     border-radius: 10px !important;
 }
