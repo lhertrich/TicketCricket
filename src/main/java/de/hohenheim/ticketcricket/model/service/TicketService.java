@@ -1,15 +1,12 @@
 package de.hohenheim.ticketcricket.model.service;
 
-import de.hohenheim.ticketcricket.model.entity.Ticket;
-import de.hohenheim.ticketcricket.model.entity.User;
+import de.hohenheim.ticketcricket.model.entity.*;
 import de.hohenheim.ticketcricket.model.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TicketService {
@@ -47,6 +44,41 @@ public class TicketService {
     public void setRequest(int id){
         Ticket ticketToUpdate = ticketRepository.getById(id);
         ticketToUpdate.setLastRequest(new Date(System.currentTimeMillis()));
+        ticketRepository.save(ticketToUpdate);
+    }
+
+    public void setStatus(Status status, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.setStatus(status);
+        ticketRepository.save(ticketToUpdate);
+    }
+
+    public void setCategory(Category category, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.setCategory(category);
+        ticketRepository.save(ticketToUpdate);
+    }
+
+    public void setPriority(Priority priority, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.setPriority(priority);
+        ticketRepository.save(ticketToUpdate);
+    }
+
+    public void setAdmin(User admin, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.setAdmin(admin);
+        ticketRepository.save(ticketToUpdate);
+    }
+    public void setBookmark(User bookmark, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.getBookmark().add(bookmark);
+        ticketRepository.save(ticketToUpdate);
+    }
+
+    public void removeBookmark(User bookmark, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.getBookmark().remove(bookmark);
         ticketRepository.save(ticketToUpdate);
     }
 }

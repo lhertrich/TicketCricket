@@ -1,5 +1,6 @@
 package de.hohenheim.ticketcricket.controller;
 
+import de.hohenheim.ticketcricket.model.entity.Priority;
 import de.hohenheim.ticketcricket.model.entity.Status;
 import de.hohenheim.ticketcricket.model.entity.Ticket;
 import de.hohenheim.ticketcricket.model.service.TicketService;
@@ -38,6 +39,7 @@ public class TicketController {
     @GetMapping("/ticket-form")
     public String showTicketForm(Model model){
         model.addAttribute("ticket", new Ticket());
+        model.addAttribute("admins", userService.getAdmins());
         return "ticketerstellung";
     }
     @PostMapping("/create-ticket")
@@ -48,9 +50,11 @@ public class TicketController {
         }
         ticket.setStatus(Status.OFFEN);
         ticket.setUser(userService.getCurrentUser());
+        ticket.setAdmin(userService.getUserByUsername("admin1"));
         Date currentDate = new Date(System.currentTimeMillis());
         ticket.setDate(currentDate);
         ticket.setLastRequest(currentDate);
+        ticket.setPriority(Priority.WICHTIG);
         ticketService.saveTicket(ticket);
         return "redirect:/";
     }
