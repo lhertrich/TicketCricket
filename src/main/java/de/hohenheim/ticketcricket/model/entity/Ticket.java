@@ -3,6 +3,8 @@ package de.hohenheim.ticketcricket.model.entity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Ticket {
@@ -15,6 +17,9 @@ public class Ticket {
     @JoinColumn(name = "creatorID")
     private User user;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "adminID")
+    private User admin;
     
     private String title;
 
@@ -27,8 +32,16 @@ public class Ticket {
 
     private Date lastRequest;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<User> bookmark;
+
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
+
     @Enumerated(EnumType.STRING)
     private Status status;
+
+
 
     public Ticket(){
     }
@@ -97,4 +110,24 @@ public class Ticket {
         this.status = status;
     }
 
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public User getAdmin() {return admin;}
+
+    public void setAdmin(User admin) {
+        this.admin = admin;
+    }
+
+    public List<User> getBookmark() {
+        return bookmark;
+    }
+    public void setBookmark(List<User> bookmark) {
+        this.bookmark = bookmark;
+    }
 }

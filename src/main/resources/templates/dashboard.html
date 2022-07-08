@@ -116,7 +116,68 @@
         </div>
     </li>
 
-    <div th:fragment="innerWindowTickets" id="bottomOuterBorder" class="container-fluid">
+
+    <div id="bottomOuterBorder" class="container-fluid">
+
+
+        <!-- Info bar -->
+        <div class="d-none d-md-inline">
+            <div id="info-bar" class="list-group-item mb-2" style="background-color:transparent;
+            border-top: none; border-right:none; border-left:none; border-radius: 0px;">
+                <div class="d-flex justify-content-between">
+                    <div class="container-fluid">
+                        <div class="row justify-content-evenly">
+                            <!-- Status -->
+                            <div class="col-2 d-none d-md-inline align-self-start info-status-badge badge fw-bold "
+                                 style="margin:0px 10px"
+                            >
+                                Status
+                            </div>
+
+                            <!-- Status angefragt -->
+                            <div class="col-1 d-none d-md-inline align-self-end fw-bold mr-2">
+                                Anfrage
+                            </div>
+
+                            <!-- Title text-->
+                            <div class="d-none d-md-inline col-3 fw-bold text-left no-overflow " style="z-index:2; background-color:#E8E9F3">
+                                Titel
+                            </div>
+
+                            <!-- Date -->
+                            <div class="col-1 d-none d-md-inline align-self-end fw-bold ">
+                                Erstellt
+                            </div>
+
+
+                            <!--Bookmark -->
+                            <div class="col-1 d-none d-sm-inline align-self-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                    <title>Um Lesezeichen zu Bearbeiten Ticket öffnen</title>
+                                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                                </svg>
+                            </div>
+
+
+
+                            <!-- Category -->
+                            <div class="col-2 d-none d-md-inline align-self-end fw-bold badge rounded-pill info-category-badge "
+                                 style="margin:0px 10px; color:white;"
+                            >
+                                Kategorie
+                            </div>
+
+                            <!-- Priority -->
+                            <div class="d-inline col-1 d-none d-md-inline align-self-end fw-bold " sec:authorize="hasRole('ROLE_ADMIN')">
+                                Priorität
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div th:each="ticket: ${tickets}" id="innerWindowTickets">
             <a th:href="@{/ticket/expand(id=${ticket.ticketID})}" id="ticketBox" href="#"
                class="list-group-item list-group-item-action list-group-item-light mb-2">
@@ -125,11 +186,14 @@
                         <div class="row justify-content-evenly">
                             <!-- Mobile status dots -->
                             <div th:if="${ticket.status.getDisplayValue() == 'Offen'}"
-                                 class="d-inline col-2 d-md-none align-self-start dot openBadge"></div>
+                                 class="d-inline col-2 d-md-none align-self-start dot openBadge"
+                                 title="Offen"></div>
                             <div th:if="${ticket.status.getDisplayValue() == 'In Bearbeitung'}"
-                                 class="d-inline col-2 d-md-none align-self-start dot progressBadge"></div>
+                                 class="d-inline col-2 d-md-none align-self-start dot progressBadge"
+                                 title="In Bearbeitung"></div>
                             <div th:if="${ticket.status.getDisplayValue() == 'Erledigt'}"
-                                 class="d-inline col-2 d-md-none align-self-start dot finishedBadge"></div>
+                                 class="d-inline col-2 d-md-none align-self-start dot finishedBadge"
+                                 title="Erledigt"></div>
                             <!-- Desktop status -->
                             <div th:if="${ticket.status.getDisplayValue() == 'Offen'}"
                                  class="col-2 d-none d-md-inline align-self-start openBadge badge">Offen
@@ -141,16 +205,80 @@
                                  class="col-2 d-none d-md-inline align-self-start finishedBadge badge">Erledigt
                             </div>
 
+
+                            <!-- Status Timestamp, will only be displayed in Desktop Version-->
+                            <div th:if="${ticket.getLastRequest() != null}"
+                                 class="col-1 d-none d-md-inline align-self-end" style="font-weight:bold"
+                                 title="Status angefragt">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                                    <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                                </svg>
+                            </div>
+                            <div th:if="${ticket.getLastRequest() == null}"
+                                 class="col-1 d-none d-md-inline align-self-end" style="font-weight:bold"
+                                 title="Status nicht angefragt">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                </svg>
+                            </div>
+
+
+
+                            <!-- Ticket Title Text Mobile -->
                             <div th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"
-                                 class="col-7 fw-bold text-center no-overflow"></div>
+                                 class="d-md-none col-6 fw-bold text-left no-overflow"></div>
+
+                            <!-- Ticket Title Text Desktop -->
+                            <div th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"
+                                 class="d-none d-md-inline col-3 fw-bold text-left no-overflow"></div>
+
+
+                            <!-- Creation Date, smaller Desktop View -->
+                            <div th:text="${#dates.format(ticket.getDate(), 'dd.MM.')}"
+                                 class="col-1 d-none d-md-inline d-lg-none align-self-end">
+                            </div>
+
+                            <!-- Creation Date, xl Desktop View -->
+                            <div th:text="${#dates.format(ticket.getDate(), 'dd.MM.yyyy')}"
+                                class="col-1 d-none d-lg-inline align-self-end" >
+                            </div>
+
+
+                            <!--Bookmark -->
+                            <div th:if="${ticket.getBookmark().contains(currentUser)}" id="bookmark" class="col-1 d-none d-sm-inline align-self-start">
+                                <form class="no-style" method="post" th:action="@{/setBookmark(id=${ticket.ticketID})}" href="#">
+                                    <button type="submit" name="submit" value="value" data-toggle="tooltip" data-placement="bottom" title="Klicken um Lesezeichen zu setzen/löschen" class="no-style" >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+                                            <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+                                            <title>Um Lesezeichen zu Bearbeiten Ticket öffnen</title>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div th:if="${!ticket.getBookmark().contains(currentUser)}"id="noBookmark" class="col-1 d-none d-sm-inline align-self-start">
+                                <form class="no-style" method="post" th:action="@{/setBookmark(id=${ticket.ticketID})}">
+                                    <button type="submit" name="submit" value="value" data-toggle="tooltip" data-placement="bottom" title="Klicken um Lesezeichen zu setzen/löschen"  class="no-style">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                            <title>Um Lesezeichen zu Bearbeiten Ticket öffnen</title>
+                                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+
 
                             <!-- Mobile category dots -->
                             <div th:if="${ticket.category.getDisplayValue() == 'Inaktivität'}"
-                                 class="d-inline col-2 d-md-none align-self-end dot inactivityBadge"></div>
+                                 class="d-inline col-2 d-md-none align-self-end dot inactivityBadge"
+                                 title="Inaktivität"></div>
                             <div th:if="${ticket.category.getDisplayValue() == 'Technisches Problem'}"
-                                 class="d-inline col-2 d-md-none align-self-end dot technicalBadge"></div>
+                                 class="d-inline col-2 d-md-none align-self-end dot technicalBadge"
+                                 title="Technisches Problem"></div>
                             <div th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}"
-                                 class="d-inline col-2 d-md-none align-self-end dot elseBadge"></div>
+                                 class="d-inline col-2 d-md-none align-self-end dot elseBadge"
+                                 title="Sonstiges"></div>
 
                             <!-- Desktop categories -->
                             <div th:if="${ticket.category.getDisplayValue() == 'Inaktivität'}"
@@ -162,6 +290,49 @@
                             <div th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}"
                                  th:text="${ticket.category.displayValue}"
                                  class="col-2 d-none d-md-inline align-self-end badge rounded-pill elseBadge"></div>
+
+
+                            <!--- Mobile Priority Triangles -->
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig'}"
+                                 style="font-weight:bold"
+                                 class="d-inline col-1 d-md-none align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')"
+                                 title="Hoch">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up" viewBox="0 0 16 16">
+                                    <path d="M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
+                                </svg>
+                            </div>
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
+                                 style="font-weight:bold"
+                                 class="d-inline col-1 d-md-none align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')"
+                                 title="Mittel">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right" viewBox="0 0 16 16">
+                                    <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
+                                </svg>
+                            </div>
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
+                                 style="font-weight:bold"
+                                 class="d-inline col-1 d-md-none align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')"
+                                 title="Niedrig">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                                    <path d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
+                                </svg>
+                            </div>
+
+                            <!--- Desktop priority -->
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig' }"
+                                 style="font-weight:bold"
+                                 class="d-inline col-1 d-none d-md-inline align-self-end " sec:authorize="hasRole('ROLE_ADMIN')">Hoch
+                                </div>
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
+                                 style="font-weight:bold"
+                                 class="d-inline col-1 d-none d-md-inline align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')">Mittel
+                                </div>
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
+                                 style="font-weight:bold;"
+                                 class="d-inline col-1 d-none d-md-inline align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')">Niedrig
+                                </div>
+
+
                         </div>
                     </div>
                 </div>

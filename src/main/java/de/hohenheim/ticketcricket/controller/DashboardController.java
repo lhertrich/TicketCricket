@@ -2,6 +2,7 @@ package de.hohenheim.ticketcricket.controller;
 
 import de.hohenheim.ticketcricket.model.entity.Role;
 
+import de.hohenheim.ticketcricket.model.entity.Ticket;
 import de.hohenheim.ticketcricket.model.entity.User;
 import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
@@ -10,10 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -33,6 +33,7 @@ public class DashboardController {
         User currentUser = userService.getCurrentUser();
         Set<Role> roles = currentUser.getRoles();
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
+        model.addAttribute("currentUser", userService.getCurrentUser());
         model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
         model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
         model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
@@ -42,6 +43,17 @@ public class DashboardController {
             model.addAttribute("tickets", ticketService.findAllTicketsByUser(currentUser));
         }
         return "dashboard";
+    }
+
+    @PostMapping("/setBookmark{id}")
+    public String setBookmark(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
+        List<User> userBookmark = ticketService.findTicketById(id).getBookmark();
+        if (userBookmark.contains(userService.getCurrentUser())){
+            ticketService.removeBookmark(userService.getCurrentUser(),id);
+        }else{
+            ticketService.setBookmark(userService.getCurrentUser(), id);
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/ajax/updateHome{searchString}")
