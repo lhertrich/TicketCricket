@@ -100,6 +100,7 @@
                     <li class="dd-item">
                         <label for="sortAttribute"> <strong>Sortieren nach</strong> </label>
                         <select class="form-control input-field" id="sortAttribute">
+                            <option value="" selected disabled hidden>Bitte auswählen</option>
                             <option value="Status">Status</option>
                             <option value="Kategorie">Kategorie</option>
                         </select>
@@ -119,7 +120,7 @@
     </li>
 
 
-    <div id="bottomOuterBorder" class="container-fluid">
+    <div th:fragment="ticketFragment" id="bottomOuterBorder" class="container-fluid">
 
 
         <!-- Info bar -->

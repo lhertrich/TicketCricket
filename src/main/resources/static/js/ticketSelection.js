@@ -18,6 +18,22 @@ $(document).ready(function(){
         });
         sortString = $("#sortAttribute").val();
         console.log("searchstring: "+searchString+"; filterstring: "+filterString+"; sortattribute: "+sortString);
+        let selectionObject = {
+            searchString: searchString,
+            filterString: filterString,
+            sortString: sortString
+        }
+        $.ajax({
+            type: "POST",
+            url: "/ajax/updateDashboard",
+            dataType: "text",
+            contentType: "application/json",
+            data: JSON.stringify(selectionObject),
+            success: function (result){
+                console.log("success");
+                $("#bottomOuterBorder").html(result);
+            }
+        })
     });
 
     $("#search").click(function (){

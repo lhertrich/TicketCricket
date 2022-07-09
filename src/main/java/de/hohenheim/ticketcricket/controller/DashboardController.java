@@ -1,5 +1,6 @@
 package de.hohenheim.ticketcricket.controller;
 
+import de.hohenheim.ticketcricket.config.SelectionObject;
 import de.hohenheim.ticketcricket.model.entity.Role;
 
 import de.hohenheim.ticketcricket.model.entity.Ticket;
@@ -73,6 +74,15 @@ public class DashboardController {
         Set<Role> roles = currentUser.getRoles();
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
         model.addAttribute("tickets", ticketService.findAllTicketsByUserFilter(filterString, currentUser));
+        return "dashboard :: #innerWindowTickets";
+    }
+
+    @PostMapping(value = "/ajax/updateDashboard", produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String updateHome(@RequestBody SelectionObject selectionObject, Model model){
+        User currentUser = userService.getCurrentUser();
+        System.out.println("filterstring: "+selectionObject.getFilterString()+"; searchstring: "+selectionObject.getSearchString()+"; sortString: "+selectionObject.getSortString());
+        model.addAttribute("tickets", ticketService.findAllTicketsForUserSelection(currentUser, selectionObject));
         return "dashboard :: #innerWindowTickets";
     }
 

@@ -1,5 +1,6 @@
 package de.hohenheim.ticketcricket.model.service;
 
+import de.hohenheim.ticketcricket.config.SelectionObject;
 import de.hohenheim.ticketcricket.model.entity.*;
 import de.hohenheim.ticketcricket.model.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,26 @@ public class TicketService {
             allTicketsFilter.addAll(allTickets.stream().filter(x -> x.getCategory() == Category.SONSTIGES).collect(Collectors.toList()));
         }
         return allTicketsFilter;
+    }
+
+    private static void sortTickets(List<Ticket> tickets, String sortString){
+        if(sortString == null){
+          return;
+        } else if(sortString == "Kategorie"){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getCategory));
+        } else if(sortString == "Status"){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getCategory));
+        }
+    }
+
+    public List<Ticket> findAllTicketsForUserSelection(User user, SelectionObject selectionObject){
+        List<Ticket> selectedTickets = findAllTicketsByUserFilter(selectionObject.getFilterString(), user);
+        List<Ticket> searchTickets = findAllTicketsByUserSearch(selectionObject.getSearchString(), user);
+        System.out.println(searchTickets);
+        selectedTickets.stream().filter(searchTickets::contains).collect(Collectors.toList());
+        System.out.println(selectedTickets);
+        sortTickets(selectedTickets, selectionObject.getSortString());
+        return searchTickets;
     }
 
     public void setRequest(int id){
