@@ -83,7 +83,7 @@ public class DashboardController {
         User currentUser = userService.getCurrentUser();
         System.out.println("filterstring: "+selectionObject.getFilterString()+"; searchstring: "+selectionObject.getSearchString()+"; sortString: "+selectionObject.getSortString());
         model.addAttribute("tickets", ticketService.findAllTicketsForUserSelection(currentUser, selectionObject));
-        return "dashboard :: #innerWindowTickets";
+        return "dashboard :: #ticketsWithHeader";
     }
 
 }

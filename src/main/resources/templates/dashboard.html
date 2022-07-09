@@ -107,11 +107,11 @@
                     </li>
                     <li class="dropdown-divider dd-divider"></li>
                     <div id="sortButtons">
-                        <button id="sortSubmitButton" type="button" class="btn button-color float-end no-overflow" style="margin: 5px">
-                            Sortieren
-                        </button>
                         <button id="sortResetButton" type="button" class="btn button-color float-end no-overflow" style="margin: 5px">
                             Zurücksetzen
+                        </button>
+                        <button id="sortSubmitButton" type="button" class="btn button-color float-end no-overflow" style="margin: 5px">
+                            Sortieren
                         </button>
                     </div>
                 </ul>
@@ -122,7 +122,7 @@
 
     <div th:fragment="ticketFragment" id="bottomOuterBorder" class="container-fluid">
 
-
+    <div id="ticketsWithHeader">
         <!-- Info bar -->
         <div class="d-none d-md-inline">
             <div id="info-bar" class="list-group-item mb-2" style="background-color:transparent;
@@ -341,6 +341,7 @@
                 </div>
             </a>
         </div>
+    </div>
     </div>
 </div>
 </body>

@@ -60,58 +60,78 @@ public class TicketService {
         return allTicketsSearch;
     }
 
+    private List<Ticket> filterTicketsByCategory(List<Ticket> tickets, String filterString){
+        List<Ticket> categoryTickets = new ArrayList<>();
+        if(filterString.equals("")){
+            return tickets;
+        }
+        if (filterString.contains("OFFEN")){
+            categoryTickets.addAll(tickets.stream().filter(x -> x.getStatus() == Status.OFFEN).collect(Collectors.toList()));
+        }
+        if(filterString.contains("IN_BEARBEITUNG")){
+            categoryTickets.addAll(tickets.stream().filter(x -> x.getStatus() == Status.IN_BEARBEITUNG).collect(Collectors.toList()));
+        }
+        if(filterString.contains("ERLEDIGT")){
+            categoryTickets.addAll(tickets.stream().filter(x -> x.getStatus() == Status.ERLEDIGT).collect(Collectors.toList()));
+        }
+
+        if(categoryTickets.isEmpty()){
+            return tickets;
+        }
+        return categoryTickets;
+    }
+
+    private List<Ticket> filterTicketsByStatus(List<Ticket> tickets, String filterString){
+        List<Ticket> statusTickets = new ArrayList<>();
+        if(filterString.equals("")){
+            return tickets;
+        }
+        if (filterString.contains("INAKTIVITÄT")){
+            statusTickets.addAll(tickets.stream().filter(x -> x.getCategory() == Category.INAKTIVITÄT).collect(Collectors.toList()));
+        }
+        if(filterString.contains("TECHNISCHE_PROBLEME")){
+            statusTickets.addAll(tickets.stream().filter(x -> x.getCategory() == Category.TECHNISCHE_PROBLEME).collect(Collectors.toList()));
+        }
+        if(filterString.contains("SONSTIGES")){
+            statusTickets.addAll(tickets.stream().filter(x -> x.getCategory() == Category.SONSTIGES).collect(Collectors.toList()));
+        }
+        if(statusTickets.isEmpty()){
+            return tickets;
+        }
+        return statusTickets;
+    }
+
     public List<Ticket> findAllTicketsByUserFilter(String filterString, User user){
         List<Ticket> allTickets;
-        List<Ticket> allTicketsFilter = new ArrayList<>();
         Set<String> userRolenames = user.getRoles().stream().map(Role::getRolename).collect(Collectors.toSet());
         if(userRolenames.contains("ROLE_ADMIN")){
             allTickets = findAllTickets();
         } else {
             allTickets = findAllTicketsByUser(user);
         }
-        if(filterString.equals("")){
-            return allTickets;
-        }
-        if (filterString.contains("OFFEN")){
-            allTicketsFilter.addAll(allTickets.stream().filter(x -> x.getStatus() == Status.OFFEN).collect(Collectors.toList()));
-        }
-        if(filterString.contains("IN_BEARBEITUNG")){
-            allTicketsFilter.addAll(allTickets.stream().filter(x -> x.getStatus() == Status.IN_BEARBEITUNG).collect(Collectors.toList()));
-        }
-        if(filterString.contains("ERLEDIGT")){
-            allTicketsFilter.addAll(allTickets.stream().filter(x -> x.getStatus() == Status.ERLEDIGT).collect(Collectors.toList()));
-        }
-
-        if(filterString.contains("INAKTIVITÄT")){
-            allTicketsFilter.addAll(allTickets.stream().filter(x -> x.getCategory() == Category.INAKTIVITÄT).collect(Collectors.toList()));
-        }
-        if(filterString.contains("TECHNISCHE_PROBLEME")){
-            allTicketsFilter.addAll(allTickets.stream().filter(x -> x.getCategory() == Category.TECHNISCHE_PROBLEME).collect(Collectors.toList()));
-        }
-        if(filterString.contains("SONSTIGES")){
-            allTicketsFilter.addAll(allTickets.stream().filter(x -> x.getCategory() == Category.SONSTIGES).collect(Collectors.toList()));
-        }
-        return allTicketsFilter;
+        List<Ticket> categoryTickets = filterTicketsByCategory(allTickets, filterString);
+        List<Ticket> statusTickets = filterTicketsByStatus(allTickets, filterString);
+        List<Ticket> filterTickets = categoryTickets.stream().filter(statusTickets::contains).collect(Collectors.toList());
+        
+        return filterTickets;
     }
 
     private static void sortTickets(List<Ticket> tickets, String sortString){
         if(sortString == null){
-          return;
-        } else if(sortString == "Kategorie"){
+            return;
+        } else if(sortString.equals("Kategorie")){
             Collections.sort(tickets, Comparator.comparing(Ticket::getCategory));
-        } else if(sortString == "Status"){
-            Collections.sort(tickets, Comparator.comparing(Ticket::getCategory));
+        } else if(sortString.equals("Status")){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getStatus));
         }
     }
 
     public List<Ticket> findAllTicketsForUserSelection(User user, SelectionObject selectionObject){
         List<Ticket> selectedTickets = findAllTicketsByUserFilter(selectionObject.getFilterString(), user);
         List<Ticket> searchTickets = findAllTicketsByUserSearch(selectionObject.getSearchString(), user);
-        System.out.println(searchTickets);
-        selectedTickets.stream().filter(searchTickets::contains).collect(Collectors.toList());
-        System.out.println(selectedTickets);
+        selectedTickets = selectedTickets.stream().filter(searchTickets::contains).collect(Collectors.toList());
         sortTickets(selectedTickets, selectionObject.getSortString());
-        return searchTickets;
+        return selectedTickets;
     }
 
     public void setRequest(int id){

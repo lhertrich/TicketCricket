@@ -5,12 +5,14 @@ $(document).ready(function(){
             xhr.setRequestHeader(header, token); });
     });
 
-    //search
+    //Attributes
     let searchString;
     let filterString = "";
     let sortString;
-    $("#searchBar").keyup(function (){
+
+    function getDataAndSend(){
         searchString = $("#searchBar").val().replace(/\s+/g, '');
+        filterString = "";
         $(":checkbox").each(function(){
             if($(this).is(":checked")){
                 filterString += $(this).val();
@@ -34,31 +36,37 @@ $(document).ready(function(){
                 $("#bottomOuterBorder").html(result);
             }
         })
+    }
+
+    //Searchbar
+    $("#searchBar").keyup(function (){
+        getDataAndSend();
     });
 
     $("#search").click(function (){
-        searchString = $("#searchBar").val().replace(/\s+/g, '');
-        $("#bottomOuterBorder").load("/ajax/updateHome?searchString=" + searchString);
+        getDataAndSend();
     });
 
-    $("#filterResetButton").click(function (){
-
-    });
-
+    //Filterbuttons
     $("#filterSubmitButton").click(function (){
-        let filterString = "";
-        $(":checkbox").each(function(){
-            if($(this).is(":checked")){
-                filterString += $(this).val();
-            }
-        });
-        $("#bottomOuterBorder").load("/ajax/filter?filterString=" + filterString);
+        getDataAndSend();
     });
 
     $("#filterResetButton").click(function (){
+        filterString = "";
         $(":checkbox").each(function (){
             $(this).prop('checked', false);
         });
-        $("#bottomOuterBorder").load("/ajax/filter?filterString=");
+        getDataAndSend();
+    });
+
+    //Sortbuttons
+    $("#sortSubmitButton").click(function (){
+        getDataAndSend();
+    });
+
+    $("#sortResetButton").click(function (){
+        sortString = "";
+        $("#sortAttribute").val("");
     });
 });
