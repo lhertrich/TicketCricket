@@ -246,3 +246,21 @@ margin: 3px;
     width: 300px;
     visibility: hidden
 }
+
+.filter-dropdown{
+    width: 75vw;
+    max-width: 500px;
+
+    max-height: 50vh; !important;
+}
+.sort-dropdown{
+    width: 75vw;
+    max-width: 400px;
+
+    max-height: 50vh; !important;
+}
+
+#sortAttribute{
+    width: 258px;
+}
+
