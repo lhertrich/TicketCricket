@@ -49,7 +49,6 @@ html, body {
 }
 
 .input-field {
-    border-color:black;
     border-radius:10px;
 }
 
@@ -140,6 +139,8 @@ html, body {
     text-align: center;
 }
 
+
+
 .our-button{
     max-width: 190px;
     background-color: #A6A6A8;
@@ -170,9 +171,42 @@ html, body {
     color: white;
 
 }
+.width-drop{
+    width: 350px;
+}
+.arrow-drop{
+    -webkit-appearance: none; !important;
+    -moz-appearance: none; !important;
+    appearance: none; !important;
+}
+.admin-badge{
+    background-color: #3babf8;
+    font-size: large;
+}
 
-select{
+.margin-top-bar{
+    margin-right: 25px;
+}
+
+.select2-selection__rendered {
+margin: 3px;
+}
+
+.select2-selection__arrow {
+margin: 3px;
+    -webkit-appearance: none; !important;
+    -moz-appearance: none; !important;
     -webkit-appearance:listbox !important;
+}
+.select2-selection {
+    background-color: #fff;
+    border: 0;
+    border-radius: 0;
+    color: #555555;
+    font-size: 16px;
+    outline: 0;
+    min-height: 37px;
+    text-align: left;
 }
 
 .chat-message-self {
@@ -199,3 +233,62 @@ select{
     padding: 10px;
     margin: 10px 0;
 }
+
+.notification-dropdown{
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.dd-outer{
+    border-color: #272635;
+    border-width: 3px;
+    border-radius: 10px;
+    background-color: #E8E9F3;
+}
+
+.dd-divider{
+    border-color: #272635;
+    border-width: 1px;
+}
+
+.dd-item{
+    background-color: white;
+    border-color: white;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.dd-text{
+    color: #636464;
+}
+
+[class^='select2'] {
+    border-radius: 10px !important;
+}
+
+.dropdown-width{
+    width: 300px;
+    visibility: hidden
+}
+
+.filter-dropdown{
+    width: 75vw;
+    max-width: 500px;
+
+    max-height: 50vh; !important;
+}
+.sort-dropdown{
+    width: 75vw;
+    max-width: 400px;
+
+    max-height: 50vh; !important;
+}
+
+#sortAttribute{
+    width: 258px;
+}
+#min-body-height{
+    min-height: 100vh;
+}
+

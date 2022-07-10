@@ -6,8 +6,6 @@
     <title>Expanded Ticket</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-
 </head>
 
 <body>
@@ -29,14 +27,66 @@
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/js/websocket-chat.js"></script>
 
+    <!--Select 2 Stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Import of JQuery and Select2 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.selectAdmin').select2({
+               dropdownParent: $('#parentDropdown'),
+               dropdownAutoWidth : false,
+                width: 'resolve',
+                "language": {
+                    "noResults": function(){
+                        return "Keine Ergebnisse gefunden...";
+                    }
+                },
+
+            }).on('select2:opening', function(e) {
+                $(this).data('select2').$dropdown.find(':input.select2-search__field').attr('placeholder', 'Suchen...')
+            });
+            $('.selectStatus').select2({
+                minimumResultsForSearch: -1
+            });
+            $('.selectCategory').select2({
+                minimumResultsForSearch: -1
+            });
+            $('.selectPriority').select2({
+                minimumResultsForSearch: -1
+            });
+        });
+    </script>
+
     <div class="container-fluid">
+
         <!-- Top Bar -->
         <div id="topBar" class="row top-bar align-items-center top-outer-border p-1">
-            <div id="title" th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"
-                 class="no-overflow col my-2">
+            <div id="title" class="no-overflow col my-2">
+            <form class="form-inline" method="post" th:action="@{/ticket/expand/setBookmark(id=${ticket.ticketID})}">
+                <th:block th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"></th:block>
+                <!--Bookmark -->
+                <button type="submit" name="submit" value="value" class="link-button" data-toggle="tooltip" data-placement="bottom" title="Klicken um Lesezeichen zu setzen/löschen" style="background-color: #272635; border: none" >
+                    <svg th:if="${ticket.getBookmark().contains(currentUser)}" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 20 20" style="color: white">
+                        <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+                    </svg>
+                    <svg th:if="${!ticket.getBookmark().contains(currentUser)}" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 20 20" style="color: white">
+                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+                    </svg>
+                </button>
+            </form>
             </div>
-            <div id="topButtons" class="col align-self-center">
-                <a th:href="@{/}" style="color: white">
+
+            <div id="topButtons" class="col d-flex align-items-center justify-content-end">
+                <button th:if="${user eq ticket.getUser()}" type="button" style="max-width: 190px; margin-right: 35px"
+                        class="col-6 btn btn-danger no-overflow float-end d-none d-sm-block our-button-takeback"
+                        data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
+                    Ticket&nbsp;zurücknehmen
+                </button>
+                <span class="badge badge-secondary admin-badge float-end margin-top-bar" data-bs-toggle="tooltip" th:title="${responsibleAdmin}" th:text="${responsibleAdminChar}" disabled></span>
+                <a th:href="@{/}" style="color: white;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                          fill="currentColor" class="bi bi-x-lg float-end mx-2" viewBox="0 0 16 16"
                          style="min-width: 32px; min-height: 32px">
@@ -44,21 +94,10 @@
                     </svg>
                 </a>
 
-
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                     fill="currentColor" class="bi bi-person float-end mx-2" viewBox="0 0 16 16"
-                     style="min-width: 32px; min-height: 32px">
-                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                </svg>
-
-                <button th:if="${user eq ticket.getUser()}" type="button" style="max-width: 190px"
-                        class="col-6 btn btn-danger no-overflow float-end mx-2 d-none d-sm-block our-button-takeback"
-                        data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
-                    Ticket&nbsp;zurücknehmen
-                </button>
             </div>
         </div>
         <!-- Top Bar end -->
+
         <!-- Ticket Info start -->
         <div id="ticketInfo" class="row mid-outer-border">
             <!-- Ticket Info left-->
@@ -94,22 +133,86 @@
                           class="elseBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
                 </div>
                 <div id="priority" class="row fs-10 fw-bold p-1">Priorität:
-                    <span class="openBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"> Wichtig </span>
+                        <span th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig'}"
+                              class="openBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center col">Sehr wichtig
+                    </span>
+                        <span th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
+                              class="progressBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center col">Wichtig
+                    </span>
+                        <span th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
+                              class="finishedBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center col">Unwichtig
+                    </span>
+                    </div>
                 </div>
-            </div>
+
             <!-- Ticket Info right -->
             <div id="rightButtons" class="col align-self-evenly">
-                <div id="setAdmin" class="row p-2 d-flex justify-content-start">
-                    <button type="button" class="align-self-end btn our-button" disabled>Admin&nbsp;zuweisen</button>
+                <!--<div id="setAdmin" class="row p-2 d-flex justify-content-start">
+                    <button type="button" class="align-self-end btn our-button">Admin&nbsp;zuweisen</button>
+                </div>-->
+                <div id="setAdmin" class="row p-2 d-flex justify-content-start dropdown-center">
+                    <button type="button" class="btn btn-secondary our-button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        Admin zuweisen
+                    </button>
+
+                    <form id="parentDropdown" class="dropdown-menu p-4 width-drop" th:action="@{/ticket/expand/setAdmin(id=${ticket.ticketID})}" th:object="${ticket}" method="post">
+                        <div class="mb-3">
+                            <label for="adminOptions" class="form-label">Admin auswählen </label>
+                                <select class="selectAdmin form-control dropdown-width" id="adminOptions" th:field="*{admin}">
+                                    <option th:each="admin : ${admins}"
+                                        th:value="${admin.getUserId()}" th:text="${admin.getUsername()}"></option>
+                                 </select>
+                        </div>
+                        <button th:type="submit"  th:text="Anwenden" class="btn our-button"></button>
+                    </form>
                 </div>
-                <div id="setStatus" class="row p-2 d-flex justify-content-start">
-                    <button type="button" class="btn our-button" disabled>Status&nbsp;ändern</button>
+
+                <div id="setStatus" class="row p-2 d-flex justify-content-start dropdown-center">
+                    <button type="button" class="btn btn-secondary our-button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        Status ändern
+                    </button>
+                    <form class="dropdown-menu p-4 width-drop" th:action="@{/ticket/expand/setStatus(id=${ticket.ticketID})}" th:object="${ticket}" method="post">
+                        <div class="mb-3">
+                            <label for="statusOptions" class="form-label">Status auswählen</label>
+                            <select class="selectStatus dropdown-width" id="statusOptions" th:field="*{status}">
+                               <option th:each="status : ${T(de.hohenheim.ticketcricket.model.entity.Status).values()}"
+                               th:value="${status}" th:text="${status.getDisplayValue()}"></option>
+                            </select>
+                        </div>
+                        <button th:type="submit"  th:text="Anwenden" class="btn our-button"></button>
+                    </form>
                 </div>
-                <div id="setCategory" class="row p-2 d-flex justify-content-start">
-                    <button type="button" class="btn our-button" disabled>Katgeorie&nbsp;ändern</button>
+
+                <div id="setCategory" class="row p-2 d-flex justify-content-start dropdown-center">
+                    <button type="button" class="btn btn-secondary our-button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        Kategorie ändern
+                    </button>
+                    <form class="dropdown-menu p-4 width-drop" th:action="@{/ticket/expand/setCategory(id=${ticket.ticketID})}" th:object="${ticket}" method="post">
+                        <div class="mb-3">
+                            <label for="statusOptions" class="form-label">Status auswählen</label>
+                            <select class="selectCategory dropdown-width" id="categoryOptions" th:field="*{category}">
+                                <option th:each="category : ${T(de.hohenheim.ticketcricket.model.entity.Category).values()}"
+                                        th:value="${category}" th:text="${category.getDisplayValue()}"></option>
+                            </select>
+                        </div>
+                        <button th:type="submit"  th:text="Anwenden" class="btn our-button"></button>
+                    </form>
                 </div>
-                <div id="setPriority" class="row p-2 d-flex justify-content-sart">
-                    <button type="button" class="btn our-button" disabled>Priorität&nbsp;ändern</button>
+
+                <div id="setPriority" class="row p-2 d-flex justify-content-start dropdown-center arrow-drop">
+                    <button type="button" class="btn btn-secondary our-button " data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        Priorität ändern
+                    </button>
+                    <form class="dropdown-menu p-4 width-drop" th:action="@{/ticket/expand/setPriority(id=${ticket.ticketID})}" th:object="${ticket}" method="post">
+                        <div class="mb-3">
+                            <label for="statusOptions" class="form-label">Status auswählen</label>
+                            <select class="selectPriority dropdown-width" id="priorityOptions" th:field="*{priority}">
+                                <option th:each="priority : ${T(de.hohenheim.ticketcricket.model.entity.Priority).values()}"
+                                        th:value="${priority}" th:text="${priority.getDisplayValue()}"></option>
+                            </select>
+                        </div>
+                        <button th:type="submit"  th:text="Anwenden" class="btn our-button"></button>
+                    </form>
                 </div>
                 <div class="row d-flex d-sm-none justify-content-center p-2">
                     <button th:if="${user eq ticket.getUser()}" type="button" style="max-width: 190px" class="col btn btn-danger no-overflow"
