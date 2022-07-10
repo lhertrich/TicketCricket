@@ -215,6 +215,7 @@ margin: 3px;
     border-radius: 10px;
     padding: 10px;
     margin: 10px 0;
+    overflow-wrap: break-word;
 }
 
 .chat-message-other {
@@ -223,6 +224,7 @@ margin: 3px;
     border-radius: 10px;
     padding: 10px;
     margin: 10px 0;
+    overflow-wrap: break-word;
 }
 
 .chat-status {
@@ -233,6 +235,61 @@ margin: 3px;
     padding: 10px;
     margin: 10px 0;
 }
+
+.message-box {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    position: relative;
+    background: rgba(59, 171, 248, 0.91);
+    border: 2px solid #3babf8;
+    color: #000000;
+}
+
+
+.message-box:after {
+    content: "";
+    position: absolute;
+    border: 10px solid transparent;
+    border-top: 10px solid #3babf8;
+    border-right: none;
+    bottom: -22px;
+    right: 5%;
+}
+
+.message-box-other {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    position: relative;
+    background: rgba(218, 218, 218, 0.87);
+    border: 2px solid #dadada;
+    color: #000000;
+}
+
+.message-box-other:after {
+    content: "";
+    position: absolute;
+    border: 10px solid transparent;
+    border-top: 10px solid #dadada;
+    border-left: none;
+    bottom: -22px;
+    right: 90%;
+}
+
+.text-align-end {
+    text-align: end;
+}
+
+.break-text {
+    overflow-wrap: break-word;
+}
+
+.name {
+    font-weight: bold;
+}
+
+
 
 .notification-dropdown{
     max-height: 220px;
@@ -292,7 +349,14 @@ margin: 3px;
     min-height: 100vh;
 }
 
+#messageBox {
+    max-height: calc(100vh - 500px);
+    height: calc(100vh - 500px);
+    overflow-y: scroll;
+}
 .search-bar-width{
     min-width: 250px;
     max-width: 500px;
 }
+
+

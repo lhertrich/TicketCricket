@@ -31,41 +31,57 @@ function createMessage(message, self) {
     var message;
     var date = new Date(message.date);
     if (self) {
-        message = "<div class=\"row justify-content-end\">\n" +
-            "            <div class=\"col-6 float-right chat-message-self\">\n" +
-            "                <div class=\"row\">\n" +
-            "                    <div class=\"row\">\n" +
-            "                        <div class=\"col\">" + message.message + "</div>\n" +
-            "                    </div>\n" +
-            "                    <div class=\"row\">\n" +
-            "                        <div class=\"col-6 align-self-start text-muted\">\n" +
-            "                            " + message.user.username + "\n" +
+        message = "<div class=\"container\">\n" +
+            "    <div id=\"top-2\" class=\"row justify-content-end\">\n" +
+            "        <div class=\"col-7 message-box\">\n" +
+            "            <div class=\"row\">\n" +
+            "                <div id=\"text-wrapper-2\" class=\"col\">\n" +
+            "                    <div id=\"username-2\" class=\"row\">\n" +
+            "                        <div class=\"col name\">\n" +
+            "                            "+message.user.username+"\n" +
             "                        </div>\n" +
-            "                        <div class=\"col-6 align-self-end text-muted\" style=\"text-align: end\">\n" +
-            "                            " + date.getHours() + ":" + date.getMinutes() + "\n" +
+            "                    </div>\n" +
+            "                    <div id=\"message-2\" class=\"row break-text\">\n" +
+            "                        <div class=\"col\">\n" +
+            "                            "+message.message+"\n" +
+            "                        </div>\n" +
+            "                    </div>\n" +
+            "                    <div id=\"date-2\" class=\"row text-muted\">\n" +
+            "                        <div class=\"col\">\n" +
+            "                            "+ date.getHours()+":"+date.getMinutes()+"\n" +
             "                        </div>\n" +
             "                    </div>\n" +
             "                </div>\n" +
             "            </div>\n" +
-            "        </div>";
+            "        </div>\n" +
+            "    </div>\n" +
+            "</div>";
     } else {
-        message = "<div class=\"row justify-content-start\">\n" +
-            "            <div class=\"col-6 float-right chat-message-other\">\n" +
-            "                <div class=\"row\">\n" +
-            "                    <div class=\"row\">\n" +
-            "                        <div class=\"col\">" + message.message + "</div>\n" +
-            "                    </div>\n" +
-            "                    <div class=\"row\">\n" +
-            "                        <div class=\"col-6 align-self-start text-muted\">\n" +
-            "                            " + message.user.username + "\n" +
+        message = "<div class=\"container\">\n" +
+            "    <div id=\"top-3\" class=\"row justify-content-start\">\n" +
+            "        <div class=\"col-7 message-box-other\">\n" +
+            "            <div class=\"row\">\n" +
+            "                <div id=\"text-wrapper-3\" class=\"col\">\n" +
+            "                    <div id=\"username\" class=\"row\">\n" +
+            "                        <div class=\"col name\">\n" +
+            "                            "+message.user.username+"\n" +
             "                        </div>\n" +
-            "                        <div class=\"col-6 align-self-end text-muted\" style=\"text-align: end\">\n" +
-            "                            " + date.getHours() + ":" + date.getMinutes() + "\n" +
+            "                    </div>\n" +
+            "                    <div id=\"message-3\" class=\"row break-text\">\n" +
+            "                        <div class=\"col\">\n" +
+            "                            "+message.message+"\n" +
+            "                        </div>\n" +
+            "                    </div>\n" +
+            "                    <div id=\"date-3\" class=\"row text-muted\">\n" +
+            "                        <div class=\"col text-align-end\">\n" +
+            "                            "+ date.getHours()+":"+date.getMinutes()+"\n" +
             "                        </div>\n" +
             "                    </div>\n" +
             "                </div>\n" +
             "            </div>\n" +
-            "        </div>";
+            "        </div>\n" +
+            "    </div>\n" +
+            "</div>"
     }
     return message;
 }
