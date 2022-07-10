@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/css/design.css">
     <title>Ticketsystem - Dashboard</title>
 </head>
-<body>
+<body id="min-body-height">
 <!-- Navbar -->
 <th:block th:insert="fragments/navbarFragments::navbarUser" sec:authorize="hasRole('ROLE_USER')"/>
 <th:block th:insert="fragments/navbarFragments::navbarAdmin" sec:authorize="hasRole('ROLE_ADMIN')"/>

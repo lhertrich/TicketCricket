@@ -263,4 +263,7 @@ margin: 3px;
 #sortAttribute{
     width: 258px;
 }
+#min-body-height{
+    min-height: 100vh;
+}
 
