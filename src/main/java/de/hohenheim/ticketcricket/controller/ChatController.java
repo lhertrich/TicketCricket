@@ -13,7 +13,6 @@ public class ChatController {
     @Autowired
     private MessageService messageService;
 
-    //hier senden wir Nachricht hin
     @MessageMapping("/chat{id}")
     @SendTo("/topic/chat{id}")
     public Message chat(Message message) {

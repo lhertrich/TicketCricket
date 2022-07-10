@@ -11,9 +11,16 @@ import java.util.Date;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Message {
 
+    private enum MessageType {
+        CHAT,
+        STATUS
+    }
+
     @Id
     @GeneratedValue
     private int messageId;
+
+    private MessageType messageType;
 
     private String message;
 
@@ -69,5 +76,13 @@ public class Message {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
     }
 }

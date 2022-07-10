@@ -27,6 +27,7 @@ function sendMessage() {
     var ticketData = ticket;
     var data = {
         "message": messageData,
+        "messageType": "CHAT",
         "date": dateData,
         "user": userData,
         "ticket": ticketData
