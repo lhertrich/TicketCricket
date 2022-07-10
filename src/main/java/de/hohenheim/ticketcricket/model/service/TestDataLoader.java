@@ -182,7 +182,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket6.setCategory(Category.TECHNISCHE_PROBLEME);
         ticket6.setUser(normalUser1);
         long d6 = System.currentTimeMillis();
-        ticket6.setDate(new Date(d6));
+        ticket6.setDate(new Date(d6 - 200000000));
         ticket6.setLastRequest(new Date(d6));
         ticket6.setProblem("Der Impressum-Button kann nicht gedrückt werden");
         ticket6.setStatus(Status.OFFEN);
@@ -225,7 +225,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket9.setCategory(Category.TECHNISCHE_PROBLEME);
         ticket9.setUser(normalUser2);
         long d9 = System.currentTimeMillis();
-        ticket9.setDate(new Date(d9));
+        ticket9.setDate(new Date(d9-1000000000));
         ticket9.setLastRequest(new Date(d9));
         ticket9.setProblem("Wenn ich einen Artikel inseriere crasht die Seite oft.");
         ticket9.setStatus(Status.ERLEDIGT);
@@ -239,7 +239,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket10.setCategory(Category.TECHNISCHE_PROBLEME);
         ticket10.setUser(admin1);
         long d10 = System.currentTimeMillis();
-        ticket10.setDate(new Date(d10));
+        ticket10.setDate(new Date(d10-500000000));
         ticket10.setLastRequest(new Date(d10));
         ticket10.setProblem("Home Button in der Navbar funktioniert nicht");
         ticket10.setStatus(Status.OFFEN);
