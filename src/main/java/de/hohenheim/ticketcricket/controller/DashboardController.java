@@ -57,32 +57,13 @@ public class DashboardController {
         return "redirect:/";
     }
 
-    @GetMapping("/ajax/updateHome{searchString}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public String updateHome(Model model, @RequestParam("searchString") String searchString){
-        User currentUser = userService.getCurrentUser();
-        Set<Role> roles = currentUser.getRoles();
-        Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
-        model.addAttribute("tickets", ticketService.findAllTicketsByUserSearch(searchString, currentUser));
-        return "dashboard :: #innerWindowTickets";
-    }
-
-    @GetMapping("/ajax/filter{filterString}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public String filterHome(Model model, @RequestParam("filterString") String filterString){
-        User currentUser = userService.getCurrentUser();
-        Set<Role> roles = currentUser.getRoles();
-        Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
-        model.addAttribute("tickets", ticketService.findAllTicketsByUserFilter(filterString, currentUser));
-        return "dashboard :: #innerWindowTickets";
-    }
-
     @PostMapping(value = "/ajax/updateDashboard", produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     public String updateHome(@RequestBody SelectionObject selectionObject, Model model){
         User currentUser = userService.getCurrentUser();
         System.out.println("filterstring: "+selectionObject.getFilterString()+"; searchstring: "+selectionObject.getSearchString()+"; sortString: "+selectionObject.getSortString());
         model.addAttribute("tickets", ticketService.findAllTicketsForUserSelection(currentUser, selectionObject));
+        model.addAttribute("currentUser", userService.getCurrentUser());
         return "dashboard :: #ticketsWithHeader";
     }
 

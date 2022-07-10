@@ -10,6 +10,8 @@ $(document).ready(function(){
     let filterString = "";
     let sortString;
 
+    if(searchString != "" )
+
     function getDataAndSend(){
         searchString = $("#searchBar").val().replace(/\s+/g, '');
         filterString = "";

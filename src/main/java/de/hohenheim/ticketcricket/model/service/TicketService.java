@@ -43,7 +43,7 @@ public class TicketService {
         return userTickets;
     }
 
-    public List<Ticket> findAllTicketsByUserSearch(String searchString, User user){
+    private List<Ticket> findAllTicketsByUserSearch(String searchString, User user){
         List<Ticket> allTickets;
         Set<String> userRolenames = user.getRoles().stream().map(Role::getRolename).collect(Collectors.toSet());
         if(userRolenames.contains("ROLE_ADMIN")){
@@ -83,9 +83,7 @@ public class TicketService {
 
     private List<Ticket> filterTicketsByStatus(List<Ticket> tickets, String filterString){
         List<Ticket> statusTickets = new ArrayList<>();
-        if(filterString.equals("")){
-            return tickets;
-        }
+
         if (filterString.contains("INAKTIVITÄT")){
             statusTickets.addAll(tickets.stream().filter(x -> x.getCategory() == Category.INAKTIVITÄT).collect(Collectors.toList()));
         }
@@ -101,7 +99,25 @@ public class TicketService {
         return statusTickets;
     }
 
-    public List<Ticket> findAllTicketsByUserFilter(String filterString, User user){
+    private List<Ticket> filterTicketsByPrio(List<Ticket> tickets, String filterString){
+        List<Ticket> prioTickets = new ArrayList<>();
+
+        if(filterString.contains("SEHR_WICHTIG")){
+            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.SEHR_WICHTIG).collect(Collectors.toList()));
+        }
+        if(filterString.contains("WICHTIG")){
+            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.WICHTIG).collect(Collectors.toList()));
+        }
+        if(filterString.contains("UNWICHTIG")){
+            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.UNWICHTIG).collect(Collectors.toList()));
+        }
+        if (prioTickets.isEmpty()){
+            return tickets;
+        }
+        return prioTickets;
+    }
+
+    private List<Ticket> findAllTicketsByUserFilter(String filterString, User user){
         List<Ticket> allTickets;
         Set<String> userRolenames = user.getRoles().stream().map(Role::getRolename).collect(Collectors.toSet());
         if(userRolenames.contains("ROLE_ADMIN")){
@@ -111,18 +127,31 @@ public class TicketService {
         }
         List<Ticket> categoryTickets = filterTicketsByCategory(allTickets, filterString);
         List<Ticket> statusTickets = filterTicketsByStatus(allTickets, filterString);
+        List<Ticket> prioTickets = filterTicketsByPrio(allTickets, filterString);
+        List<Ticket> bookmarkTickets = allTickets.stream().filter(x -> x.getBookmark().contains(user)).collect(Collectors.toList());
+        List<Ticket> adminTickets = allTickets.stream().filter(x -> x.getAdmin().equals(user)).collect(Collectors.toList());
         List<Ticket> filterTickets = categoryTickets.stream().filter(statusTickets::contains).collect(Collectors.toList());
-        
+        filterTickets = filterTickets.stream().filter(prioTickets::contains).collect(Collectors.toList());
+        if(filterString.contains("bookmark")){
+            filterTickets = filterTickets.stream().filter(bookmarkTickets::contains).collect(Collectors.toList());
+        }
+        if(filterString.contains("admin")){
+            filterTickets = filterTickets.stream().filter(adminTickets::contains).collect(Collectors.toList());
+        }
         return filterTickets;
     }
 
     private static void sortTickets(List<Ticket> tickets, String sortString){
-        if(sortString == null){
-            return;
+        if(sortString == null || sortString == ""){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getTicketID));
         } else if(sortString.equals("Kategorie")){
             Collections.sort(tickets, Comparator.comparing(Ticket::getCategory));
         } else if(sortString.equals("Status")){
             Collections.sort(tickets, Comparator.comparing(Ticket::getStatus));
+        } else if(sortString.equals("Priorität")){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getPriority));
+        } else if(sortString.equals("Datum")){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getDate));
         }
     }
 
