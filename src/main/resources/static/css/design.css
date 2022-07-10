@@ -346,7 +346,7 @@ margin: 3px;
     width: 258px;
 }
 #min-body-height{
-    min-height: 100vh;
+    min-height: 50vh;
 }
 
 #messageBox {
