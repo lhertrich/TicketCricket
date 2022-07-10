@@ -1,6 +1,5 @@
 package de.hohenheim.ticketcricket.model.entity;
 
-
 public enum Category {
         INAKTIVITÄT("Inaktivität"), TECHNISCHE_PROBLEME("Technisches Problem"), SONSTIGES("Sonstiges");
 

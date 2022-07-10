@@ -1,6 +1,11 @@
 package de.hohenheim.ticketcricket.controller;
 
-import de.hohenheim.ticketcricket.model.entity.*;
+import de.hohenheim.ticketcricket.model.entity.Role;
+import de.hohenheim.ticketcricket.model.entity.Priority;
+import de.hohenheim.ticketcricket.model.entity.Status;
+import de.hohenheim.ticketcricket.model.entity.Ticket;
+import de.hohenheim.ticketcricket.model.entity.User;
+import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
 import de.hohenheim.ticketcricket.model.validation.TicketValidator;
@@ -29,6 +34,9 @@ public class TicketController {
     @Autowired
     private TicketValidator ticketValidator;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @InitBinder("ticket")
     public void initBinder(WebDataBinder binder) {
         binder.setValidator(ticketValidator);
@@ -39,20 +47,28 @@ public class TicketController {
         User user = userService.getCurrentUser();
         model.addAttribute("currentUser", user);
         model.addAttribute("ticket", new Ticket());
+        model.addAttribute("admins", userService.getAdmins());
+        User currentUser = userService.getCurrentUser();
+        model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
+        model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
+        model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
         return "ticketerstellung";
     }
 
     @PostMapping("/create-ticket")
-    public String createTicket(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result, Model model) {
-        User user = userService.getCurrentUser();
-        if (result.hasErrors()) {
-            model.addAttribute("user", user);
+    public String createTicket(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result, Model model){
+        User currentUser = userService.getCurrentUser();
+        if(result.hasErrors()){
+            model.addAttribute("user", currentUser);
             model.addAttribute("ticket", ticket);
+            model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
+            model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
+            model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
             return "ticketerstellung";
         }
         ticket.setStatus(Status.OFFEN);
         ticket.setUser(userService.getCurrentUser());
-        ticket.setPriority(Priority.SEHR_WICHTIG);
+        ticket.setAdmin(userService.getUserByUsername("admin1"));
         Date currentDate = new Date(System.currentTimeMillis());
         ticket.setDate(currentDate);
         ticket.setLastRequest(currentDate);
