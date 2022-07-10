@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -50,8 +51,14 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         // Initialisieren Sie Beispielobjekte und speichern Sie diese über Ihre Services
         Role userRole = new Role("ROLE_USER");
         Role adminRole = new Role("ROLE_ADMIN");
+        Role adminRoleInaktivität = new Role("ROLE_"+Category.INAKTIVITÄT);
+        Role adminRoleTechnisch = new Role("ROLE_"+Category.TECHNISCHE_PROBLEME);
+        Role adminRoleSonstiges = new Role("ROLE_"+Category.SONSTIGES);
         roleService.saveRole(userRole);
         roleService.saveRole(adminRole);
+        roleService.saveRole(adminRoleInaktivität);
+        roleService.saveRole(adminRoleTechnisch);
+        roleService.saveRole(adminRoleSonstiges);
 
         List<User> allBookmarked = userService.findAllUsers();
         List<User> bookmarkedTicket8 = new ArrayList<>();
@@ -82,14 +89,20 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         User admin1 = new User();
         admin1.setUsername("admin1");
         admin1.setPassword(passwordEncoder.encode("admin1"));
-        admin1.setRoles(adminRoles);
+        admin1.setRoles(new HashSet<>(Arrays.asList(adminRole, adminRoleInaktivität)));
         userService.saveUser(admin1);
 
         User admin2 = new User();
         admin2.setUsername("admin2");
         admin2.setPassword(passwordEncoder.encode("admin2"));
-        admin2.setRoles(adminRoles);
+        admin2.setRoles(new HashSet<>(Arrays.asList(adminRole, adminRoleTechnisch)));
         userService.saveUser(admin2);
+
+        User admin3 = new User();
+        admin3.setUsername("Peter Admin");
+        admin3.setPassword(passwordEncoder.encode("admin3"));
+        admin3.setRoles(new HashSet<>(Arrays.asList(adminRole, adminRoleSonstiges)));
+        userService.saveUser(admin3);
 
         bookmarkedTicket8.add(admin1);
         bookmarkedTicket8.add(admin2);

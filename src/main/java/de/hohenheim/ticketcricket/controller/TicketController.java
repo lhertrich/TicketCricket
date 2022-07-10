@@ -1,10 +1,6 @@
 package de.hohenheim.ticketcricket.controller;
 
-import de.hohenheim.ticketcricket.model.entity.Role;
-import de.hohenheim.ticketcricket.model.entity.Priority;
-import de.hohenheim.ticketcricket.model.entity.Status;
-import de.hohenheim.ticketcricket.model.entity.Ticket;
-import de.hohenheim.ticketcricket.model.entity.User;
+import de.hohenheim.ticketcricket.model.entity.*;
 import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
@@ -21,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -65,13 +62,37 @@ public class TicketController {
         }
         ticket.setStatus(Status.OFFEN);
         ticket.setUser(userService.getCurrentUser());
-        ticket.setAdmin(userService.getUserByUsername("admin1"));
-        Date currentDate = new Date(System.currentTimeMillis());
-        ticket.setDate(currentDate);
-        ticket.setLastRequest(currentDate);
-        ticket.setPriority(Priority.WICHTIG);
+        ticket.setDate(new Date());
+        ticket.setLastRequest(new Date());
+        ticket.setPriority(prioritiseTicket(ticket));
+        if(ticket.getAdmin() == null){
+            ticket.setAdmin(assignAdmin(ticket));
+        }
         ticketService.saveTicket(ticket);
         return "redirect:/";
+    }
+
+    private Priority prioritiseTicket(Ticket ticket){
+        if(ticket.getCategory() == Category.TECHNISCHE_PROBLEME){
+            return Priority.SEHR_WICHTIG;
+        } else if(ticket.getCategory() == Category.INAKTIVITÄT){
+            return Priority.WICHTIG;
+        } else {
+            return Priority.UNWICHTIG;
+        }
+    }
+
+    private User assignAdmin(Ticket ticket){
+        List<User> capableAdmins = userService.getAdminsByCategory(ticket.getCategory());
+        User assignedAdmin = capableAdmins.get(0);
+        int minNumberOfTickets = ticketService.findAllTicketsForAdmin(assignedAdmin).size();
+        for(User admin : capableAdmins){
+            if(ticketService.findAllTicketsForAdmin(admin).size() < minNumberOfTickets){
+                assignedAdmin = admin;
+                minNumberOfTickets = ticketService.findAllTicketsForAdmin(admin).size();
+            }
+        }
+        return assignedAdmin;
     }
 
 }

@@ -87,8 +87,10 @@
                         <div sec:authorize="hasRole('ROLE_ADMIN')" class="p-2">
                             <label for="adminOptions">Zuständigen Admin auswählen</label> <br>
                             <select class="selectAdmin form-control" id="adminOptions" th:field="*{admin}" style="width: 300px">
+                                <option th:value="-1">Systemseitig zuweisen</option>
                                 <option th:each="admin : ${admins}"
                                         th:value="${admin.getUserId()}" th:text="${admin.getUsername()}"></option>
+
                             </select>
                         </div>
                     </div>
