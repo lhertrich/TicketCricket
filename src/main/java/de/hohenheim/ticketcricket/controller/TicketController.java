@@ -1,15 +1,12 @@
 package de.hohenheim.ticketcricket.controller;
 
-import de.hohenheim.ticketcricket.model.entity.Role;
-import de.hohenheim.ticketcricket.model.entity.Priority;
-import de.hohenheim.ticketcricket.model.entity.Status;
-import de.hohenheim.ticketcricket.model.entity.Ticket;
-import de.hohenheim.ticketcricket.model.entity.User;
+import de.hohenheim.ticketcricket.model.entity.*;
 import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
 import de.hohenheim.ticketcricket.model.validation.TicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,6 +69,7 @@ public class TicketController {
         Date currentDate = new Date(System.currentTimeMillis());
         ticket.setDate(currentDate);
         ticket.setLastRequest(currentDate);
+        model.addAttribute("currentUser", currentUser);
 
         if (ticket.getCategory() == Category.INAKTIVITÄT) {
             ticket.setPriority(Priority.WICHTIG);
@@ -80,7 +78,7 @@ public class TicketController {
         } else {
             ticket.setPriority(Priority.UNWICHTIG);
         }
-        if (user.isAllowed()) {
+        if (currentUser.isAllowed()) {
             ticketService.saveTicket(ticket);
         }
 
@@ -99,7 +97,9 @@ public class TicketController {
                 }
             }
         }
-
+        model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(userService.getCurrentUser()));
+        model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(userService.getCurrentUser()));
+        model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(userService.getCurrentUser()));
         model.addAttribute("currentUser", userService.getCurrentUser());
         model.addAttribute("users", roleUserList);
         return "ticketerstellung-verwalten";
@@ -139,6 +139,9 @@ public class TicketController {
                 }
             }
         }
+        model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(userService.getCurrentUser()));
+        model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(userService.getCurrentUser()));
+        model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(userService.getCurrentUser()));
         model.addAttribute("currentUser", userService.getCurrentUser());
         model.addAttribute("users", roleUserList);
         return "ticketerstellung-disabled";
@@ -160,6 +163,9 @@ public class TicketController {
                 }
             }
         }
+        model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(userService.getCurrentUser()));
+        model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(userService.getCurrentUser()));
+        model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(userService.getCurrentUser()));
         model.addAttribute("currentUser", userService.getCurrentUser());
         model.addAttribute("users", roleUserList);
         return "ticketerstellung-verwalten";
@@ -177,10 +183,27 @@ public class TicketController {
                 }
             }
         }
-
+        model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(userService.getCurrentUser()));
+        model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(userService.getCurrentUser()));
+        model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(userService.getCurrentUser()));
         model.addAttribute("currentUser", userService.getCurrentUser());
         model.addAttribute("users", roleUserList);
         return "ticketerstellung-disabled";
     }
 
+    @GetMapping("/ajax/updateTicketerstellung{searchString}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String updateUser(Model model, @RequestParam("searchString") String searchString){
+
+        model.addAttribute("users", userService.findAllUserByUsername(searchString));
+        return "ticketerstellung-verwalten :: #innerWindowUsers";
+    }
+
+    @GetMapping("/ajax/updateTicketerstellungDisabled{searchString}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String updateUserDisabled(Model model, @RequestParam("searchString") String searchString){
+
+        model.addAttribute("users", userService.findAllUserByUsername(searchString));
+        return "ticketerstellung-disabled :: #innerWindowUsers";
+    }
 }
