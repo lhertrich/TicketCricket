@@ -5,6 +5,7 @@ import de.hohenheim.ticketcricket.model.service.MessageService;
 import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,11 +65,23 @@ public class ExpandedTicketController {
     @PostMapping("/ticket/expand/setStatus{id}")
     public String setStatus(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
         ticketService.setStatus(ticket.getStatus(), id);
+        Notification statusNotification = new Notification();
+        statusNotification.setNotificationType(NotificationType.STATUS_ÄNDERUNG);
+        statusNotification.setTicket(ticket);
+        statusNotification.setDate(new Date());
+        statusNotification.setUser(ticket.getUser());
+        notificationService.saveNotification(statusNotification);
         return "redirect:/ticket/expand?id="+id;
     }
     @PostMapping("/ticket/expand/setCategory{id}")
     public String setCategory(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
         ticketService.setCategory(ticket.getCategory(), id);
+        Notification categoryNotification = new Notification();
+        categoryNotification.setNotificationType(NotificationType.KATEGORIE_ÄNDERUNG);
+        categoryNotification.setTicket(ticket);
+        categoryNotification.setUser(ticket.getUser());
+        categoryNotification.setDate(new Date());
+        notificationService.saveNotification(categoryNotification);
         return "redirect:/ticket/expand?id="+id;
     }
 
