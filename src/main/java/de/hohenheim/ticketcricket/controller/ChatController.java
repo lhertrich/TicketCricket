@@ -39,6 +39,7 @@ public class ChatController {
         User currentUser = message.getUser();
         Ticket ticket = message.getTicket();
         ticketService.setRequest(id);
+        ticketService.setViewed(false, id);
         Notification notification = new Notification();
         notification.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notification.setTicket(ticket);

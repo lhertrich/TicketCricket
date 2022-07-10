@@ -203,4 +203,11 @@ public class TicketService {
         ticketToUpdate.getBookmark().remove(bookmark);
         ticketRepository.save(ticketToUpdate);
     }
+
+    public void setViewed(boolean isViewed, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.setViewed(isViewed);
+        ticketRepository.save(ticketToUpdate);
+    }
+
 }
