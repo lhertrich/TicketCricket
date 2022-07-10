@@ -12,7 +12,7 @@
 </head>
 <body>
 <div th:fragment="navbarAdmin" style="font-size: 1.2em">
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-body" >
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-body">
         <div class="container-fluid">
             <a class="navbar-brand" href="#" th:href="@{/}">
                 <!--Home Icon-->
@@ -24,7 +24,8 @@
                           d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
                 </svg>
             </a>
-            <button class="navbar-toggler burger-color" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContentAdmin"
+            <button class="navbar-toggler burger-color" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarContentAdmin"
                     aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon navbar-icon-color">
                     </span>
@@ -32,61 +33,83 @@
             <div class="collapse navbar-collapse" id="navbarContentAdmin">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#" th:href="@{/ticket-form}">
-                            Ticket erstellen
-                        </a>
+                        <div th:if="${currentUser.isAllowedGeneral()}">
+                            <a class="nav-link active" aria-current="page" href="#" th:href="@{/ticket-form}">
+                                Ticket erstellen
+                            </a>
+                        </div>
+                        <div th:if="${!currentUser.isAllowedGeneral()}">
+                            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="Die Ticketerstellung ist momentan deaktiviert">
+                            <a class="nav-link disabled" aria-current="page" href="#" aria-disabled="true">
+                                Ticket erstellen
+                            </a>
+                            </span>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">
-                            Ticketerstellung verwalten
-                        </a>
+                        <div th:if="${currentUser.isAllowedGeneral()}">
+                            <a class="nav-link active" aria-current="page" href="#"
+                               th:href="@{/ticket-creation-managing}">
+                                Ticketerstellung verwalten
+                            </a>
+                        </div>
+                        <div th:if="${!currentUser.isAllowedGeneral()}">
+                            <a class="nav-link active" aria-current="page" href="#"
+                               th:href="@{/ticket-creation-managing-disabled}">
+                                Ticketerstellung verwalten
+                            </a>
+                        </div>
                     </li>
                 </ul>
                 <div class="d-flex">
                     <ul class="navbar-nav">
                         <div>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle disabled"
-                               href="#" id="notificationAdmin"
-                               role="button" data-bs-toggle="dropdown"
-                               aria-expanded="false">
-                                <!-- Notification Bell -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
-                                     class="bi bi-bell-fill" viewBox="0 0 16 16">
-                                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
-                                </svg>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-left"
-                                aria-labelledby="notificationAdmin">
-                                <li><a class="dropdown-item" href="#">
-                                    Notification #1
-                                </a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">
-                                    Notification #2
-                                </a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">
-                                    Notification #3
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle disabled"
+                                   href="#" id="notificationAdmin"
+                                   role="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <!-- Notification Bell -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
+                                         class="bi bi-bell-fill" viewBox="0 0 16 16">
+                                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                                    </svg>
                                 </a>
-                                </li>
-                            </ul>
-                        </li>
+                                <ul class="dropdown-menu dropdown-menu-left"
+                                    aria-labelledby="notificationAdmin">
+                                    <li><a class="dropdown-item" href="#">
+                                        Notification #1
+                                    </a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">
+                                        Notification #2
+                                    </a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">
+                                        Notification #3
+                                    </a>
+                                    </li>
+                                </ul>
+                            </li>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button class="nav-brand " style="background:none; border:none; color: white" data-bs-toggle="modal" data-bs-target="#modalSubmitLogout">
+                            <button class="nav-brand " style="background:none; border:none; color: white"
+                                    data-bs-toggle="modal" data-bs-target="#modalSubmitLogout">
                                 <!--Logout -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16" style="float:left;">
-                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
+                                     class="bi bi-box-arrow-right" viewBox="0 0 16 16" style="float:left;">
+                                    <path fill-rule="evenodd"
+                                          d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                    <path fill-rule="evenodd"
+                                          d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
                                 </svg>
                             </button>
 
-                            </div>
+                        </div>
 
 
                     </ul>
@@ -120,13 +143,14 @@
 </div>
 
 
-
 <div th:fragment="navbarLogin" style="font-size: 1.2em">
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-body" style="background-color: #272635; height: 70px">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-body"
+         style="background-color: #272635; height: 70px">
         <div class="container-fluid">
             <a class="navbar-brand">
                 <!--Placeholder-->
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16"></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-house"
+                     viewBox="0 0 16 16"></svg>
             </a>
         </div>
     </nav>
@@ -146,16 +170,28 @@
                           d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
                 </svg>
             </a>
-            <button class="navbar-toggler burger-color" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            <button class="navbar-toggler burger-color" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarContent"
                     aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon navbar-icon-color"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#" th:href="@{/ticket-form}">
-                            Ticket erstellen
-                        </a>
+                        <div th:if="${currentUser.isAllowed() && currentUser.isAllowedGeneral}">
+                            <a class="nav-link active" aria-current="page" href="#" th:href="@{/ticket-form}">
+                                Ticket erstellen
+                            </a>
+                        </div>
+
+                        <div th:if="${!currentUser.isAllowed() || !currentUser.isAllowedGeneral}">
+                            <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="Die Ticketerstellung ist für Sie momentan deaktiviert">
+                            <a class="nav-link disabled" aria-current="page" href="#" aria-disabled="true">
+                                Ticket erstellen
+                            </a>
+                            </span>
+                        </div>
+
                     </li>
                 </ul>
                 <div class="d-flex">
@@ -194,11 +230,15 @@
                             <li>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button class="nav-brand " style="background:none; border:none; color: white" data-bs-toggle="modal" data-bs-target="#modalSubmitLogoutUser">
+                            <button class="nav-brand " style="background:none; border:none; color: white"
+                                    data-bs-toggle="modal" data-bs-target="#modalSubmitLogoutUser">
                                 <!--Logout -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16" style="float:left;">
-                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor"
+                                     class="bi bi-box-arrow-right" viewBox="0 0 16 16" style="float:left;">
+                                    <path fill-rule="evenodd"
+                                          d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                    <path fill-rule="evenodd"
+                                          d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
                                 </svg>
                             </button>
                         </div>
@@ -231,5 +271,7 @@
         </div>
     </div>
 </div>
+
+
 </body>
 </html>

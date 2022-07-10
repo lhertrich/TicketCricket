@@ -34,6 +34,7 @@ public class DashboardController {
         } else {
             model.addAttribute("tickets", ticketService.findAllTicketsByUser(currentUser));
         }
+        model.addAttribute("currentUser", currentUser);
         return "dashboard";
     }
 

@@ -24,6 +24,8 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    public Optional<User> getUserByID(int id){ return userRepository.findById(id);}
+
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
