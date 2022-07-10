@@ -1,9 +1,6 @@
 package de.hohenheim.ticketcricket.model.service;
 
-import de.hohenheim.ticketcricket.model.entity.Priority;
-import de.hohenheim.ticketcricket.model.entity.Role;
-import de.hohenheim.ticketcricket.model.entity.Ticket;
-import de.hohenheim.ticketcricket.model.entity.User;
+import de.hohenheim.ticketcricket.model.entity.*;
 import de.hohenheim.ticketcricket.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -92,16 +89,33 @@ public class UserService implements UserDetailsService {
         return grantedAuthorities;
     }
 
-    public Set<User> getAdmins(){
+    public Set<User> getAdmins() {
         HashSet<User> admins = new HashSet<>();
         List<User> users = userRepository.findAll();
-        for (User user: users){
-            for (Role role: user.getRoles()) {
-                if (role.getRolename()=="ROLE_ADMIN"){
+        for (User user : users) {
+            for (Role role : user.getRoles()) {
+                if (role.getRolename() == "ROLE_ADMIN") {
                     admins.add(user);
                 }
             }
         }
         return admins.stream().sorted(Comparator.comparing(User::getUsername)).collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    public List<User> getAdminsByCategory(Category category) {
+        List<User> allAdmins = getAdmins().stream().toList();
+        List<User> adminsByRole = new ArrayList<>();
+        for (User admin : allAdmins) {
+            Set<String> roleNames = admin.getRoles().stream().map(Role::getRolename).collect(Collectors.toSet());
+            System.out.println("called: "+category.toString());
+            if (roleNames.contains("ROLE_"+category)) {
+                adminsByRole.add(admin);
+            }
+        }
+        if (adminsByRole.isEmpty()) {
+            return allAdmins;
+        } else {
+            return adminsByRole;
+        }
     }
 }
