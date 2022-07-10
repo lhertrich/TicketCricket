@@ -9,6 +9,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -31,6 +33,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
     @Autowired
     private NotificationService notificationService;
+
+    @Autowired
+    private MessageService messageService;
 
 
 
@@ -60,30 +65,40 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         normalUser1.setUsername("user1");
         normalUser1.setPassword(passwordEncoder.encode("user1"));
         normalUser1.setRoles(userRoles);
+        normalUser1.setAllowed(true);
+        normalUser1.setAllowedGeneral(true);
         userService.saveUser(normalUser1);
 
         User normalUser2 = new User();
         normalUser2.setUsername("user2");
         normalUser2.setPassword(passwordEncoder.encode("user2"));
         normalUser2.setRoles(userRoles);
+        normalUser2.setAllowed(true);
+        normalUser2.setAllowedGeneral(true);
         userService.saveUser(normalUser2);
 
         User normalUser3 = new User();
         normalUser3.setUsername("user3");
         normalUser3.setPassword(passwordEncoder.encode("user3"));
         normalUser3.setRoles(userRoles);
+        normalUser3.setAllowed(true);
+        normalUser3.setAllowedGeneral(true);
         userService.saveUser(normalUser3);
 
         User admin1 = new User();
         admin1.setUsername("admin1");
         admin1.setPassword(passwordEncoder.encode("admin1"));
         admin1.setRoles(adminRoles);
+        admin1.setAllowed(true);
+        admin1.setAllowedGeneral(true);
         userService.saveUser(admin1);
 
         User admin2 = new User();
         admin2.setUsername("admin2");
         admin2.setPassword(passwordEncoder.encode("admin2"));
         admin2.setRoles(adminRoles);
+        admin2.setAllowed(true);
+        admin2.setAllowedGeneral(true);
         userService.saveUser(admin2);
 
         bookmarkedTicket8.add(admin1);
@@ -177,7 +192,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket6.setCategory(Category.TECHNISCHE_PROBLEME);
         ticket6.setUser(normalUser1);
         long d6 = System.currentTimeMillis();
-        ticket6.setDate(new Date(d6));
+        ticket6.setDate(new Date(d6 - 200000000));
         ticket6.setLastRequest(new Date(d6));
         ticket6.setProblem("Der Impressum-Button kann nicht gedrückt werden");
         ticket6.setStatus(Status.OFFEN);
@@ -220,7 +235,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket9.setCategory(Category.TECHNISCHE_PROBLEME);
         ticket9.setUser(normalUser2);
         long d9 = System.currentTimeMillis();
-        ticket9.setDate(new Date(d9));
+        ticket9.setDate(new Date(d9-1000000000));
         ticket9.setLastRequest(new Date(d9));
         ticket9.setProblem("Wenn ich einen Artikel inseriere crasht die Seite oft.");
         ticket9.setStatus(Status.ERLEDIGT);
@@ -234,7 +249,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket10.setCategory(Category.TECHNISCHE_PROBLEME);
         ticket10.setUser(admin1);
         long d10 = System.currentTimeMillis();
-        ticket10.setDate(new Date(d10));
+        ticket10.setDate(new Date(d10-500000000));
         ticket10.setLastRequest(new Date(d10));
         ticket10.setProblem("Home Button in der Navbar funktioniert nicht");
         ticket10.setStatus(Status.OFFEN);
@@ -258,13 +273,12 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket11.setBookmark(new ArrayList<>());
         ticketService.saveTicket(ticket11);
 
-
         Notification notification1 = new Notification();
         notification1.setUser(normalUser1);
         notification1.setTicket(ticket3);
         long nd1 = System.currentTimeMillis();
         notification1.setDate(new Date(nd1));
-        notification1.setRequest(true);
+        notification1.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notificationService.saveNotification(notification1);
 
         Notification notification2 = new Notification();
@@ -272,7 +286,61 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         notification2.setTicket(ticket4);
         long nd2 = System.currentTimeMillis();
         notification2.setDate(new Date(nd2));
-        notification2.setRequest(true);
+        notification2.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notificationService.saveNotification(notification2);
+
+        Message message1 = new Message();
+        message1.setTicket(ticket);
+        message1.setUser(normalUser1);
+        message1.setDate(new Date(System.currentTimeMillis()));
+        message1.setMessage("Test von user1");
+        messageService.saveMessage(message1);
+
+        Message message2 = new Message();
+        message2.setTicket(ticket);
+        message2.setUser(admin1);
+        message2.setDate(new Date(System.currentTimeMillis()));
+        message2.setMessage("Test von admin1");
+        messageService.saveMessage(message2);
+
+       Notification notification3 = new Notification();
+       notification3.setUser(admin1);
+       notification3.setTicket(ticket4);
+       notification3.setDate(new Date());
+       notification3.setNew(false);
+       notification3.setNotificationType(NotificationType.NACHRICHT);
+       notificationService.saveNotification(notification3);
+
+        Notification notification4 = new Notification();
+        notification4.setUser(admin1);
+        notification4.setTicket(ticket4);
+        notification4.setDate(new Date());
+        notification4.setNotificationType(NotificationType.NACHRICHT);
+        notificationService.saveNotification(notification4);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+        String dateInString = "7-Jun-2022";
+        String dateInString2 = "4-Jul-2022";
+        try {
+            Date date1 = formatter.parse(dateInString);
+            Date date2 = formatter.parse(dateInString2);
+
+            Notification notification5 = new Notification();
+            notification5.setUser(admin1);
+            notification5.setTicket(ticket4);
+            notification5.setDate(date1);
+            notification5.setNotificationType(NotificationType.NACHRICHT);
+            notificationService.saveNotification(notification5);
+
+            Notification notification6 = new Notification();
+            notification6.setUser(admin1);
+            notification6.setTicket(ticket4);
+            notification6.setDate(date2);
+            notification6.setNotificationType(NotificationType.NACHRICHT);
+            notificationService.saveNotification(notification6);
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

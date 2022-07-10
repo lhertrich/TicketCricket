@@ -209,6 +209,117 @@ margin: 3px;
     text-align: left;
 }
 
+.chat-message-self {
+    border: 2px solid black;
+    background-color: lightgray;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    overflow-wrap: break-word;
+}
+
+.chat-message-other {
+    border: 2px solid black;
+    background-color: darkgray;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    overflow-wrap: break-word;
+}
+
+.chat-status {
+    border: 2px solid black;
+    color: white;
+    background-color: #1d1d1d;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.message-box {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    position: relative;
+    background: rgba(59, 171, 248, 0.91);
+    border: 2px solid #3babf8;
+    color: #000000;
+}
+
+
+.message-box:after {
+    content: "";
+    position: absolute;
+    border: 10px solid transparent;
+    border-top: 10px solid #3babf8;
+    border-right: none;
+    bottom: -22px;
+    right: 5%;
+}
+
+.message-box-other {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    position: relative;
+    background: rgba(218, 218, 218, 0.87);
+    border: 2px solid #dadada;
+    color: #000000;
+}
+
+.message-box-other:after {
+    content: "";
+    position: absolute;
+    border: 10px solid transparent;
+    border-top: 10px solid #dadada;
+    border-left: none;
+    bottom: -22px;
+    right: 90%;
+}
+
+.text-align-end {
+    text-align: end;
+}
+
+.break-text {
+    overflow-wrap: break-word;
+}
+
+.name {
+    font-weight: bold;
+}
+
+
+
+.notification-dropdown{
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.dd-outer{
+    border-color: #272635;
+    border-width: 3px;
+    border-radius: 10px;
+    background-color: #E8E9F3;
+}
+
+.dd-divider{
+    border-color: #272635;
+    border-width: 1px;
+}
+
+.dd-item{
+    background-color: white;
+    border-color: white;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.dd-text{
+    color: #636464;
+}
+
 [class^='select2'] {
     border-radius: 10px !important;
 }
@@ -217,3 +328,35 @@ margin: 3px;
     width: 300px;
     visibility: hidden
 }
+
+.filter-dropdown{
+    width: 75vw;
+    max-width: 500px;
+
+    max-height: 50vh; !important;
+}
+.sort-dropdown{
+    width: 75vw;
+    max-width: 400px;
+
+    max-height: 50vh; !important;
+}
+
+#sortAttribute{
+    width: 258px;
+}
+#min-body-height{
+    min-height: 50vh;
+}
+
+#messageBox {
+    max-height: calc(100vh - 500px);
+    height: calc(100vh - 500px);
+    overflow-y: scroll;
+}
+.search-bar-width{
+    min-width: 250px;
+    max-width: 500px;
+}
+
+

@@ -1,5 +1,6 @@
 package de.hohenheim.ticketcricket.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Notification {
 
     @Id
@@ -24,7 +26,10 @@ public class Notification {
 
     private Date date;
 
-    private boolean isRequest;
+    @Enumerated(EnumType.STRING)
+    private NotificationType notificationType;
+
+    private boolean isNew = true;
 
     public Notification(){}
 
@@ -60,11 +65,19 @@ public class Notification {
         this.date = date;
     }
 
-    public boolean isRequest() {
-        return isRequest;
+    public NotificationType getNotificationType() {
+        return notificationType;
     }
 
-    public void setRequest(boolean request) {
-        isRequest = request;
+    public void setNotificationType(NotificationType notificationType) {
+        this.notificationType = notificationType;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
     }
 }

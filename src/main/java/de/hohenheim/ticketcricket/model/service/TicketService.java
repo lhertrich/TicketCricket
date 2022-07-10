@@ -1,5 +1,6 @@
 package de.hohenheim.ticketcricket.model.service;
 
+import de.hohenheim.ticketcricket.config.SelectionObject;
 import de.hohenheim.ticketcricket.model.entity.*;
 import de.hohenheim.ticketcricket.model.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketService {
@@ -39,6 +41,126 @@ public class TicketService {
             }
         }
         return userTickets;
+    }
+
+    private List<Ticket> findAllTicketsByUserSearch(String searchString, User user){
+        List<Ticket> allTickets;
+        Set<String> userRolenames = user.getRoles().stream().map(Role::getRolename).collect(Collectors.toSet());
+        if(userRolenames.contains("ROLE_ADMIN")){
+            allTickets = findAllTickets();
+        } else {
+            allTickets = findAllTicketsByUser(user);
+        }
+        List<Ticket> allTicketsSearch;
+        if(searchString != null){
+            allTicketsSearch = allTickets.stream().filter(x -> x.getTitle().replaceAll("\s", "").toLowerCase().contains(searchString.toLowerCase())).collect(Collectors.toList());
+        } else {
+            allTicketsSearch = allTickets;
+        }
+        return allTicketsSearch;
+    }
+
+    private List<Ticket> filterTicketsByCategory(List<Ticket> tickets, String filterString){
+        List<Ticket> categoryTickets = new ArrayList<>();
+        if(filterString.equals("")){
+            return tickets;
+        }
+        if (filterString.contains("OFFEN")){
+            categoryTickets.addAll(tickets.stream().filter(x -> x.getStatus() == Status.OFFEN).collect(Collectors.toList()));
+        }
+        if(filterString.contains("IN_BEARBEITUNG")){
+            categoryTickets.addAll(tickets.stream().filter(x -> x.getStatus() == Status.IN_BEARBEITUNG).collect(Collectors.toList()));
+        }
+        if(filterString.contains("ERLEDIGT")){
+            categoryTickets.addAll(tickets.stream().filter(x -> x.getStatus() == Status.ERLEDIGT).collect(Collectors.toList()));
+        }
+
+        if(categoryTickets.isEmpty()){
+            return tickets;
+        }
+        return categoryTickets;
+    }
+
+    private List<Ticket> filterTicketsByStatus(List<Ticket> tickets, String filterString){
+        List<Ticket> statusTickets = new ArrayList<>();
+
+        if (filterString.contains("INAKTIVITÄT")){
+            statusTickets.addAll(tickets.stream().filter(x -> x.getCategory() == Category.INAKTIVITÄT).collect(Collectors.toList()));
+        }
+        if(filterString.contains("TECHNISCHE_PROBLEME")){
+            statusTickets.addAll(tickets.stream().filter(x -> x.getCategory() == Category.TECHNISCHE_PROBLEME).collect(Collectors.toList()));
+        }
+        if(filterString.contains("SONSTIGES")){
+            statusTickets.addAll(tickets.stream().filter(x -> x.getCategory() == Category.SONSTIGES).collect(Collectors.toList()));
+        }
+        if(statusTickets.isEmpty()){
+            return tickets;
+        }
+        return statusTickets;
+    }
+
+    private List<Ticket> filterTicketsByPrio(List<Ticket> tickets, String filterString){
+        List<Ticket> prioTickets = new ArrayList<>();
+
+        if(filterString.contains("SEHR_WICHTIG")){
+            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.SEHR_WICHTIG).collect(Collectors.toList()));
+        }
+        if(filterString.contains("WICHTIG")){
+            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.WICHTIG).collect(Collectors.toList()));
+        }
+        if(filterString.contains("UNWICHTIG")){
+            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.UNWICHTIG).collect(Collectors.toList()));
+        }
+        if (prioTickets.isEmpty()){
+            return tickets;
+        }
+        return prioTickets;
+    }
+
+    private List<Ticket> findAllTicketsByUserFilter(String filterString, User user){
+        List<Ticket> allTickets;
+        Set<String> userRolenames = user.getRoles().stream().map(Role::getRolename).collect(Collectors.toSet());
+        if(userRolenames.contains("ROLE_ADMIN")){
+            allTickets = findAllTickets();
+        } else {
+            allTickets = findAllTicketsByUser(user);
+        }
+        List<Ticket> categoryTickets = filterTicketsByCategory(allTickets, filterString);
+        List<Ticket> statusTickets = filterTicketsByStatus(allTickets, filterString);
+        List<Ticket> prioTickets = filterTicketsByPrio(allTickets, filterString);
+        List<Ticket> bookmarkTickets = allTickets.stream().filter(x -> x.getBookmark().contains(user)).collect(Collectors.toList());
+        List<Ticket> adminTickets = allTickets.stream().filter(x -> x.getAdmin().equals(user)).collect(Collectors.toList());
+        List<Ticket> filterTickets = categoryTickets.stream().filter(statusTickets::contains).collect(Collectors.toList());
+        filterTickets = filterTickets.stream().filter(prioTickets::contains).collect(Collectors.toList());
+        if(filterString.contains("bookmark")){
+            filterTickets = filterTickets.stream().filter(bookmarkTickets::contains).collect(Collectors.toList());
+        }
+        if(filterString.contains("admin")){
+            filterTickets = filterTickets.stream().filter(adminTickets::contains).collect(Collectors.toList());
+        }
+        return filterTickets;
+    }
+
+    private static void sortTickets(List<Ticket> tickets, String sortString){
+        if(sortString == null || sortString == ""){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getTicketID));
+        } else if(sortString.equals("Kategorie")){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getCategory));
+        } else if(sortString.equals("Status")){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getStatus));
+        } else if(sortString.equals("Priorität")){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getPriority));
+        } else if(sortString.equals("Datum")){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getDate));
+        }
+    }
+
+    public List<Ticket> findAllTicketsForUserSelection(User user, SelectionObject selectionObject){
+        List<Ticket> selectedTickets = findAllTicketsByUserFilter(selectionObject.getFilterString(), user);
+        List<Ticket> searchTickets = findAllTicketsByUserSearch(selectionObject.getSearchString(), user);
+        selectedTickets = selectedTickets.stream().filter(searchTickets::contains).collect(Collectors.toList());
+        sortTickets(selectedTickets, selectionObject.getSortString());
+        return selectedTickets;
     }
 
     public void setRequest(int id){
