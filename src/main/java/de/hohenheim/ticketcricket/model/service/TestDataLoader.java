@@ -65,30 +65,40 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         normalUser1.setUsername("user1");
         normalUser1.setPassword(passwordEncoder.encode("user1"));
         normalUser1.setRoles(userRoles);
+        normalUser1.setAllowed(true);
+        normalUser1.setAllowedGeneral(true);
         userService.saveUser(normalUser1);
 
         User normalUser2 = new User();
         normalUser2.setUsername("user2");
         normalUser2.setPassword(passwordEncoder.encode("user2"));
         normalUser2.setRoles(userRoles);
+        normalUser2.setAllowed(true);
+        normalUser2.setAllowedGeneral(true);
         userService.saveUser(normalUser2);
 
         User normalUser3 = new User();
         normalUser3.setUsername("user3");
         normalUser3.setPassword(passwordEncoder.encode("user3"));
         normalUser3.setRoles(userRoles);
+        normalUser3.setAllowed(true);
+        normalUser3.setAllowedGeneral(true);
         userService.saveUser(normalUser3);
 
         User admin1 = new User();
         admin1.setUsername("admin1");
         admin1.setPassword(passwordEncoder.encode("admin1"));
         admin1.setRoles(adminRoles);
+        admin1.setAllowed(true);
+        admin1.setAllowedGeneral(true);
         userService.saveUser(admin1);
 
         User admin2 = new User();
         admin2.setUsername("admin2");
         admin2.setPassword(passwordEncoder.encode("admin2"));
         admin2.setRoles(adminRoles);
+        admin2.setAllowed(true);
+        admin2.setAllowedGeneral(true);
         userService.saveUser(admin2);
 
         bookmarkedTicket8.add(admin1);
@@ -182,7 +192,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket6.setCategory(Category.TECHNISCHE_PROBLEME);
         ticket6.setUser(normalUser1);
         long d6 = System.currentTimeMillis();
-        ticket6.setDate(new Date(d6));
+        ticket6.setDate(new Date(d6 - 200000000));
         ticket6.setLastRequest(new Date(d6));
         ticket6.setProblem("Der Impressum-Button kann nicht gedrückt werden");
         ticket6.setStatus(Status.OFFEN);
@@ -225,7 +235,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket9.setCategory(Category.TECHNISCHE_PROBLEME);
         ticket9.setUser(normalUser2);
         long d9 = System.currentTimeMillis();
-        ticket9.setDate(new Date(d9));
+        ticket9.setDate(new Date(d9-1000000000));
         ticket9.setLastRequest(new Date(d9));
         ticket9.setProblem("Wenn ich einen Artikel inseriere crasht die Seite oft.");
         ticket9.setStatus(Status.ERLEDIGT);
@@ -239,7 +249,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket10.setCategory(Category.TECHNISCHE_PROBLEME);
         ticket10.setUser(admin1);
         long d10 = System.currentTimeMillis();
-        ticket10.setDate(new Date(d10));
+        ticket10.setDate(new Date(d10-500000000));
         ticket10.setLastRequest(new Date(d10));
         ticket10.setProblem("Home Button in der Navbar funktioniert nicht");
         ticket10.setStatus(Status.OFFEN);
