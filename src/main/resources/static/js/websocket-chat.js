@@ -7,9 +7,11 @@ $(document).ready(function () {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/topic/chat?id=' + ticket.ticketID, function (message) {
             displayMessage(message);
+            updateScroll();
         });
         stompClient.subscribe('/topic/status?id=' + ticket.ticketID, function (message) {
             displayStatus(message);
+            updateScroll();
         });
     });
 });
@@ -73,4 +75,9 @@ $(function() {
         sendStatusRequest();
         $("#request-status-submit").prop("disabled", true);
     })
-})
+});
+
+function updateScroll() {
+    var element = document.getElementById("messageBox");
+    element.scrollTop = element.scrollHeight;
+}

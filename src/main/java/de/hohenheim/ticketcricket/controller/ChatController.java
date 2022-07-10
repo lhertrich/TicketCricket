@@ -1,9 +1,6 @@
 package de.hohenheim.ticketcricket.controller;
 
-import de.hohenheim.ticketcricket.model.entity.Message;
-import de.hohenheim.ticketcricket.model.entity.Notification;
-import de.hohenheim.ticketcricket.model.entity.Ticket;
-import de.hohenheim.ticketcricket.model.entity.User;
+import de.hohenheim.ticketcricket.model.entity.*;
 import de.hohenheim.ticketcricket.model.service.MessageService;
 import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
@@ -43,7 +40,7 @@ public class ChatController {
         Ticket ticket = message.getTicket();
         ticketService.setRequest(id);
         Notification notification = new Notification();
-        notification.setRequest(true);
+        notification.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notification.setTicket(ticket);
         notification.setUser(currentUser);
         notification.setDate(new Date());

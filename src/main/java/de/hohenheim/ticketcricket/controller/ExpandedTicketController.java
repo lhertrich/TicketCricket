@@ -1,6 +1,7 @@
 package de.hohenheim.ticketcricket.controller;
 
 import de.hohenheim.ticketcricket.model.entity.*;
+import de.hohenheim.ticketcricket.model.service.MessageService;
 import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
