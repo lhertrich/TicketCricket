@@ -14,8 +14,11 @@
 </head>
 <body id="min-body-height">
 <!-- Navbar -->
-<th:block th:insert="fragments/navbarFragments::navbarUser" sec:authorize="hasRole('ROLE_USER')"/>
 <th:block th:insert="fragments/navbarFragments::navbarAdmin" sec:authorize="hasRole('ROLE_ADMIN')"/>
+<th:block th:insert="fragments/navbarFragments::navbarUser" sec:authorize="hasRole('ROLE_USER')"/>
+
+
+
 
 <!-- Tickets -->
 
