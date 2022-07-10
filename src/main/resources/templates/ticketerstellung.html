@@ -16,6 +16,8 @@
 </head>
 
 <body>
+
+
 <th:block th:insert="fragments/navbarFragments::navbarUser" sec:authorize="hasRole('ROLE_USER')"/>
 <th:block th:insert="fragments/navbarFragments::navbarAdmin" sec:authorize="hasRole('ROLE_ADMIN')"/>
 
@@ -40,12 +42,13 @@
                         <label for="title">Titel</label>
                         <input type="text" class="form-control input-field" id="title"
                                placeholder="Geben Sie einen Titel an" th:field="*{title}"
-                             >
-                        <p th:if="${#fields.hasErrors('title')}"  class="error-message" th:errors="*{title}"></p>
+                        >
+                        <p th:if="${#fields.hasErrors('title')}" class="error-message" th:errors="*{title}"></p>
                     </div>
                     <div class="row form-group box-format">
                         <label for="vorkategorisierung">Vorkategorisierung</label>
-                        <select id="vorkategorisierung" class="form-control input-field" required th:field="*{category}">
+                        <select id="vorkategorisierung" class="form-control input-field" required
+                                th:field="*{category}">
                             <option th:each="category : ${T(de.hohenheim.ticketcricket.model.entity.Category).values()}"
                                     th:value="${category}" th:text="${category.displayValue}"></option>
                         </select>
@@ -56,17 +59,44 @@
                                   th:field="*{problem}"></textarea>
                         <p th:if="${#fields.hasErrors('problem')}" class="error-message" th:errors="*{problem}"></p>
                     </div>
+
                     <div class="row justify-content-end form-group box-format">
                         <div class="col-2">
-                            <button th:type="submit" th:text="'Ticket erstellen'" class="btn button-color float-end no-overflow"/>
+                            <button th:type="submit" th:text="'Ticket erstellen'" onclick="myFunction()"
+                                    class="btn button-color float-end no-overflow"/>
                         </div>
                     </div>
-
                 </form>
+
             </div>
         </div>
     </div>
 </div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var user = /*[[${currentUser}]]*/ 'User Validation';
+
+    /*]]>*/
+
+</script>
+
+<script>
+function myFunction(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function (){
+
+    }
+    xhttp.open("GET" , user , true);
+    xhttp.send();
+
+    if(!user.isAllowed()){
+        alert("Not allowed")
+    }
+}
+
+</script>
 
 </body>
 

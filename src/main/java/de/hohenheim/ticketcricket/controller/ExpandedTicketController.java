@@ -42,6 +42,7 @@ public class ExpandedTicketController {
         } else {
             model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
         }
+        model.addAttribute("currentUser", currentUser);
         return "expanded-ticket";
     }
 
