@@ -267,3 +267,7 @@ margin: 3px;
     min-height: 100vh;
 }
 
+.search-bar-width{
+    min-width: 250px;
+    max-width: 500px;
+}
