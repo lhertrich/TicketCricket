@@ -34,6 +34,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private MessageService messageService;
+
 
 
     /**
@@ -275,6 +278,20 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         notification2.setDate(new Date(nd2));
         notification2.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notificationService.saveNotification(notification2);
+
+        Message message1 = new Message();
+        message1.setTicket(ticket);
+        message1.setUser(normalUser1);
+        message1.setDate(new Date(System.currentTimeMillis()));
+        message1.setMessage("Test von user1");
+        messageService.saveMessage(message1);
+
+        Message message2 = new Message();
+        message2.setTicket(ticket);
+        message2.setUser(admin1);
+        message2.setDate(new Date(System.currentTimeMillis()));
+        message2.setMessage("Test von admin1");
+        messageService.saveMessage(message2);
 
        Notification notification3 = new Notification();
        notification3.setUser(admin1);

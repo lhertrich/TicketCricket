@@ -12,6 +12,21 @@
 
 <!-- Navbar  class="col top-bar-text"-->
 <div th:fragment="expanded-ticket-admin" class="box-format">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var ticket = /*[[${ticket}]]*/ "";
+        var user = /*[[${user}]]*/ "";
+        var messages = /*[[${messages}]]*/ "";
+        var notifications = /*[[${notifications}]]*/ "";
+        /*]]>*/
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!--<script src="/js/send-message.js"></script>-->
+    <script src="/js/load-messages.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/js/websocket-chat.js"></script>
+
     <!--Select 2 Stylesheet -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- Import of JQuery and Select2 -->
@@ -210,13 +225,13 @@
         <!-- Ticket Info end-->
         <!-- Chat -->
         <div id="chatBox" class="row bottom-outer-border chat-height justify-content-center">
-            <div id="messageBox" class="row align-content-center justify-content-center overflow-auto" th:each="chatNotification: ${chatNotifications}">
-                <div th:if="${chatNotification.getNotificationType() == T(de.hohenheim.ticketcricket.model.entity.NotificationType).STATUS_ANFRAGE}" th:text="'Status angefragt am ' + ${#dates.format(chatNotification.getDate(), 'dd.MM.yyyy HH:mm')}"
-                     class="row statusBadge rounded-pill d-inline-flex align-items-center justify-content-center" style="max-width:300px"/>
+            <div id="messageBox" class="row align-content-center justify-content-center overflow-auto">
+
             </div>
-            <div id="sendBar" class="row align-self-end">
+            <div id="sendBarContainer" class="row align-self-end">
                 <form class="input-group py-2" id="text-input-bar">
-                    <input id="searchBar" type="text" class="form-control input-field" placeholder="Send message..." disabled>
+                    <input id="sendBar" type="text" class="form-control input-field send-bar" placeholder="Send message...">
+                    <input type="submit" hidden />
                 </form>
             </div>
         </div>

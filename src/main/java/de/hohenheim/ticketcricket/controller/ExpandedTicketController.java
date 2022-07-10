@@ -5,12 +5,11 @@ import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -29,12 +28,21 @@ public class ExpandedTicketController {
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private MessageService messageService;
+
     @GetMapping("/ticket/expand{id}")
-    public String expandTicket(@RequestParam("id") Integer id, Model model){
+    public String expandTicket(@RequestParam("id") Integer id, Model model) {
         User currentUser = userService.getCurrentUser();
         Set<Role> roles = currentUser.getRoles();
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
         model.addAttribute("ticket", ticketService.findTicketById(id));
+        List<Message> allMessages = messageService.findAllMessages();
+        List<Message> messages = allMessages.stream().filter(m -> m.getTicket().getTicketID() == id).collect(java.util.stream.Collectors.toList());
+        model.addAttribute("messages", messages);
+        model.addAttribute("user", userService.getCurrentUser());
+        model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000 * 60 * 12)));
+        model.addAttribute("currentUser", userService.getCurrentUser());
         model.addAttribute("chatNotifications", notificationService.findAllNotificationsForTicket(id));
         model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
         model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
@@ -43,13 +51,7 @@ public class ExpandedTicketController {
         model.addAttribute("responsibleAdminChar", Character.toUpperCase(ticketService.findTicketById(id).getAdmin().getUsername().charAt(0)));
         model.addAttribute("responsibleAdmin", ticketService.findTicketById(id).getAdmin().getUsername());
         model.addAttribute("bookmark", ticketService.findTicketById(id).getBookmark());
-        model.addAttribute("currentUser", userService.getCurrentUser());
-        if(roleNames.contains("ROLE_ADMIN")) {
-            model.addAttribute("user", userService.getCurrentUser());
-            model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
-        } else {
-            model.addAttribute("compareDate", new Date(System.currentTimeMillis() - (60000*60*12)));
-        }
+        model.addAttribute("notifications", notificationService.findAllNotificationsForTicket(id));
         return "expanded-ticket";
     }
 
@@ -92,6 +94,15 @@ public class ExpandedTicketController {
         notificationService.saveNotification(notification);
         return "redirect:/ticket/expand?id="+id;
     }
+
+    @GetMapping("/ticket/load-messages{id}")
+    @ResponseBody
+    public List<Message> loadMessages(@RequestParam("id") Integer id) {
+        List<Message> messages = messageService.findAllMessages();
+        List<Message> filteredMessages = messages.stream().filter(m -> m.getTicket().getTicketID() == id).collect(java.util.stream.Collectors.toList());
+        return filteredMessages;
+    }
+
 
     @PostMapping("/ticket/expand/setBookmark{id}")
     public String setBookmark(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
