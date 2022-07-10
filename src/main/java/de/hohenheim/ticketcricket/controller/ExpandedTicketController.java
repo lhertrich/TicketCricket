@@ -56,17 +56,7 @@ public class ExpandedTicketController {
         return "redirect:/";
     }
 
-    @PostMapping("/ticket/status{id}")
-    public String requestStatus(@RequestParam("id") Integer id) {
-        ticketService.setRequest(id);
-        Notification notification = new Notification();
-        notification.setRequest(true);
-        notification.setTicket(ticketService.findTicketById(id));
-        notification.setUser(userService.getCurrentUser());
-        notification.setDate(new Date());
-        notificationService.saveNotification(notification);
-        return "redirect:/ticket/expand?id=" + id;
-    }
+
 
     @PostMapping(value="/ticket/send-message{id}", produces = "application/json")
     @ResponseBody

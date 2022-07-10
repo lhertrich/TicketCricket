@@ -22,8 +22,11 @@
         /*]]>*/
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="/js/send-message.js"></script>
     <script src="/js/load-messages.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/js/websocket-chat.js"></script>
+
     <div class="container-fluid">
         <!-- Top Bar -->
         <div id="topBar" class="row top-bar align-items-center top-outer-border p-1">
@@ -95,9 +98,8 @@
             <div id="rightButtons" class="col-12 col-sm-2 align-self-center p-2 p-sm-0">
                 <div class="row">
                     <th:block th:if="${ticket.lastRequest.before(compareDate)}">
-                        <form th:action="@{/ticket/status(id=${ticket.ticketID})}" th:object="${ticket}"
-                              method="post" class="d-flex justify-content-start">
-                            <button type="submit" class="btn no-overflow our-button">Status anfragen</button>
+                        <form id="request-status" class="d-flex justify-content-start">
+                            <button id="request-status-submit" type="submit" class="btn no-overflow our-button">Status anfragen</button>
                         </form>
                     </th:block>
                     <th:block th:if="${compareDate.before(ticket.lastRequest)}">

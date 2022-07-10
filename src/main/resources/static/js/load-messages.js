@@ -14,7 +14,9 @@ $(document).ready(function () {
         success: function (data) {
             $("#messageBox").empty();
             for (message of data) {
-                if (message.user.userId == user.userId) {
+                if (message.messageType === "STATUS") {
+                    $("#messageBox").append(createStatus(message));
+                }else if (message.user.userId == user.userId) {
                     $("#messageBox").append(createMessage(message, true));
                 } else {
                     $("#messageBox").append(createMessage(message, false));
@@ -65,5 +67,29 @@ function createMessage(message, self) {
             "            </div>\n" +
             "        </div>";
     }
+    return message;
+}
+
+function createStatus(message) {
+    var date = new Date(message.date);
+    var formatter = new Intl.DateTimeFormat('de-DE', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+    var dateString = formatter.format(date);
+
+    message = "<div class=\"row justify-content-center\">\n" +
+        "            <div class=\"col-4 chat-status\">\n" +
+        "                <div class=\"row\">\n" +
+        "                    <div class=\"row\">\n" +
+        "                        <div class=\"col\">" + message.message + " am " + dateString +"</div>\n" +
+        "                    </div>\n" +
+        "                </div>\n" +
+        "            </div>\n" +
+        "        </div>";
     return message;
 }
