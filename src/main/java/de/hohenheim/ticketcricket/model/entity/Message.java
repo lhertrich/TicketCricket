@@ -1,18 +1,30 @@
 package de.hohenheim.ticketcricket.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Message {
+
+    private enum MessageType {
+        CHAT,
+        STATUS
+    }
 
     @Id
     @GeneratedValue
     private int messageId;
 
+    private MessageType messageType;
+
     private String message;
+
+    private Date date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sender_ID")
@@ -56,5 +68,21 @@ public class Message {
 
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public MessageType getMessageType() {
+        return messageType;
+    }
+
+    public void setMessageType(MessageType messageType) {
+        this.messageType = messageType;
     }
 }

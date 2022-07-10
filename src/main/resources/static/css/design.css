@@ -209,6 +209,31 @@ margin: 3px;
     text-align: left;
 }
 
+.chat-message-self {
+    border: 2px solid black;
+    background-color: lightgray;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.chat-message-other {
+    border: 2px solid black;
+    background-color: darkgray;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.chat-status {
+    border: 2px solid black;
+    color: white;
+    background-color: #1d1d1d;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
 .notification-dropdown{
     max-height: 220px;
     overflow-y: auto;
@@ -246,3 +271,24 @@ margin: 3px;
     width: 300px;
     visibility: hidden
 }
+
+.filter-dropdown{
+    width: 75vw;
+    max-width: 500px;
+
+    max-height: 50vh; !important;
+}
+.sort-dropdown{
+    width: 75vw;
+    max-width: 400px;
+
+    max-height: 50vh; !important;
+}
+
+#sortAttribute{
+    width: 258px;
+}
+#min-body-height{
+    min-height: 100vh;
+}
+
