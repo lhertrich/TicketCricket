@@ -44,6 +44,8 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    private boolean viewed;
+
 
 
     public Ticket(){
@@ -132,5 +134,13 @@ public class Ticket {
     }
     public void setBookmark(List<User> bookmark) {
         this.bookmark = bookmark;
+    }
+
+    public boolean isViewed() {
+        return viewed;
+    }
+
+    public void setViewed(boolean viewed) {
+        this.viewed = viewed;
     }
 }
