@@ -366,32 +366,38 @@ margin: 3px;
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px
 }
-}
+::-webkit-scrollbar {
     z-index: -1;
     width: 8px;
-::-webkit-scrollbar {
+}
 
 .input-bar{
     border-color: black;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+
 }
-}
-    background: #888;
+
 ::-webkit-scrollbar-thumb {
+    background: #888;
 }
+
+::-webkit-scrollbar-thumb {
     border: #888;
     border-radius: 10px;
     background: #888;
-::-webkit-scrollbar-thumb {
 }
-    background: none;
+
 .scrollbar::-webkit-scrollbar-track{
+    background: none;
 }
+
+::-webkit-scrollbar-track {
     z-index: +3;
     border: none;
     background: #E8E9F3;
-::-webkit-scrollbar-track {
+
+}
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
