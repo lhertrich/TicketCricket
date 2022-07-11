@@ -17,15 +17,9 @@ public class User {
 
     private String password;
 
-
-
     private boolean enabled = true;
 
-
-
     private boolean allowed;
-
-
 
     private boolean allowedGeneral;
 

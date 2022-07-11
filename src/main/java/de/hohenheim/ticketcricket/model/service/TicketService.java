@@ -43,6 +43,17 @@ public class TicketService {
         return userTickets;
     }
 
+    public List<Ticket> findAllTicketsForAdmin(User admin) {
+        List<Ticket> allTickets = ticketRepository.findAll();
+        List<Ticket> userTickets = new ArrayList<>();
+        for (Ticket ticket : allTickets) {
+            if (ticket.getAdmin().equals(admin)) {
+                userTickets.add(ticket);
+            }
+        }
+        return userTickets;
+    }
+
     private List<Ticket> findAllTicketsByUserSearch(String searchString, User user){
         List<Ticket> allTickets;
         Set<String> userRolenames = user.getRoles().stream().map(Role::getRolename).collect(Collectors.toSet());
