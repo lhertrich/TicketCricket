@@ -28,7 +28,6 @@ $(document).ready(function () {
 });
 
 function createMessage(message, self) {
-    var message;
     var date = new Date(message.date);
     if (self) {
         message = "<div class=\"container\">\n" +
