@@ -114,20 +114,15 @@ public class TicketService {
         List<Ticket> prioTickets = new ArrayList<>();
 
         if(filterString.contains("SEHR_WICHTIG")){
-            System.out.println("sehr wichtig");
             prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.SEHR_WICHTIG).collect(Collectors.toList()));
-            System.out.println(prioTickets);
         }
         if(filterString.contains("WICHTIG") && !filterString.contains("SEHR_WICHTIG") && !filterString.contains("UNWICHTIG")){
-            System.out.println("wichtig");
             prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.WICHTIG).collect(Collectors.toList()));
         }
         if(filterString.contains("UNWICHTIG") && !filterString.contains("WICHTIG")){
-            System.out.println("unwichtig");
             prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.UNWICHTIG).collect(Collectors.toList()));
         }
         if(!filterString.contains("SEHR_WICHTIG") && !filterString.contains("WICHTIG") && !filterString.contains("UNWICHTIG")){
-            System.out.println("keine prio tickets");
             return tickets;
         }
         return prioTickets;
@@ -152,7 +147,6 @@ public class TicketService {
         List<Ticket> categoryTickets = filterTicketsByCategory(allTickets, filterString);
         List<Ticket> statusTickets = filterTicketsByStatus(allTickets, filterString);
         List<Ticket> prioTickets = filterTicketsByPrio(allTickets, filterString);
-        System.out.println("prio Tickets: "+prioTickets);
         List<Ticket> bookmarkTickets = allTickets.stream().filter(x -> x.getBookmark().contains(user)).collect(Collectors.toList());
         List<Ticket> adminTickets = allTickets.stream().filter(x -> x.getAdmin().equals(user)).collect(Collectors.toList());
         List<Ticket> requestedTickets = allTickets.stream().filter(x -> !x.isViewed()).collect(Collectors.toList());
