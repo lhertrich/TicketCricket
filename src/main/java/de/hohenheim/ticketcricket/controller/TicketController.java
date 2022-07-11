@@ -65,24 +65,40 @@ public class TicketController {
         }
         ticket.setStatus(Status.OFFEN);
         ticket.setUser(userService.getCurrentUser());
-        ticket.setAdmin(userService.getUserByUsername("admin1"));
-        Date currentDate = new Date(System.currentTimeMillis());
-        ticket.setDate(currentDate);
-        ticket.setLastRequest(currentDate);
-        model.addAttribute("currentUser", currentUser);
-
-        if (ticket.getCategory() == Category.INAKTIVITÄT) {
-            ticket.setPriority(Priority.WICHTIG);
-        } else if (ticket.getCategory() == Category.TECHNISCHE_PROBLEME) {
-            ticket.setPriority(Priority.SEHR_WICHTIG);
-        } else {
-            ticket.setPriority(Priority.UNWICHTIG);
+        ticket.setDate(new Date());
+        ticket.setLastRequest(new Date());
+        ticket.setPriority(prioritiseTicket(ticket));
+        if(ticket.getAdmin() == null){
+            ticket.setAdmin(assignAdmin(ticket));
         }
+        model.addAttribute("currentUser", currentUser);
         if (currentUser.isAllowed()) {
             ticketService.saveTicket(ticket);
         }
-
         return "redirect:/";
+    }
+
+    private Priority prioritiseTicket(Ticket ticket){
+        if(ticket.getCategory() == Category.TECHNISCHE_PROBLEME){
+            return Priority.SEHR_WICHTIG;
+        } else if(ticket.getCategory() == Category.INAKTIVITÄT){
+            return Priority.WICHTIG;
+        } else {
+            return Priority.UNWICHTIG;
+        }
+    }
+
+    private User assignAdmin(Ticket ticket){
+        List<User> capableAdmins = userService.getAdminsByCategory(ticket.getCategory());
+        User assignedAdmin = capableAdmins.get(0);
+        int minNumberOfTickets = ticketService.findAllTicketsForAdmin(assignedAdmin).size();
+        for(User admin : capableAdmins){
+            if(ticketService.findAllTicketsForAdmin(admin).size() < minNumberOfTickets){
+                assignedAdmin = admin;
+                minNumberOfTickets = ticketService.findAllTicketsForAdmin(admin).size();
+            }
+        }
+        return assignedAdmin;
     }
 
     @GetMapping("/ticket-creation-managing")

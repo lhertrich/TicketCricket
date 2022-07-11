@@ -43,7 +43,7 @@ public class ChatController {
         Notification notification = new Notification();
         notification.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notification.setTicket(ticket);
-        notification.setUser(currentUser);
+        notification.setUser(ticket.getAdmin());
         notification.setDate(new Date());
         notificationService.saveNotification(notification);
         messageService.saveMessage(message);

@@ -158,13 +158,13 @@
     </li>
 
 
-    <div id="bottomOuterBorder" class="container-fluid" style="overflow-y: auto; max-height: calc(100vh - 200px); flex-grow: 1;">
+    <div id="bottomOuterBorder" class="container-fluid scrollbar" style="overflow-y: auto; max-height: calc(100vh - 200px); flex-grow: 1;">
 
     <div id="ticketsWithHeader">
         <!-- Info bar -->
         <div class="d-none d-md-inline">
-            <div id="info-bar" class="list-group-item mb-2" style="background-color:transparent;
-            border-top: none; border-right:none; border-left:none; border-radius: 0px;">
+            <div id="info-bar" class="list-group-item mb-2" style="background-color:#E8E9F3;
+            border-top: none; border-right:none; border-left:none; border-radius: 0px;position: sticky; top: 0; z-index: 3">
                 <div class="d-flex justify-content-between">
                     <div class="container-fluid">
                         <div class="row justify-content-evenly">
@@ -185,9 +185,14 @@
                                 Titel
                             </div>
 
+                            <!-- Creator -->
+                            <div class="col-1 d-none d-lg-inline align-self-end fw-bold" sec:authorize="hasRole('ROLE_ADMIN')">
+                                Ersteller
+                            </div>
+
                             <!-- Date -->
                             <div class="col-1 d-none d-md-inline align-self-end fw-bold ">
-                                Erstellt
+                                Datum
                             </div>
 
 
@@ -273,6 +278,14 @@
                             <!-- Ticket Title Text Desktop -->
                             <div th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"
                                  class="d-none d-md-inline col-3 fw-bold text-left no-overflow"></div>
+
+
+                            <!-- User Char -->
+                            <div th:text="${ticket.getUser().getUsername()}"sec:authorize="hasRole('ROLE_ADMIN')" class="col-1 d-none d-lg-inline align-self-end no-overflow">
+
+
+                            </div>
+
 
 
                             <!-- Creation Date, smaller Desktop View -->
