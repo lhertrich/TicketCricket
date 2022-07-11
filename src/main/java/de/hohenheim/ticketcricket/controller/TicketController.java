@@ -56,7 +56,7 @@ public class TicketController {
     public String createTicket(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result, Model model){
         User currentUser = userService.getCurrentUser();
         if(result.hasErrors()){
-            model.addAttribute("user", currentUser);
+            model.addAttribute("currentUser", currentUser);
             model.addAttribute("ticket", ticket);
             model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
             model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
