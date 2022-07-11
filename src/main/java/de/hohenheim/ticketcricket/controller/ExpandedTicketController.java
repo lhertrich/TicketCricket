@@ -64,7 +64,11 @@ public class ExpandedTicketController {
     @PostMapping("/ticket/expand/setStatus{id}")
     public String setStatus(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
         ticketService.setStatus(ticket.getStatus(), id);
-        return "redirect:/ticket/expand?id="+id;
+        if(ticket.getStatus() == Status.ERLEDIGT){
+            return "redirect:/";
+        } else {
+            return "redirect:/ticket/expand?id="+id;
+        }
     }
     @PostMapping("/ticket/expand/setCategory{id}")
     public String setCategory(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
