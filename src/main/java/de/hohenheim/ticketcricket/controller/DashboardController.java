@@ -38,6 +38,7 @@ public class DashboardController {
         model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
         model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
         model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
+        model.addAttribute("users", userService.findAllUsers());
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("tickets", ticketService.findAllTickets());
         } else {
