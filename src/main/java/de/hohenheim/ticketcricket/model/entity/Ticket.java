@@ -1,5 +1,7 @@
 package de.hohenheim.ticketcricket.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Ticket {
 
     @Id
@@ -40,6 +43,8 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    private boolean viewed;
 
 
 
@@ -129,5 +134,13 @@ public class Ticket {
     }
     public void setBookmark(List<User> bookmark) {
         this.bookmark = bookmark;
+    }
+
+    public boolean isViewed() {
+        return viewed;
+    }
+
+    public void setViewed(boolean viewed) {
+        this.viewed = viewed;
     }
 }

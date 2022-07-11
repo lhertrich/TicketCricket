@@ -1,9 +1,12 @@
 package de.hohenheim.ticketcricket.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
     @Id
@@ -14,7 +17,17 @@ public class User {
 
     private String password;
 
+
+
     private boolean enabled = true;
+
+
+
+    private boolean allowed;
+
+
+
+    private boolean allowedGeneral;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
@@ -61,6 +74,22 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void setAllowed(boolean allowed) {
+        this.allowed = allowed;
+    }
+
+    public boolean isAllowed() {
+        return allowed;
+    }
+
+    public boolean isAllowedGeneral() {
+        return allowedGeneral;
+    }
+
+    public void setAllowedGeneral(boolean allowedGeneral) {
+        this.allowedGeneral = allowedGeneral;
     }
 
     @Override

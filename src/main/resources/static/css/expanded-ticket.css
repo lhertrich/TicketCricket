@@ -80,7 +80,7 @@ body {
     margin-top:1em;
 }
 
-#searchBar{
+.send-bar{
     border-color: black;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px

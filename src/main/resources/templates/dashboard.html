@@ -14,8 +14,11 @@
 </head>
 <body id="min-body-height">
 <!-- Navbar -->
-<th:block th:insert="fragments/navbarFragments::navbarUser" sec:authorize="hasRole('ROLE_USER')"/>
 <th:block th:insert="fragments/navbarFragments::navbarAdmin" sec:authorize="hasRole('ROLE_ADMIN')"/>
+<th:block th:insert="fragments/navbarFragments::navbarUser" sec:authorize="hasRole('ROLE_USER')"/>
+
+
+
 
 <!-- Tickets -->
 
@@ -36,9 +39,8 @@
             });
         });
     </script>
-    <script src="/js/SearchBar.js"></script>
-    <script src="/js/Filter.js"></script>
 
+    <script src="/js/ticketSelection.js"></script>
     <link rel="stylesheet" href="/css/dashboard.css">
     <li id="topBar" class="list-group-item">
         <div class="d-flex justify-content-between">
@@ -71,22 +73,48 @@
                     </li>
                     <li class="dropdown-divider dd-divider"/>
                     <li class="dd-item">
-                        <form id="categoryData">
                             <label for="categoryInput"> <strong>Kategorie</strong> </label>
                             <div id="categoryInput"
                                  th:each="category: ${T(de.hohenheim.ticketcricket.model.entity.Category).values()}">
                                 <input id="categoryCheckbox" type="checkbox" th:value="${category}">
                                 <label for="categoryCheckbox" th:text="${category.getDisplayValue()}"></label>
                             </div>
-                        </form>
                     </li>
                     <li class="dropdown-divider dd-divider"/>
+                    <li class="dd-item">
+                        <label for="categoryInput"> <strong>Priorität</strong> </label>
+                        <div id="priorityInput"
+                             th:each="prio: ${T(de.hohenheim.ticketcricket.model.entity.Priority).values()}">
+                            <input id="priorityCheckbox" type="checkbox" th:value="${prio}">
+                            <label for="priorityCheckbox" th:text="${prio.getDisplayValue()}"></label>
+                        </div>
+                    </li>
+                    <li class="dropdown-divider dd-divider"/>
+                    <li class="dd-item">
+                        <label for="categoryInput"> <strong>Lesezeichen</strong> </label>
+                        <div id="bookmarkInput">
+                            <input id="bookmarkCheckbox" type="checkbox" th:value="bookmark">
+                            <label for="bookmarkCheckbox">Lesezeichen gesetzt</label>
+                        </div>
+                    </li>
+                    <li class="dropdown-divider dd-divider"/>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')" class="dd-item">
+                        <label for="categoryInput"> <strong>Meine Tickets</strong> </label>
+                        <div id="adminInput">
+                            <input id="adminCheckbox" type="checkbox" th:value="admin">
+                            <label for="adminCheckbox">Mir zugewiesen</label>
+                        </div>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-divider dd-divider"/>
                     <li>
-                        <div id="filterButtons">
-                            <button id="filterResetButton" type="reset" class="btn button-color float-end no-overflow shadow-none"
+                        <div id="filterButtons" class="d-flex justify-content-center">
+                            <button id="filterSubmitButton" type="button" class="btn button-color float-end no-overflow"
+                                    style="margin: 5px"> Filtern
+                            </button>
+                            <button id="filterResetButton" type="reset" class="btn button-color float-end no-overflow"
                                     style="margin: 5px"> Zurücksetzen
                             </button>
-                            <button id="filterSubmitButton" type="button" class="btn button-color float-end no-overflow shadow-none"
+                            <button id="filterSubmitButton" type="button" class="btn button-color float-end no-overflow"
                                     style="margin: 5px"> Anwenden
                             </button>
                         </div>
@@ -107,18 +135,22 @@
                     <li class="dd-item">
                         <label for="sortAttribute"> <strong>Sortieren nach</strong> </label>
                         <select class="sortDropdown" id="sortAttribute">
+                            <option value="" selected disabled hidden>Bitte auswählen</option>
                             <option value="Status">Status</option>
                             <option value="Kategorie">Kategorie</option>
+                            <option value="Priorität">Priorität</option>
+                            <option value="Datum">Datum</option>
                         </select>
                     </li>
                     <li class="dropdown-divider dd-divider"></li>
                     <div id="sortButtons">
-                        <button id="sortSubmitButton" type="button" class="btn button-color float-end no-overflow shadow-none" style="margin: 5px">
+                        <button id="sortSubmitButton" type="button" class="btn button-color float-end no-overflow" style="margin: 5px">
                             Sortieren
                         </button>
                         <button id="sortResetButton" type="button" class="btn button-color float-end no-overflow shadow-none" style="margin: 5px">
                             Zurücksetzen
                         </button>
+
                     </div>
                 </ul>
             </div>
@@ -128,7 +160,7 @@
 
     <div id="bottomOuterBorder" class="container-fluid" style="overflow-y: auto; max-height: calc(100vh - 200px); flex-grow: 1;">
 
-
+    <div id="ticketsWithHeader">
         <!-- Info bar -->
         <div class="d-none d-md-inline">
             <div id="info-bar" class="list-group-item mb-2" style="background-color:transparent;
@@ -216,7 +248,7 @@
 
 
                             <!-- Status Timestamp, will only be displayed in Desktop Version-->
-                            <div th:if="${ticket.getLastRequest() != null}"
+                            <div th:if="${!ticket.isViewed()}"
                                  class="col-1 d-none d-md-inline align-self-end" style="font-weight:bold"
                                  title="Status angefragt">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
@@ -224,7 +256,7 @@
                                     <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
                                 </svg>
                             </div>
-                            <div th:if="${ticket.getLastRequest() == null}"
+                            <div th:if="${ticket.isViewed()}"
                                  class="col-1 d-none d-md-inline align-self-end" style="font-weight:bold"
                                  title="Status nicht angefragt">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -347,6 +379,7 @@
                 </div>
             </a>
         </div>
+    </div>
     </div>
 </div>
 </body>

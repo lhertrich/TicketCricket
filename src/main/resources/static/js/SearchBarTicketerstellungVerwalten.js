@@ -8,13 +8,13 @@ $(document).ready(function(){
 
     var searchString;
     $("#searchBar").keyup(function (){
-        searchString = $("#searchBar").val().replace(/\s+/g, '');
-        $("#bottomOuterBorder").load("/ajax/updateHome?searchString=" + searchString);
+        searchString = $("#searchBar").val();
+        $("#bottomOuterBorder").load("/ajax/updateTicketerstellung?searchString=" + searchString);
     });
 
     $("#search").click(function (){
-        searchString = $("#searchBar").val().replace(/\s+/g, '');
-        $("#bottomOuterBorder").load("/ajax/updateHome?searchString=" + searchString);
+        searchString = $("#searchBar").val();
+        $("#bottomOuterBorder").load("/ajax/updateTicketerstellung?searchString=" + searchString);
     });
 
 

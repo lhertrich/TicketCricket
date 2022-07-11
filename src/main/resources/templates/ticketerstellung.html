@@ -26,6 +26,8 @@
 </head>
 
 <body>
+
+
 <th:block th:insert="fragments/navbarFragments::navbarUser" sec:authorize="hasRole('ROLE_USER')"/>
 <th:block th:insert="fragments/navbarFragments::navbarAdmin" sec:authorize="hasRole('ROLE_ADMIN')"/>
 
@@ -98,17 +100,21 @@
                                   th:field="*{problem}"></textarea>
                         <p th:if="${#fields.hasErrors('problem')}" class="error-message" th:errors="*{problem}"></p>
                     </div>
+
                     <div class="row justify-content-end form-group box-format">
                         <div class="col-2">
-                            <button th:type="submit" th:text="'Ticket erstellen'" class="btn button-color float-end no-overflow"/>
+                            <button th:type="submit" th:text="'Ticket erstellen'"
+                                    class="btn button-color float-end no-overflow"/>
                         </div>
                     </div>
-
                 </form>
+
             </div>
         </div>
     </div>
 </div>
+
+
 
 </body>
 
