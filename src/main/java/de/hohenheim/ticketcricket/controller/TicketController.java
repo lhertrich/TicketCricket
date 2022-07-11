@@ -41,11 +41,10 @@ public class TicketController {
 
     @GetMapping("/ticket-form")
     public String showTicketForm(Model model) {
-        User user = userService.getCurrentUser();
-        model.addAttribute("currentUser", user);
+        User currentUser = userService.getCurrentUser();
+        model.addAttribute("currentUser", currentUser);
         model.addAttribute("ticket", new Ticket());
         model.addAttribute("admins", userService.getAdmins());
-        User currentUser = userService.getCurrentUser();
         model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
         model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
         model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
@@ -57,6 +56,7 @@ public class TicketController {
         User currentUser = userService.getCurrentUser();
         if(result.hasErrors()){
             model.addAttribute("currentUser", currentUser);
+            model.addAttribute("admins", userService.getAdmins());
             model.addAttribute("ticket", ticket);
             model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
             model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
