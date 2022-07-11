@@ -185,9 +185,14 @@
                                 Titel
                             </div>
 
+                            <!-- Creator -->
+                            <div class="col-1 d-none d-lg-inline align-self-end fw-bold" sec:authorize="hasRole('ROLE_ADMIN')">
+                                Ersteller
+                            </div>
+
                             <!-- Date -->
                             <div class="col-1 d-none d-md-inline align-self-end fw-bold ">
-                                Erstellt
+                                Datum
                             </div>
 
 
@@ -273,6 +278,14 @@
                             <!-- Ticket Title Text Desktop -->
                             <div th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"
                                  class="d-none d-md-inline col-3 fw-bold text-left no-overflow"></div>
+
+
+                            <!-- User Char -->
+                            <div th:text="${ticket.getUser().getUsername()}"sec:authorize="hasRole('ROLE_ADMIN')" class="col-1 d-none d-lg-inline align-self-end no-overflow">
+
+
+                            </div>
+
 
 
                             <!-- Creation Date, smaller Desktop View -->
