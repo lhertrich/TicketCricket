@@ -1,6 +1,25 @@
 var stompClient = null;
 
+function disableChat() {
+    $("#sendBar").prop("disabled", true);
+    $("#sendBar").val("");
+    $("#sendBar").attr("placeholder", "Der Chat ist deaktiviert, da das Ticket erledigt ist.");
+    $("#sendButton").prop("disabled", true);
+    $("#request-status-submit").prop("disabled", true);
+}
+
+function enableChat() {
+    $("#sendBar").prop("disabled", false);
+    $("#sendBar").attr("placeholder", "Nachricht senden...");
+    $("#sendButton").prop("disabled", false);
+}
+
 $(document).ready(function () {
+    loadMessages();
+    if(ticket.status == "ERLEDIGT") {
+        disableChat();
+    }
+
     var socket = new SockJS('/fallback');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
@@ -11,6 +30,16 @@ $(document).ready(function () {
         });
         stompClient.subscribe('/topic/status?id=' + ticket.ticketID, function (message) {
             displayStatus(message);
+            updateScroll();
+        });
+        stompClient.subscribe('/topic/disabled?id=' + ticket.ticketID, function (message) {
+            displayStatus(message);
+            disableChat();
+            updateScroll();
+        });
+        stompClient.subscribe('/topic/enabled?id=' + ticket.ticketID, function (message) {
+            displayStatus(message);
+            enableChat();
             updateScroll();
         });
     });
@@ -64,6 +93,36 @@ function sendStatusRequest() {
     stompClient.send("/websocket/status?id=" + ticket.ticketID, {}, JSON.stringify(data));
 }
 
+function sendDisabledInfo() {
+    var messageData = "Chat deaktiviert";
+    var dateData = new Date();
+    var userData = user;
+    var ticketData = ticket;
+    var data = {
+        "message": messageData,
+        "messageType": "STATUS",
+        "date": dateData,
+        "user": userData,
+        "ticket": ticketData
+    };
+    stompClient.send("/websocket/disabled?id=" + ticket.ticketID, {}, JSON.stringify(data));
+}
+
+function sendEnabledInfo() {
+    var messageData = "Chat aktiviert";
+    var dateData = new Date();
+    var userData = user;
+    var ticketData = ticket;
+    var data = {
+        "message": messageData,
+        "messageType": "STATUS",
+        "date": dateData,
+        "user": userData,
+        "ticket": ticketData
+    };
+    stompClient.send("/websocket/enabled?id=" + ticket.ticketID, {}, JSON.stringify(data));
+}
+
 $(function() {
     $("#text-input-bar").submit(function (e) {
         e.preventDefault();
@@ -74,7 +133,15 @@ $(function() {
         e.preventDefault();
         sendStatusRequest();
         $("#request-status-submit").prop("disabled", true);
-    })
+    });
+    $("#change-status").submit(function() {
+        let data = $("#change-status").serializeArray();
+        if(data[1].value == "ERLEDIGT") {
+            sendDisabledInfo();
+        } else {
+            sendEnabledInfo();
+        }
+    });
 });
 
 function updateScroll() {

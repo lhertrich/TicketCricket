@@ -6,7 +6,7 @@ $(function () {
     });
 });
 
-$(document).ready(function () {
+function loadMessages() {
     console.log("ready to load messages");
     $.ajax({
         type: "GET",
@@ -16,16 +16,15 @@ $(document).ready(function () {
             for (message of data) {
                 if (message.messageType === "STATUS") {
                     $("#messageBox").append(createStatus(message));
-                }else if (message.user.userId == user.userId) {
+                } else if (message.user.userId == user.userId) {
                     $("#messageBox").append(createMessage(message, true));
                 } else {
                     $("#messageBox").append(createMessage(message, false));
                 }
             }
-            messages = data;
         }
     });
-});
+}
 
 function createMessage(message, self) {
     var date = new Date(message.date);
@@ -97,12 +96,10 @@ function createStatus(message) {
     });
     var dateString = formatter.format(date);
 
-    message = "<div class=\"row justify-content-center\">\n" +
-        "            <div class=\"col-4 chat-status\">\n" +
-        "                <div class=\"row\">\n" +
-        "                    <div class=\"row\">\n" +
-        "                        <div class=\"col\">" + message.message + " am " + dateString +"</div>\n" +
-        "                    </div>\n" +
+    message = "<div class=\"container\">\n" +
+        "            <div class=\"row justify-content-center\">\n" +
+        "                <div class=\"col-4 chat-status\">\n" +
+        "                    <div class=\"text-center\">" + message.message + " am " + dateString +"</div>\n" +
         "                </div>\n" +
         "            </div>\n" +
         "        </div>";

@@ -49,4 +49,18 @@ public class ChatController {
         return message;
     }
 
+    @MessageMapping("/disabled{id}")
+    @SendTo("/topic/disabled{id}")
+    public Message disabled(Message message) {
+        messageService.saveMessage(message);
+        return message;
+    }
+
+    @MessageMapping("/enabled{id}")
+    @SendTo("/topic/enabled{id}")
+    public Message enabled(Message message) {
+        messageService.saveMessage(message);
+        return message;
+    }
+
 }
