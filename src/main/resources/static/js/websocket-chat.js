@@ -38,6 +38,7 @@ $(document).ready(function () {
             displayStatus(message);
             disableChat();
             updateScroll();
+            window.location.href = "/";
         });
         stompClient.subscribe('/topic/enabled?id=' + ticket.ticketID, function (message) {
             displayStatus(message);
@@ -138,11 +139,11 @@ $(function() {
     });
     $("#change-status").submit(function() {
         let data = $("#change-status").serializeArray();
-        if(data[1].value == "ERLEDIGT") {
+        if(data[1].value == "ERLEDIGT" && !deactivated) {
             sendDisabledInfo();
             //currently not needed but maybe in the future
             deactivated = true;
-        } else if(deactivated) {
+        } else if(deactivated && !(data[1].value == "ERLEDIGT")) {
             sendEnabledInfo();
         }
     });
