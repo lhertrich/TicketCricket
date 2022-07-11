@@ -39,6 +39,9 @@ public class ExpandedTicketController {
         Set<Role> roles = currentUser.getRoles();
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
         model.addAttribute("ticket", ticketService.findTicketById(id));
+        if(roleNames.contains("ROLE_ADMIN")) {
+            ticketService.setViewed(true, id);
+        }
         List<Message> allMessages = messageService.findAllMessages();
         List<Message> messages = allMessages.stream().filter(m -> m.getTicket().getTicketID() == id).collect(java.util.stream.Collectors.toList());
         model.addAttribute("messages", messages);

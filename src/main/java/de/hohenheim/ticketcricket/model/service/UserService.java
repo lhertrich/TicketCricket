@@ -24,6 +24,10 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    public Optional<User> getUserByID(int id) {
+        return userRepository.findById(id);
+    }
+
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
@@ -51,6 +55,28 @@ public class UserService implements UserDetailsService {
         return getUserByUsername(((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal()).getUsername());
     }
+
+
+    public List<User> findAllUserByUsername(String searchString) {
+        List<User> roleUserList = new ArrayList<>();
+        List<User> userList = findAllUsers();
+        for (User user : userList) {
+            Set<Role> roles = user.getRoles();
+            for (Role role : roles) {
+                if (role.getRolename().equals("ROLE_USER")) {
+                    roleUserList.add(user);
+                }
+            }
+        }
+        List<User> allUsersSearch;
+        if (searchString != null) {
+            allUsersSearch = roleUserList.stream().filter(x -> x.getUsername().replaceAll("\s", "").contains(searchString)).collect(Collectors.toList());
+        } else {
+            allUsersSearch = roleUserList;
+        }
+        return allUsersSearch;
+    }
+
 
     /**
      * Gibt das UserDetails Objekt des aktuell eingeloggten Users zurück. Wird u.U. benötigt um
