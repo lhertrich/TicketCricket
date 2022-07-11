@@ -96,18 +96,24 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         admin1.setUsername("admin1");
         admin1.setPassword(passwordEncoder.encode("admin1"));
         admin1.setRoles(new HashSet<>(Arrays.asList(adminRole, adminRoleInaktivität)));
+        admin1.setAllowed(true);
+        admin1.setAllowedGeneral(true);
         userService.saveUser(admin1);
 
         User admin2 = new User();
         admin2.setUsername("admin2");
         admin2.setPassword(passwordEncoder.encode("admin2"));
         admin2.setRoles(new HashSet<>(Arrays.asList(adminRole, adminRoleTechnisch)));
+        admin2.setAllowed(true);
+        admin2.setAllowedGeneral(true);
         userService.saveUser(admin2);
 
         User admin3 = new User();
         admin3.setUsername("Peter Admin");
         admin3.setPassword(passwordEncoder.encode("admin3"));
         admin3.setRoles(new HashSet<>(Arrays.asList(adminRole, adminRoleSonstiges)));
+        admin3.setAllowed(true);
+        admin3.setAllowedGeneral(true);
         userService.saveUser(admin3);
 
         bookmarkedTicket8.add(admin1);
