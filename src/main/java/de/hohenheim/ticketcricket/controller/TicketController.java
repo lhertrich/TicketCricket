@@ -41,11 +41,10 @@ public class TicketController {
 
     @GetMapping("/ticket-form")
     public String showTicketForm(Model model) {
-        User user = userService.getCurrentUser();
-        model.addAttribute("currentUser", user);
+        User currentUser = userService.getCurrentUser();
+        model.addAttribute("currentUser", currentUser);
         model.addAttribute("ticket", new Ticket());
         model.addAttribute("admins", userService.getAdmins());
-        User currentUser = userService.getCurrentUser();
         model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
         model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
         model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
@@ -56,7 +55,8 @@ public class TicketController {
     public String createTicket(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult result, Model model){
         User currentUser = userService.getCurrentUser();
         if(result.hasErrors()){
-            model.addAttribute("user", currentUser);
+            model.addAttribute("currentUser", currentUser);
+            model.addAttribute("admins", userService.getAdmins());
             model.addAttribute("ticket", ticket);
             model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
             model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
@@ -65,24 +65,40 @@ public class TicketController {
         }
         ticket.setStatus(Status.OFFEN);
         ticket.setUser(userService.getCurrentUser());
-        ticket.setAdmin(userService.getUserByUsername("admin1"));
-        Date currentDate = new Date(System.currentTimeMillis());
-        ticket.setDate(currentDate);
-        ticket.setLastRequest(currentDate);
-        model.addAttribute("currentUser", currentUser);
-
-        if (ticket.getCategory() == Category.INAKTIVITÄT) {
-            ticket.setPriority(Priority.WICHTIG);
-        } else if (ticket.getCategory() == Category.TECHNISCHE_PROBLEME) {
-            ticket.setPriority(Priority.SEHR_WICHTIG);
-        } else {
-            ticket.setPriority(Priority.UNWICHTIG);
+        ticket.setDate(new Date());
+        ticket.setLastRequest(new Date());
+        ticket.setPriority(prioritiseTicket(ticket));
+        if(ticket.getAdmin() == null){
+            ticket.setAdmin(assignAdmin(ticket));
         }
+        model.addAttribute("currentUser", currentUser);
         if (currentUser.isAllowed()) {
             ticketService.saveTicket(ticket);
         }
-
         return "redirect:/";
+    }
+
+    private Priority prioritiseTicket(Ticket ticket){
+        if(ticket.getCategory() == Category.TECHNISCHE_PROBLEME){
+            return Priority.SEHR_WICHTIG;
+        } else if(ticket.getCategory() == Category.INAKTIVITÄT){
+            return Priority.WICHTIG;
+        } else {
+            return Priority.UNWICHTIG;
+        }
+    }
+
+    private User assignAdmin(Ticket ticket){
+        List<User> capableAdmins = userService.getAdminsByCategory(ticket.getCategory());
+        User assignedAdmin = capableAdmins.get(0);
+        int minNumberOfTickets = ticketService.findAllTicketsForAdmin(assignedAdmin).size();
+        for(User admin : capableAdmins){
+            if(ticketService.findAllTicketsForAdmin(admin).size() < minNumberOfTickets){
+                assignedAdmin = admin;
+                minNumberOfTickets = ticketService.findAllTicketsForAdmin(admin).size();
+            }
+        }
+        return assignedAdmin;
     }
 
     @GetMapping("/ticket-creation-managing")

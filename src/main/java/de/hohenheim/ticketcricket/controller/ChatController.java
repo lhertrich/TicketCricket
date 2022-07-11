@@ -43,9 +43,23 @@ public class ChatController {
         Notification notification = new Notification();
         notification.setNotificationType(NotificationType.STATUS_ANFRAGE);
         notification.setTicket(ticket);
-        notification.setUser(currentUser);
+        notification.setUser(ticket.getAdmin());
         notification.setDate(new Date());
         notificationService.saveNotification(notification);
+        messageService.saveMessage(message);
+        return message;
+    }
+
+    @MessageMapping("/disabled{id}")
+    @SendTo("/topic/disabled{id}")
+    public Message disabled(Message message) {
+        messageService.saveMessage(message);
+        return message;
+    }
+
+    @MessageMapping("/enabled{id}")
+    @SendTo("/topic/enabled{id}")
+    public Message enabled(Message message) {
         messageService.saveMessage(message);
         return message;
     }
