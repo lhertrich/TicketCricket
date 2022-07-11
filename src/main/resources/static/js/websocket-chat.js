@@ -38,7 +38,6 @@ $(document).ready(function () {
             displayStatus(message);
             disableChat();
             updateScroll();
-            window.location.href = "/";
         });
         stompClient.subscribe('/topic/enabled?id=' + ticket.ticketID, function (message) {
             displayStatus(message);
