@@ -1,4 +1,5 @@
 var stompClient = null;
+var deactivated = false;
 
 function disableChat() {
     $("#sendBar").prop("disabled", true);
@@ -17,6 +18,7 @@ function enableChat() {
 $(document).ready(function () {
     loadMessages();
     if(ticket.status == "ERLEDIGT") {
+        deactivated = true;
         disableChat();
     }
 
@@ -138,11 +140,15 @@ $(function() {
         let data = $("#change-status").serializeArray();
         if(data[1].value == "ERLEDIGT") {
             sendDisabledInfo();
-        } else {
+            //currently not needed but maybe in the future
+            deactivated = true;
+        } else if(deactivated) {
             sendEnabledInfo();
         }
     });
 });
+
+
 
 function updateScroll() {
     var element = document.getElementById("messageBox");
