@@ -37,7 +37,7 @@ public class Ticket {
     private Date lastRequest;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<User> bookmark;
+    private Set<User> bookmark;
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
@@ -130,10 +130,10 @@ public class Ticket {
         this.admin = admin;
     }
 
-    public List<User> getBookmark() {
+    public Set<User> getBookmark() {
         return bookmark;
     }
-    public void setBookmark(List<User> bookmark) {
+    public void setBookmark(Set<User> bookmark) {
         this.bookmark = bookmark;
     }
 

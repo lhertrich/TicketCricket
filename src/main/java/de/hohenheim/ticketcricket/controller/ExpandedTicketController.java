@@ -120,7 +120,7 @@ public class ExpandedTicketController {
 
     @PostMapping("/ticket/expand/setBookmark{id}")
     public String setBookmark(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
-        List <User> userBookmark = ticketService.findTicketById(id).getBookmark();
+        Set<User> userBookmark = ticketService.findTicketById(id).getBookmark();
         if (userBookmark.contains(userService.getCurrentUser())){
          ticketService.removeBookmark(userService.getCurrentUser(),id);
         }else{
