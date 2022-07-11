@@ -98,6 +98,24 @@
                         </div>
                     </li>
                     <li class="dropdown-divider dd-divider"/>
+                    <li class="dd-item">
+                        <label for="categoryInput"> <strong>Angefragt</strong> </label>
+                        <div id="requestInput">
+                            <input id="requestCheckbox" type="checkbox" th:value="request">
+                            <label for="bookmarkCheckbox">Status angefragt</label>
+                        </div>
+                    </li>
+                    <li class="dropdown-divider dd-divider"/>
+                    <li class="dd-item">
+                        <label for="categoryInput"> <strong>User</strong> </label>
+                        <div id="userInput">
+                            <select id="userSelection" class="sortDropdown">
+                                <option value="noUser">User auswählen</option>
+                                <option th:each="user: ${users}" th:value="${user.getUsername()}" th:text="${user.getUsername()}"></option>
+                            </select>
+                        </div>
+                    </li>
+                    <li class="dropdown-divider dd-divider"/>
                     <li sec:authorize="hasRole('ROLE_ADMIN')" class="dd-item">
                         <label for="categoryInput"> <strong>Meine Tickets</strong> </label>
                         <div id="adminInput">
@@ -138,6 +156,7 @@
                             <option value="Kategorie">Kategorie</option>
                             <option value="Priorität">Priorität</option>
                             <option value="Datum">Datum</option>
+                            <option value="User">User</option>
                         </select>
                     </li>
                     <li class="dropdown-divider dd-divider"></li>
