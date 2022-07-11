@@ -1,6 +1,7 @@
 package de.hohenheim.ticketcricket.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.aspectj.weaver.ast.Not;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,7 +24,7 @@ public class Ticket {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "adminID")
     private User admin;
-    
+
     private String title;
 
     private String problem;
