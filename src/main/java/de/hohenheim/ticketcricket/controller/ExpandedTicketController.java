@@ -5,6 +5,7 @@ import de.hohenheim.ticketcricket.model.service.MessageService;
 import de.hohenheim.ticketcricket.model.service.NotificationService;
 import de.hohenheim.ticketcricket.model.service.TicketService;
 import de.hohenheim.ticketcricket.model.service.UserService;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,11 +68,25 @@ public class ExpandedTicketController {
     @PostMapping("/ticket/expand/setStatus{id}")
     public String setStatus(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
         ticketService.setStatus(ticket.getStatus(), id);
+        Ticket newTicket = ticketService.findTicketById(id);
+        Notification statusNotification = new Notification();
+        statusNotification.setNotificationType(NotificationType.STATUS_ÄNDERUNG);
+        statusNotification.setTicket(newTicket);
+        statusNotification.setDate(new Date());
+        statusNotification.setUser(newTicket.getUser());
+        notificationService.saveNotification(statusNotification);
         return "redirect:/ticket/expand?id="+id;
     }
     @PostMapping("/ticket/expand/setCategory{id}")
     public String setCategory(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
         ticketService.setCategory(ticket.getCategory(), id);
+        Ticket newTicket = ticketService.findTicketById(id);
+        Notification categoryNotification = new Notification();
+        categoryNotification.setNotificationType(NotificationType.KATEGORIE_ÄNDERUNG);
+        categoryNotification.setTicket(newTicket);
+        categoryNotification.setUser(newTicket.getUser());
+        categoryNotification.setDate(new Date());
+        notificationService.saveNotification(categoryNotification);
         return "redirect:/ticket/expand?id="+id;
     }
 
@@ -84,18 +99,13 @@ public class ExpandedTicketController {
     @PostMapping("/ticket/expand/setAdmin{id}")
     public String setAdmin(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
         ticketService.setAdmin(ticket.getAdmin(), id);
-        return "redirect:/ticket/expand?id="+id;
-    }
-
-    @PostMapping("/ticket/status{id}")
-    public String requestStatus(@RequestParam("id") Integer id){
-        ticketService.setRequest(id);
-        Notification notification = new Notification();
-        notification.setNotificationType(NotificationType.STATUS_ANFRAGE);
-        notification.setTicket(ticketService.findTicketById(id));
-        notification.setUser(userService.getCurrentUser());
-        notification.setDate(new Date());
-        notificationService.saveNotification(notification);
+        Ticket newTicket = ticketService.findTicketById(id);
+        Notification adminNotification = new Notification();
+        adminNotification.setNotificationType(NotificationType.TICKET_ZUGEWIESEN);
+        adminNotification.setTicket(newTicket);
+        adminNotification.setUser(newTicket.getAdmin());
+        adminNotification.setDate(new Date());
+        notificationService.saveNotification(adminNotification);
         return "redirect:/ticket/expand?id="+id;
     }
 
