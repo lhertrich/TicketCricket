@@ -39,6 +39,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private MessageDraftService messageDraftService;
+
 
 
     /**
@@ -60,6 +63,17 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         roleService.saveRole(adminRoleInaktivität);
         roleService.saveRole(adminRoleTechnisch);
         roleService.saveRole(adminRoleSonstiges);
+
+        MessageDraft messageDraft1 = new MessageDraft();
+        messageDraft1.setMessage("Das Black Screen Issue wird am Freitag gefixed.");
+        messageDraftService.saveMessage(messageDraft1);
+        MessageDraft messageDraft2 = new MessageDraft();
+        messageDraft2.setMessage("Halt die Fresse du Hurensohn");
+        messageDraftService.saveMessage(messageDraft2);
+        MessageDraft messageDraft3 = new MessageDraft();
+        messageDraft3.setMessage("Hallo, ich werde mich um ihr Problem kümmern.");
+        messageDraftService.saveMessage(messageDraft3);
+
 
         Set<User> allBookmarked = new HashSet<>(userService.findAllUsers());
         Set<User> bookmarkedTicket8 = new HashSet<>();
