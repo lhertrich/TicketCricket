@@ -30,9 +30,9 @@
 
     <link rel="stylesheet" href="/css/ticketerstellung-verwalten.css">
     <li id="topBar" class="list-group-item">
-        <div class="d-flex justify-content-between">
-               <form class="input-group search-bar-width" style="width: 20%" onsubmit="return false">
-                 <input id="searchBar" type="text" class="form-control shadow-none" placeholder="..." >
+        <div class="d-flex justify-content-between align-items-center">
+                   <form class="input-group" style="margin-right: 5px; min-width:50px; max-width: 500px; width: 50vw" onsubmit="return false">
+                   <input id="searchBar" type="text" class="form-control shadow-none" placeholder="..." >
                    <button id="search" type="button" class="btn shadow-none">
                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-search" viewBox="0 0 16 16">
@@ -48,7 +48,7 @@
                     <form th:action="@{/ticket-creation-disabled}" method="post">
                         <div class="form-check form-switch">
                             <input class="form-check-input button1" type="checkbox" onchange="submit()" role="switch"
-                                   id="flexSwitchCheckDefault"/>
+                                   id="flexSwitchCheckDefault" style="margin-top:7px;"/>
                             <label class="form-check-label" for="flexSwitchCheckDefault">Ticketerstellung </label>
                         </div>
                     </form>
@@ -60,7 +60,7 @@
     <div id="bottomOuterBorder" class="container-fluid">
         <div th:each="user: ${users}" id="innerWindowUsers">
             <div class="row justifiy-content-evenly">
-                <div class="list-group-item">
+                <div class="list-group-item" style="background:none;">
                     <div class="row justify-content-between">
                         <div th:text="${user.getUsername()}" class="col-11"></div>
 
