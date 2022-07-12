@@ -20,6 +20,8 @@ $(document).ready(function(){
                 filterString += $(this).val();
             }
         });
+        console.log("selection: "+$("#userSelection").val())
+        filterString = filterString + $("#userSelection").val();
         sortString = $("#sortAttribute").val();
         console.log("searchstring: "+searchString+"; filterstring: "+filterString+"; sortattribute: "+sortString);
         let selectionObject = {
@@ -59,6 +61,7 @@ $(document).ready(function(){
         $(":checkbox").each(function (){
             $(this).prop('checked', false);
         });
+        $("#userSelection").val('noUser').change();
         getDataAndSend();
     });
 
@@ -69,6 +72,7 @@ $(document).ready(function(){
 
     $("#sortResetButton").click(function (){
         sortString = "";
-        $("#sortAttribute").val("");
+        $("#sortAttribute").val('').change();
+        getDataAndSend();
     });
 });

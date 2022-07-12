@@ -1,6 +1,7 @@
 package de.hohenheim.ticketcricket.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.aspectj.weaver.ast.Not;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,7 +24,7 @@ public class Ticket {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "adminID")
     private User admin;
-    
+
     private String title;
 
     private String problem;
@@ -36,13 +37,15 @@ public class Ticket {
     private Date lastRequest;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<User> bookmark;
+    private Set<User> bookmark;
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    private boolean viewed;
 
 
 
@@ -127,10 +130,18 @@ public class Ticket {
         this.admin = admin;
     }
 
-    public List<User> getBookmark() {
+    public Set<User> getBookmark() {
         return bookmark;
     }
-    public void setBookmark(List<User> bookmark) {
+    public void setBookmark(Set<User> bookmark) {
         this.bookmark = bookmark;
+    }
+
+    public boolean isViewed() {
+        return viewed;
+    }
+
+    public void setViewed(boolean viewed) {
+        this.viewed = viewed;
     }
 }

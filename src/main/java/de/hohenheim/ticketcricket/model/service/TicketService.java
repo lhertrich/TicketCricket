@@ -6,7 +6,6 @@ import de.hohenheim.ticketcricket.model.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +36,17 @@ public class TicketService {
         List<Ticket> userTickets = new ArrayList<>();
         for (Ticket ticket : allTickets) {
             if (ticket.getUser().equals(user)) {
+                userTickets.add(ticket);
+            }
+        }
+        return userTickets;
+    }
+
+    public List<Ticket> findAllTicketsForAdmin(User admin) {
+        List<Ticket> allTickets = ticketRepository.findAll();
+        List<Ticket> userTickets = new ArrayList<>();
+        for (Ticket ticket : allTickets) {
+            if (ticket.getAdmin().equals(admin)) {
                 userTickets.add(ticket);
             }
         }
@@ -75,7 +85,7 @@ public class TicketService {
             categoryTickets.addAll(tickets.stream().filter(x -> x.getStatus() == Status.ERLEDIGT).collect(Collectors.toList()));
         }
 
-        if(categoryTickets.isEmpty()){
+        if(!filterString.contains("OFFEN") && !filterString.contains("IN_BEARBEITUNG") && !filterString.contains("ERLEDIGT")){
             return tickets;
         }
         return categoryTickets;
@@ -93,7 +103,7 @@ public class TicketService {
         if(filterString.contains("SONSTIGES")){
             statusTickets.addAll(tickets.stream().filter(x -> x.getCategory() == Category.SONSTIGES).collect(Collectors.toList()));
         }
-        if(statusTickets.isEmpty()){
+        if(!filterString.contains("INAKTIVITÄT") && !filterString.contains("TECHNISCHE_PROBLEME") && !filterString.contains("SONSTIGES")){
             return tickets;
         }
         return statusTickets;
@@ -102,19 +112,27 @@ public class TicketService {
     private List<Ticket> filterTicketsByPrio(List<Ticket> tickets, String filterString){
         List<Ticket> prioTickets = new ArrayList<>();
 
-        if(filterString.contains("SEHR_WICHTIG")){
-            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.SEHR_WICHTIG).collect(Collectors.toList()));
+        if(filterString.contains("HOCH")){
+            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.HOCH).collect(Collectors.toList()));
         }
-        if(filterString.contains("WICHTIG")){
-            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.WICHTIG).collect(Collectors.toList()));
+        if(filterString.contains("MITTEL") && !filterString.contains("HOCH") && !filterString.contains("NIEDRIG")){
+            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.MITTEL).collect(Collectors.toList()));
         }
-        if(filterString.contains("UNWICHTIG")){
-            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.UNWICHTIG).collect(Collectors.toList()));
+        if(filterString.contains("NIEDRIG") && !filterString.contains("MITTEL")){
+            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.NIEDRIG).collect(Collectors.toList()));
         }
-        if (prioTickets.isEmpty()){
+        if(!filterString.contains("HOCH") && !filterString.contains("MITTEL") && !filterString.contains("NIEDRIG")){
             return tickets;
         }
         return prioTickets;
+    }
+
+    private List<Ticket> filterTicketsByUser(List<Ticket> tickets, String filterString){
+        if(filterString.contains("noUser")){
+            return tickets;
+        }
+        List<Ticket> userTickets = tickets.stream().filter(x -> filterString.contains(x.getUser().getUsername())).collect(Collectors.toList());
+        return userTickets;
     }
 
     private List<Ticket> findAllTicketsByUserFilter(String filterString, User user){
@@ -130,8 +148,14 @@ public class TicketService {
         List<Ticket> prioTickets = filterTicketsByPrio(allTickets, filterString);
         List<Ticket> bookmarkTickets = allTickets.stream().filter(x -> x.getBookmark().contains(user)).collect(Collectors.toList());
         List<Ticket> adminTickets = allTickets.stream().filter(x -> x.getAdmin().equals(user)).collect(Collectors.toList());
+        List<Ticket> requestedTickets = allTickets.stream().filter(x -> !x.isViewed()).collect(Collectors.toList());
+        List<Ticket> userTickets = filterTicketsByUser(allTickets, filterString);
         List<Ticket> filterTickets = categoryTickets.stream().filter(statusTickets::contains).collect(Collectors.toList());
+        filterTickets = filterTickets.stream().filter(userTickets::contains).collect(Collectors.toList());
         filterTickets = filterTickets.stream().filter(prioTickets::contains).collect(Collectors.toList());
+        if(filterString.contains("request")){
+            filterTickets = filterTickets.stream().filter(requestedTickets::contains).collect(Collectors.toList());
+        }
         if(filterString.contains("bookmark")){
             filterTickets = filterTickets.stream().filter(bookmarkTickets::contains).collect(Collectors.toList());
         }
@@ -152,6 +176,8 @@ public class TicketService {
             Collections.sort(tickets, Comparator.comparing(Ticket::getPriority));
         } else if(sortString.equals("Datum")){
             Collections.sort(tickets, Comparator.comparing(Ticket::getDate));
+        } else if(sortString.equals("User")){
+            Collections.sort(tickets, Comparator.comparing(x -> x.getUser().getUsername()));
         }
     }
 
@@ -203,4 +229,11 @@ public class TicketService {
         ticketToUpdate.getBookmark().remove(bookmark);
         ticketRepository.save(ticketToUpdate);
     }
+
+    public void setViewed(boolean isViewed, int id){
+        Ticket ticketToUpdate = ticketRepository.getById(id);
+        ticketToUpdate.setViewed(isViewed);
+        ticketRepository.save(ticketToUpdate);
+    }
+
 }

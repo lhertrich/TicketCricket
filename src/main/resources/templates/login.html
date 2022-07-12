@@ -13,6 +13,28 @@
 
 </head>
 <body>
+<style>
+    .our-button{
+    max-width: 190px;
+    background-color: #272635;
+    border-color: #272635;
+    border-radius: 10px;
+    color: white;
+    }
+    .our-button:disabled{
+    opacity: 98%;
+    background-color: #bdbdbd;
+    border-color: #bdbdbd;
+    color: #939393;
+    }
+
+    .our-button:hover {
+    background-color: rgba(39, 38, 53, 0.55);
+    border-color: rgba(39, 38, 53, 0.55);
+    color: white;
+    }
+</style>
+
 <div th:insert="fragments/navbarFragments::navbarLogin"></div>
 
 <div class="row justify-content-center" style=" margin-top: 100px">
@@ -52,8 +74,8 @@
                                 <p class="alert alert-success text-center my-3 " style="overflow: hidden;" th:text="'Logout erfolgreich.'"></p>
                             </div>
                         </div>
-                        <div class="form-actions d-flex justify-content-center" style="margin-bottom:2%;">
-                            <button th:type="submit" th:text="Login" class="btn" style="background-color: #A6A6A8;border-color: #A6A6A8;border-radius: 10px;color: white;">Log In</button>
+                        <div class="form-actions d-flex justify-content-center no-style" style="margin-bottom:2%;">
+                            <button th:type="submit" th:text="Login" class="our-button btn">Log In</button>
                         </div>
 
                     </form>

@@ -38,6 +38,7 @@ public class DashboardController {
         model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
         model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
         model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
+        model.addAttribute("users", userService.findAllUsers());
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("tickets", ticketService.findAllTickets());
         } else {
@@ -49,7 +50,7 @@ public class DashboardController {
 
     @PostMapping("/setBookmark{id}")
     public String setBookmark(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
-        List<User> userBookmark = ticketService.findTicketById(id).getBookmark();
+        Set<User> userBookmark = ticketService.findTicketById(id).getBookmark();
         if (userBookmark.contains(userService.getCurrentUser())){
             ticketService.removeBookmark(userService.getCurrentUser(),id);
         }else{
@@ -62,7 +63,6 @@ public class DashboardController {
     @ResponseStatus(value = HttpStatus.OK)
     public String updateHome(@RequestBody SelectionObject selectionObject, Model model){
         User currentUser = userService.getCurrentUser();
-        System.out.println("filterstring: "+selectionObject.getFilterString()+"; searchstring: "+selectionObject.getSearchString()+"; sortString: "+selectionObject.getSortString());
         model.addAttribute("tickets", ticketService.findAllTicketsForUserSelection(currentUser, selectionObject));
         model.addAttribute("currentUser", userService.getCurrentUser());
         return "dashboard :: #ticketsWithHeader";

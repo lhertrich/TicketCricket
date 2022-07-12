@@ -97,14 +97,14 @@
                           class="elseBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
                 </div>
                 <div id="priority" class="row fs-10 fw-bold p-1">Priorität:
-                    <span th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig'}"
-                          class="openBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Sehr wichtig
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Hoch'}"
+                          class="openBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Hoch
                     </span>
-                    <span th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
-                          class="progressBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Wichtig
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Mittel'}"
+                          class="progressBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Mittel
                     </span>
-                    <span th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
-                          class="finishedBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Unwichtig
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Niedrig'}"
+                          class="finishedBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Niedrig
                     </span>
                 </div>
             </div>
@@ -135,13 +135,17 @@
         <!-- Ticket Info end-->
         <!-- Chat -->
         <div id="chatBox" class="row bottom-outer-border chat-height justify-content-center">
-            <div id="messageBox" class="row align-content-center justify-content-center overflow-auto">
+            <div id="messageBox" class="row">
 
             </div>
             <div id="sendBarContainer" class="row align-self-end">
                 <form class="input-group py-2" id="text-input-bar">
-                    <input id="sendBar" type="text" class="form-control input-field send-bar" placeholder="Send message...">
-                    <input type="submit" hidden />
+                    <input id="sendBar" type="text" class="form-control input-field input-bar shadow-none" placeholder="Nachricht senden...">
+                    <button id="sendButton" type="submit" class="btn shadow-none bar-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+                        </svg>
+                    </button>
                 </form>
             </div>
         </div>
@@ -160,10 +164,10 @@
                         werden. </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn our-button" data-bs-dismiss="modal">Abbrechen</button>
                     <form th:action="@{/ticket/delete(id=${ticket.ticketID})}" th:object="${ticket}"
                           method="post">
-                        <button type="submit" class="btn btn-danger no-overflow">
+                        <button type="submit" class="btn btn-danger no-overflow our-button-takeback">
                             Ticket zurücknehmen
                         </button>
                     </form>

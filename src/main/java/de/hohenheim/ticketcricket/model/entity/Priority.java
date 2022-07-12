@@ -2,7 +2,7 @@ package de.hohenheim.ticketcricket.model.entity;
 
 
 public enum Priority {
-    SEHR_WICHTIG("Sehr Wichtig"), WICHTIG("Wichtig"), UNWICHTIG("Unwichtig");
+    HOCH("Hoch"), MITTEL("Mittel"), NIEDRIG("Niedrig");
 
     private final String displayValue;
 

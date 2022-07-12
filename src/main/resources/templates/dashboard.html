@@ -98,6 +98,24 @@
                         </div>
                     </li>
                     <li class="dropdown-divider dd-divider"/>
+                    <li class="dd-item">
+                        <label for="categoryInput"> <strong>Angefragt</strong> </label>
+                        <div id="requestInput">
+                            <input id="requestCheckbox" type="checkbox" th:value="request">
+                            <label for="bookmarkCheckbox">Status angefragt</label>
+                        </div>
+                    </li>
+                    <li class="dropdown-divider dd-divider"/>
+                    <li class="dd-item">
+                        <label for="categoryInput"> <strong>User</strong> </label>
+                        <div id="userInput">
+                            <select id="userSelection" class="sortDropdown">
+                                <option value="noUser">User auswählen</option>
+                                <option th:each="user: ${users}" th:value="${user.getUsername()}" th:text="${user.getUsername()}"></option>
+                            </select>
+                        </div>
+                    </li>
+                    <li class="dropdown-divider dd-divider"/>
                     <li sec:authorize="hasRole('ROLE_ADMIN')" class="dd-item">
                         <label for="categoryInput"> <strong>Meine Tickets</strong> </label>
                         <div id="adminInput">
@@ -108,14 +126,12 @@
                     <li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-divider dd-divider"/>
                     <li>
                         <div id="filterButtons" class="d-flex justify-content-center">
-                            <button id="filterSubmitButton" type="button" class="btn button-color float-end no-overflow"
-                                    style="margin: 5px"> Filtern
-                            </button>
-                            <button id="filterResetButton" type="reset" class="btn button-color float-end no-overflow"
+
+                            <button id="filterResetButton" type="reset" class="btn our-button float-end no-overflow"
                                     style="margin: 5px"> Zurücksetzen
                             </button>
-                            <button id="filterSubmitButton" type="button" class="btn button-color float-end no-overflow"
-                                    style="margin: 5px"> Anwenden
+                            <button id="filterSubmitButton" type="button" class="btn our-button float-end no-overflow"
+                                    style="margin: 5px"> Filtern
                             </button>
                         </div>
                     </li>
@@ -140,17 +156,17 @@
                             <option value="Kategorie">Kategorie</option>
                             <option value="Priorität">Priorität</option>
                             <option value="Datum">Datum</option>
+                            <option value="User">User</option>
                         </select>
                     </li>
                     <li class="dropdown-divider dd-divider"></li>
-                    <div id="sortButtons">
-                        <button id="sortSubmitButton" type="button" class="btn button-color float-end no-overflow" style="margin: 5px">
-                            Sortieren
-                        </button>
-                        <button id="sortResetButton" type="button" class="btn button-color float-end no-overflow shadow-none" style="margin: 5px">
+                    <div id="sortButtons" class="d-flex justify-content-center">
+                        <button id="sortResetButton" type="button" class="btn our-button float-end no-overflow shadow-none" style="margin: 5px">
                             Zurücksetzen
                         </button>
-
+                        <button id="sortSubmitButton" type="button" class="btn our-button float-end no-overflow" style="margin: 5px">
+                            Sortieren
+                        </button>
                     </div>
                 </ul>
             </div>
@@ -158,13 +174,13 @@
     </li>
 
 
-    <div th:fragment="ticketFragment" id="bottomOuterBorder" class="container-fluid">
+    <div id="bottomOuterBorder" class="container-fluid scrollbar" style="overflow-y: auto; max-height: calc(100vh - 200px); flex-grow: 1;">
 
     <div id="ticketsWithHeader">
         <!-- Info bar -->
         <div class="d-none d-md-inline">
-            <div id="info-bar" class="list-group-item mb-2" style="background-color:transparent;
-            border-top: none; border-right:none; border-left:none; border-radius: 0px;">
+            <div id="info-bar" class="list-group-item mb-2" style="background-color:#E8E9F3;
+            border-top: none; border-right:none; border-left:none; border-radius: 0px;position: sticky; top: 0; z-index: 3">
                 <div class="d-flex justify-content-between">
                     <div class="container-fluid">
                         <div class="row justify-content-evenly">
@@ -185,9 +201,14 @@
                                 Titel
                             </div>
 
+                            <!-- Creator -->
+                            <div class="col-1 d-none d-lg-inline align-self-end fw-bold" sec:authorize="hasRole('ROLE_ADMIN')">
+                                Ersteller
+                            </div>
+
                             <!-- Date -->
                             <div class="col-1 d-none d-md-inline align-self-end fw-bold ">
-                                Erstellt
+                                Datum
                             </div>
 
 
@@ -248,7 +269,7 @@
 
 
                             <!-- Status Timestamp, will only be displayed in Desktop Version-->
-                            <div th:if="${ticket.getLastRequest() != null}"
+                            <div th:if="${!ticket.isViewed()}"
                                  class="col-1 d-none d-md-inline align-self-end" style="font-weight:bold"
                                  title="Status angefragt">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
@@ -256,7 +277,7 @@
                                     <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
                                 </svg>
                             </div>
-                            <div th:if="${ticket.getLastRequest() == null}"
+                            <div th:if="${ticket.isViewed()}"
                                  class="col-1 d-none d-md-inline align-self-end" style="font-weight:bold"
                                  title="Status nicht angefragt">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -275,6 +296,14 @@
                                  class="d-none d-md-inline col-3 fw-bold text-left no-overflow"></div>
 
 
+                            <!-- User Char -->
+                            <div th:text="${ticket.getUser().getUsername()}"sec:authorize="hasRole('ROLE_ADMIN')" class="col-1 d-none d-lg-inline align-self-end no-overflow">
+
+
+                            </div>
+
+
+
                             <!-- Creation Date, smaller Desktop View -->
                             <div th:text="${#dates.format(ticket.getDate(), 'dd.MM.')}"
                                  class="col-1 d-none d-md-inline d-lg-none align-self-end">
@@ -288,25 +317,19 @@
 
                             <!--Bookmark -->
                             <div th:if="${ticket.getBookmark().contains(currentUser)}" id="bookmark" class="col-1 d-none d-sm-inline align-self-start">
-                                <form class="no-style" method="post" th:action="@{/setBookmark(id=${ticket.ticketID})}" href="#">
-                                    <button type="submit" name="submit" value="value" data-toggle="tooltip" data-placement="bottom" title="Klicken um Lesezeichen zu setzen/löschen" class="no-style" >
+                                    <button class="no-style" disabled>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
                                             <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
-                                            <title>Klicken um Lesezeichen zu setzen/löschen</title>
                                         </svg>
                                     </button>
-                                </form>
                             </div>
 
                             <div th:if="${!ticket.getBookmark().contains(currentUser)}"id="noBookmark" class="col-1 d-none d-sm-inline align-self-start">
-                                <form class="no-style" method="post" th:action="@{/setBookmark(id=${ticket.ticketID})}">
-                                    <button type="submit" name="submit" value="value" data-toggle="tooltip" data-placement="bottom" title="Klicken um Lesezeichen zu setzen/löschen"  class="no-style">
+                                    <button class="no-style" disabled>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-                                            <title>Klicken um Lesezeichen zu setzen/löschen</title>
                                             <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
                                         </svg>
                                     </button>
-                                </form>
                             </div>
 
 
@@ -334,7 +357,7 @@
 
 
                             <!--- Mobile Priority Triangles -->
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig'}"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Hoch'}"
                                  style="font-weight:bold"
                                  class="d-inline col-1 d-md-none align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')"
                                  title="Hoch">
@@ -342,7 +365,7 @@
                                     <path d="M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
                                 </svg>
                             </div>
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Mittel'}"
                                  style="font-weight:bold"
                                  class="d-inline col-1 d-md-none align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')"
                                  title="Mittel">
@@ -350,7 +373,7 @@
                                     <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
                                 </svg>
                             </div>
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Niedrig'}"
                                  style="font-weight:bold"
                                  class="d-inline col-1 d-md-none align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')"
                                  title="Niedrig">
@@ -360,15 +383,15 @@
                             </div>
 
                             <!--- Desktop priority -->
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig' }"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Hoch' }"
                                  style="font-weight:bold"
                                  class="d-inline col-1 d-none d-md-inline align-self-end " sec:authorize="hasRole('ROLE_ADMIN')">Hoch
                                 </div>
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Mittel'}"
                                  style="font-weight:bold"
                                  class="d-inline col-1 d-none d-md-inline align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')">Mittel
                                 </div>
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Niedrig'}"
                                  style="font-weight:bold;"
                                  class="d-inline col-1 d-none d-md-inline align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')">Niedrig
                                 </div>
