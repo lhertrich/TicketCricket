@@ -63,8 +63,25 @@ public class DashboardController {
     @ResponseStatus(value = HttpStatus.OK)
     public String updateHome(@RequestBody SelectionObject selectionObject, Model model){
         User currentUser = userService.getCurrentUser();
+        System.out.println(currentUser.getUsername());
         model.addAttribute("tickets", ticketService.findAllTicketsForUserSelection(currentUser, selectionObject));
         model.addAttribute("currentUser", userService.getCurrentUser());
+        return "dashboard :: #ticketsWithHeader";
+    }
+
+    @GetMapping("/ajax/reloadDashboard")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String reloadDashboard(Model model){
+        User currentUser = userService.getCurrentUser();
+        Set<Role> roles = currentUser.getRoles();
+        Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
+        model.addAttribute("currentUser", currentUser);
+        if(roleNames.contains("ROLE_ADMIN")) {
+            model.addAttribute("tickets", ticketService.findAllTickets());
+        }else{
+            model.addAttribute("tickets", ticketService.findAllTicketsByUser(currentUser));
+        }
+
         return "dashboard :: #ticketsWithHeader";
     }
 

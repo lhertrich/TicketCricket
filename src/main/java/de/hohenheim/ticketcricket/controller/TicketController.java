@@ -222,4 +222,12 @@ public class TicketController {
         model.addAttribute("users", userService.findAllUserByUsername(searchString));
         return "ticketerstellung-disabled :: #innerWindowUsers";
     }
+
+    @GetMapping("/ticket/load-tickets")
+    @ResponseBody
+    public List<Ticket> loadTickets(Model model) {
+        model.addAttribute("tickets", ticketService.findAllTickets());
+        List<Ticket> ticketList = ticketService.findAllTickets();
+        return ticketList;
+    }
 }
