@@ -163,6 +163,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket.setPriority(Priority.HOCH);
         ticket.setAdmin(admin1);
         ticket.setBookmark(allBookmarked);
+        ticket.setViewed(true);
         ticketService.saveTicket(ticket);
 
         Ticket ticket1 = new Ticket();
@@ -177,6 +178,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket1.setPriority(Priority.HOCH);
         ticket1.setAdmin(admin1);
         ticket1.setBookmark(allBookmarked);
+        ticket1.isViewed();
+        ticket1.setViewed(true);
         ticketService.saveTicket(ticket1);
 
         Ticket ticket2 = new Ticket();
@@ -191,6 +194,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket2.setPriority(Priority.MITTEL);
         ticket2.setAdmin(admin1);
         ticket2.setBookmark(new HashSet<>());
+        ticket2.setViewed(true);
         ticketService.saveTicket(ticket2);
 
         Ticket ticket3 = new Ticket();
@@ -204,6 +208,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket3.setPriority(Priority.NIEDRIG);
         ticket3.setAdmin(admin1);
         ticket3.setBookmark(new HashSet<>());
+        ticket3.setViewed(true);
         ticketService.saveTicket(ticket3);
 
 
@@ -219,6 +224,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket4.setPriority(Priority.HOCH);
         ticket4.setAdmin(admin1);
         ticket4.setBookmark(new HashSet<>());
+        ticket4.isViewed();
+        ticket4.setViewed(true);
         ticketService.saveTicket(ticket4);
 
         Ticket ticket5 = new Ticket();
@@ -233,6 +240,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket5.setPriority(Priority.MITTEL);
         ticket5.setAdmin(admin1);
         ticket5.setBookmark(allBookmarked);
+        ticket5.setViewed(true);
         ticketService.saveTicket(ticket5);
 
         Ticket ticket6 = new Ticket();
@@ -247,6 +255,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket6.setPriority(Priority.NIEDRIG);
         ticket6.setAdmin(admin1);
         ticket6.setBookmark(new HashSet<>());
+        ticket6.setViewed(true);
         ticketService.saveTicket(ticket6);
 
         Ticket ticket7 = new Ticket();
@@ -261,6 +270,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket7.setPriority(Priority.MITTEL);
         ticket7.setAdmin(admin1);
         ticket7.setBookmark(allBookmarked);
+        ticket7.setViewed(true);
         ticketService.saveTicket(ticket7);
 
         Ticket ticket8 = new Ticket();
@@ -276,6 +286,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket8.setPriority(Priority.HOCH);
         ticket8.setAdmin(admin1);
         ticket8.setBookmark(bookmarkedTicket8);
+        ticket8.setViewed(true);
         ticketService.saveTicket(ticket8);
 
         Ticket ticket9 = new Ticket();
@@ -290,6 +301,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket9.setPriority(Priority.NIEDRIG);
         ticket9.setAdmin(admin1);
         ticket9.setBookmark(allBookmarked);
+        ticket9.setViewed(true);
         ticketService.saveTicket(ticket9);
 
         Ticket ticket10 = new Ticket();
@@ -304,6 +316,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket10.setPriority(Priority.NIEDRIG);
         ticket10.setAdmin(admin1);
         ticket10.setBookmark(new HashSet<>());
+        ticket10.setViewed(true);
         ticketService.saveTicket(ticket10);
 
         Ticket ticket11 = new Ticket();
@@ -318,6 +331,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket11.setPriority(Priority.MITTEL);
         ticket11.setAdmin(admin1);
         ticket11.setBookmark(new HashSet<>());
+        ticket11.isViewed();
+        ticket11.setViewed(true);
         ticketService.saveTicket(ticket11);
 
         Notification notification1 = new Notification();
