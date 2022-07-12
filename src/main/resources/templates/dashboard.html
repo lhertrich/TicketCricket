@@ -357,7 +357,7 @@
 
 
                             <!--- Mobile Priority Triangles -->
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig'}"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Hoch'}"
                                  style="font-weight:bold"
                                  class="d-inline col-1 d-md-none align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')"
                                  title="Hoch">
@@ -365,7 +365,7 @@
                                     <path d="M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
                                 </svg>
                             </div>
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Mittel'}"
                                  style="font-weight:bold"
                                  class="d-inline col-1 d-md-none align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')"
                                  title="Mittel">
@@ -373,7 +373,7 @@
                                     <path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/>
                                 </svg>
                             </div>
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Niedrig'}"
                                  style="font-weight:bold"
                                  class="d-inline col-1 d-md-none align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')"
                                  title="Niedrig">
@@ -383,15 +383,15 @@
                             </div>
 
                             <!--- Desktop priority -->
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig' }"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Hoch' }"
                                  style="font-weight:bold"
                                  class="d-inline col-1 d-none d-md-inline align-self-end " sec:authorize="hasRole('ROLE_ADMIN')">Hoch
                                 </div>
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Mittel'}"
                                  style="font-weight:bold"
                                  class="d-inline col-1 d-none d-md-inline align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')">Mittel
                                 </div>
-                            <div th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
+                            <div th:if="${ticket.priority.getDisplayValue() == 'Niedrig'}"
                                  style="font-weight:bold;"
                                  class="d-inline col-1 d-none d-md-inline align-self-end   " sec:authorize="hasRole('ROLE_ADMIN')">Niedrig
                                 </div>
