@@ -144,11 +144,25 @@ html, body {
 
 .our-button{
     max-width: 190px;
-    background-color: #A6A6A8;
-    border-color: #A6A6A8;
+    background-color: #272635;
+    border-color: #272635;
     border-radius: 10px;
     color: white;
 }
+.our-button:disabled{
+    opacity: 98%;
+    background-color: #bdbdbd;
+    border-color: #bdbdbd;
+    color: #939393;
+}
+
+.our-button:hover {
+    background-color: rgba(39, 38, 53, 0.55);
+    border-color: rgba(39, 38, 53, 0.55);
+    color: white;
+}
+
+
 .our-button-takeback {
     border-radius: 10px;
 }
@@ -229,9 +243,8 @@ margin: 3px;
 }
 
 .chat-status {
-    border: 2px solid black;
-    color: white;
-    background-color: #1d1d1d;
+    color: black;
+    opacity: 70%;
     border-radius: 10px;
     padding: 10px;
     margin: 10px 0;
