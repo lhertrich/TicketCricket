@@ -100,14 +100,14 @@
                           class="elseBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
                 </div>
                 <div id="priority" class="row fs-10 fw-bold p-1">Priorität:
-                    <span th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig'}"
-                          class="openBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Sehr wichtig
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Hoch'}"
+                          class="openBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Hoch
                     </span>
-                    <span th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
-                          class="progressBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Wichtig
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Mittel'}"
+                          class="progressBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Mittel
                     </span>
-                    <span th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
-                          class="finishedBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Unwichtig
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Niedrig'}"
+                          class="finishedBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Niedrig
                     </span>
                 </div>
             </div>
