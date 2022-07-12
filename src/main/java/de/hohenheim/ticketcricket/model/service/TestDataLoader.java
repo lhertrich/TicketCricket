@@ -181,7 +181,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         Ticket ticket2 = new Ticket();
         ticket2.setCategory(Category.INAKTIVITÄT);
-        ticket2.setUser(normalUser1);
+        ticket2.setUser(normalUser2);
         long d2 = System.currentTimeMillis();
         ticket2.setDate(new Date(d2-50400000));
         ticket2.setLastRequest(new Date(d2-46800000));
@@ -195,7 +195,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         Ticket ticket3 = new Ticket();
         ticket3.setCategory(Category.SONSTIGES);
-        ticket3.setUser(normalUser1);
+        ticket3.setUser(normalUser3);
         ticket3.setDate(date4);
         ticket3.setLastRequest(date4);
         ticket3.setProblem("User SilasScheu hat mich mehrfach beleidigt im Chat");
@@ -209,7 +209,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         Ticket ticket4 = new Ticket();
         ticket4.setCategory(Category.SONSTIGES);
-        ticket4.setUser(normalUser1);
+        ticket4.setUser(normalUser2);
         long d4 = System.currentTimeMillis();
         ticket4.setDate(new Date(d4));
         ticket4.setLastRequest(new Date(d4));
