@@ -414,3 +414,10 @@ margin: 3px;
     position: -webkit-sticky;
     position: sticky;
 }
+.message-draft{
+    width: 40px;
+}
+.send-bar-draft{
+    border-color: black;
+    padding-bottom: 8px
+}
