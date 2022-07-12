@@ -60,11 +60,6 @@
             $('.selectPriority').select2({
                 minimumResultsForSearch: -1
             });
-            $('#selectDraft').select2({
-                dropdownAutoWidth : false,
-                width: 'resolve',
-                dropdownParent: $('#dropdownParent2')
-            })
         });
 
     </script>
@@ -265,12 +260,19 @@
                                         $('#selectDraft').select2({
                                             dropdownAutoWidth : false,
                                             width: 'resolve',
-                                            dropdownParent: $('#dropdownParent2')
-                                        })
+                                            dropdownParent: $('#dropdownParent2'),
+                                            "language": {
+                                            "noResults": function(){
+                                                return "Keine Ergebnisse gefunden...";
+                                            }
+                                        },
+                                        }).on('select2:opening', function(e) {
+                                            $(this).data('select2').$dropdown.find(':input.select2-search__field').attr('placeholder', 'Suchen...')
+                                        });
                                     });
                                 </script>
                                 <label for="adminOptions" class="form-label">Nachricht auswählen</label> <br>
-                                       <select class="" id="selectDraft" style=" width: 360px; margin: 5px;">
+                                       <select class="selectDraft" id="selectDraft" style=" width: 360px; margin: 5px;">
                                             <option th:each="messageDraft : ${messageDrafts} "
                                                     th:value="${messageDraft.getMessage()}" th:text="${messageDraft.getMessage()}"></option>
                                         </select>
