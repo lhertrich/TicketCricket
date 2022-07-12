@@ -74,6 +74,14 @@ public class ExpandedTicketController {
         statusNotification.setTicket(newTicket);
         statusNotification.setDate(new Date());
         statusNotification.setUser(newTicket.getUser());
+        if(!userService.getCurrentUser().equals(newTicket.getAdmin())){
+            Notification adminNotification = new Notification();
+            adminNotification.setNotificationType(NotificationType.STATUS_ÄNDERUNG);
+            adminNotification.setTicket(newTicket);
+            adminNotification.setDate(new Date());
+            adminNotification.setUser(newTicket.getAdmin());
+            notificationService.saveNotification(adminNotification);
+        }
         notificationService.saveNotification(statusNotification);
         return "redirect:/ticket/expand?id="+id;
     }
@@ -81,18 +89,29 @@ public class ExpandedTicketController {
     public String setCategory(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
         ticketService.setCategory(ticket.getCategory(), id);
         Ticket newTicket = ticketService.findTicketById(id);
-        Notification categoryNotification = new Notification();
-        categoryNotification.setNotificationType(NotificationType.KATEGORIE_ÄNDERUNG);
-        categoryNotification.setTicket(newTicket);
-        categoryNotification.setUser(newTicket.getUser());
-        categoryNotification.setDate(new Date());
-        notificationService.saveNotification(categoryNotification);
+        if(!userService.getCurrentUser().equals(newTicket.getAdmin())){
+            Notification categoryNotification = new Notification();
+            categoryNotification.setNotificationType(NotificationType.KATEGORIE_ÄNDERUNG);
+            categoryNotification.setTicket(newTicket);
+            categoryNotification.setUser(newTicket.getAdmin());
+            categoryNotification.setDate(new Date());
+            notificationService.saveNotification(categoryNotification);
+        }
         return "redirect:/ticket/expand?id="+id;
     }
 
     @PostMapping("/ticket/expand/setPriority{id}")
     public String setPriority(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
         ticketService.setPriority(ticket.getPriority(), id);
+        Ticket newTicket = ticketService.findTicketById(id);
+        if(!userService.getCurrentUser().equals(newTicket.getAdmin())){
+            Notification prioNotification = new Notification();
+            prioNotification.setNotificationType(NotificationType.PRIORITÄT_ÄNDERUNG);
+            prioNotification.setTicket(newTicket);
+            prioNotification.setUser(newTicket.getAdmin());
+            prioNotification.setDate(new Date());
+            notificationService.saveNotification(prioNotification);
+        }
         return "redirect:/ticket/expand?id="+id;
     }
 
@@ -100,12 +119,14 @@ public class ExpandedTicketController {
     public String setAdmin(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
         ticketService.setAdmin(ticket.getAdmin(), id);
         Ticket newTicket = ticketService.findTicketById(id);
-        Notification adminNotification = new Notification();
-        adminNotification.setNotificationType(NotificationType.TICKET_ZUGEWIESEN);
-        adminNotification.setTicket(newTicket);
-        adminNotification.setUser(newTicket.getAdmin());
-        adminNotification.setDate(new Date());
-        notificationService.saveNotification(adminNotification);
+        if(!userService.getCurrentUser().equals(newTicket.getAdmin())){
+            Notification adminNotification = new Notification();
+            adminNotification.setNotificationType(NotificationType.TICKET_ZUGEWIESEN);
+            adminNotification.setTicket(newTicket);
+            adminNotification.setUser(newTicket.getAdmin());
+            adminNotification.setDate(new Date());
+            notificationService.saveNotification(adminNotification);
+        }
         return "redirect:/ticket/expand?id="+id;
     }
 
