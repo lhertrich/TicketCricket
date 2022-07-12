@@ -70,6 +70,7 @@ public class TicketController {
         }
         model.addAttribute("currentUser", currentUser);
         if (currentUser.isAllowed()) {
+            ticket.setViewed(true);
             ticketService.saveTicket(ticket);
         }
         return "redirect:/";
