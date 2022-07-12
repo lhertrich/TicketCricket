@@ -66,7 +66,7 @@ function displayStatus(websocketMessage) {
 }
 
 function sendMessage() {
-    var messageData = $("#sendBar").val();
+    var messageData = $("#sendBar").val().trim();
     var dateData = new Date();
     var userData = user;
     var ticketData = ticket;
@@ -128,7 +128,9 @@ function sendEnabledInfo() {
 $(function() {
     $("#text-input-bar").submit(function (e) {
         e.preventDefault();
-        sendMessage();
+        if($("#sendBar").val().trim() !== "") {
+            sendMessage();
+        }
         $("#sendBar").val("");
     });
     $("#request-status").submit(function(e) {
