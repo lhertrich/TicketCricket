@@ -44,6 +44,10 @@ $(document).ready(function () {
             enableChat();
             updateScroll();
         });
+        stompClient.subscribe('/topic/status-change?id=' + ticket.ticketID, function (message) {
+            displayStatusChange(message);
+            updateScroll();
+        });
     });
 });
 
@@ -58,15 +62,30 @@ function displayMessage(websocketMessage) {
 
 function displayStatus(websocketMessage) {
     var message = JSON.parse(websocketMessage.body);
-    if (message.user.userId == user.userId) {
-        $("#messageBox").append(createStatus(message));
-    } else {
-        $("#messageBox").append(createStatus(message));
-    }
+    $("#messageBox").append(createStatus(message));
+}
+
+function displayStatusChange(websocketMessage) {
+    var message = JSON.parse(websocketMessage.body);
+    $("#messageBox").append(createStatusChange(message));
+}
+
+function sendStatusChange(status) {
+    var dateData = new Date();
+    var userData = user;
+    var ticketData = ticket;
+    var data = {
+        "message": status,
+        "messageType": "STATUS_CHANGE",
+        "date": dateData,
+        "user": userData,
+        "ticket": ticketData
+    };
+    stompClient.send("/websocket/status-change?id=" + ticket.ticketID, {}, JSON.stringify(data));
 }
 
 function sendMessage() {
-    var messageData = $("#sendBar").val();
+    var messageData = $("#sendBar").val().trim();
     var dateData = new Date();
     var userData = user;
     var ticketData = ticket;
@@ -128,7 +147,9 @@ function sendEnabledInfo() {
 $(function() {
     $("#text-input-bar").submit(function (e) {
         e.preventDefault();
-        sendMessage();
+        if($("#sendBar").val().trim() !== "") {
+            sendMessage();
+        }
         $("#sendBar").val("");
     });
     $("#request-status").submit(function(e) {
@@ -138,6 +159,8 @@ $(function() {
     });
     $("#change-status").submit(function() {
         let data = $("#change-status").serializeArray();
+        let status = data[1].value;
+        sendStatusChange(status);
         if(data[1].value == "ERLEDIGT" && !deactivated) {
             sendDisabledInfo();
             //currently not needed but maybe in the future

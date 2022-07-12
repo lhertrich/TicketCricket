@@ -13,7 +13,8 @@ public class Message {
 
     private enum MessageType {
         CHAT,
-        STATUS
+        STATUS,
+        STATUS_CHANGE
     }
 
     @Id
