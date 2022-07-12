@@ -98,6 +98,24 @@
                         </div>
                     </li>
                     <li class="dropdown-divider dd-divider"/>
+                    <li class="dd-item">
+                        <label for="categoryInput"> <strong>Angefragt</strong> </label>
+                        <div id="requestInput">
+                            <input id="requestCheckbox" type="checkbox" th:value="request">
+                            <label for="bookmarkCheckbox">Status angefragt</label>
+                        </div>
+                    </li>
+                    <li class="dropdown-divider dd-divider"/>
+                    <li class="dd-item">
+                        <label for="categoryInput"> <strong>User</strong> </label>
+                        <div id="userInput">
+                            <select id="userSelection" class="sortDropdown">
+                                <option value="noUser">User auswählen</option>
+                                <option th:each="user: ${users}" th:value="${user.getUsername()}" th:text="${user.getUsername()}"></option>
+                            </select>
+                        </div>
+                    </li>
+                    <li class="dropdown-divider dd-divider"/>
                     <li sec:authorize="hasRole('ROLE_ADMIN')" class="dd-item">
                         <label for="categoryInput"> <strong>Meine Tickets</strong> </label>
                         <div id="adminInput">
@@ -138,6 +156,7 @@
                             <option value="Kategorie">Kategorie</option>
                             <option value="Priorität">Priorität</option>
                             <option value="Datum">Datum</option>
+                            <option value="User">User</option>
                         </select>
                     </li>
                     <li class="dropdown-divider dd-divider"></li>
@@ -298,25 +317,19 @@
 
                             <!--Bookmark -->
                             <div th:if="${ticket.getBookmark().contains(currentUser)}" id="bookmark" class="col-1 d-none d-sm-inline align-self-start">
-                                <form class="no-style" method="post" th:action="@{/setBookmark(id=${ticket.ticketID})}" href="#">
-                                    <button type="submit" name="submit" value="value" data-toggle="tooltip" data-placement="bottom" title="Klicken um Lesezeichen zu setzen/löschen" class="no-style" >
+                                    <button class="no-style" disabled>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
                                             <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
-                                            <title>Klicken um Lesezeichen zu setzen/löschen</title>
                                         </svg>
                                     </button>
-                                </form>
                             </div>
 
                             <div th:if="${!ticket.getBookmark().contains(currentUser)}"id="noBookmark" class="col-1 d-none d-sm-inline align-self-start">
-                                <form class="no-style" method="post" th:action="@{/setBookmark(id=${ticket.ticketID})}">
-                                    <button type="submit" name="submit" value="value" data-toggle="tooltip" data-placement="bottom" title="Klicken um Lesezeichen zu setzen/löschen"  class="no-style">
+                                    <button class="no-style" disabled>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-                                            <title>Klicken um Lesezeichen zu setzen/löschen</title>
                                             <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
                                         </svg>
                                     </button>
-                                </form>
                             </div>
 
 
