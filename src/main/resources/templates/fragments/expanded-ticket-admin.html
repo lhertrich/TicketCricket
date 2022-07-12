@@ -115,17 +115,7 @@
 
                 </div>
 
-                <div id="priority" class="row fs-10 fw-bold p-1">Priorität:
-                    <span th:if="${ticket.priority.getDisplayValue() == 'Hoch'}"
-                          class="d-inline-flex col fw-normal">Hoch
-                    </span>
-                    <span th:if="${ticket.priority.getDisplayValue() == 'Mittel'}"
-                          class="d-inline-flex col fw-normal">Mittel
-                    </span>
-                    <span th:if="${ticket.priority.getDisplayValue() == 'Niedrig'}"
-                          class="d-inline-flex col fw-normal">Niedrig
-                    </span>
-                </div>
+
 
 
                 <div id="status" class="row fs-10 fw-bold p-1">Status:
@@ -149,6 +139,18 @@
                     <span th:if="${ticket.category.getDisplayValue() == 'Sonstiges'}"
                           th:text="${ticket.category.displayValue}"
                           class="elseBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
+                </div>
+
+                <div id="priority" class="row fs-10 fw-bold p-1">Priorität:
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Hoch'}"
+                          class="openBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Hoch
+                    </span>
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Mittel'}"
+                          class="progressBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Mittel
+                    </span>
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Niedrig'}"
+                          class="finishedBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Niedrig
+                    </span>
                 </div>
 
                 </div>
