@@ -167,10 +167,10 @@
                         werden. </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn our-button" data-bs-dismiss="modal">Abbrechen</button>
                     <form th:action="@{/ticket/delete(id=${ticket.ticketID})}" th:object="${ticket}"
                           method="post">
-                        <button type="submit" class="btn btn-danger no-overflow">
+                        <button type="submit" class="btn btn-danger no-overflow our-button-takeback">
                             Ticket zurücknehmen
                         </button>
                     </form>
