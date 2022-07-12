@@ -1,14 +1,9 @@
 package de.hohenheim.ticketcricket.controller;
 
 import de.hohenheim.ticketcricket.model.entity.*;
-import de.hohenheim.ticketcricket.model.service.MessageService;
-import de.hohenheim.ticketcricket.model.service.NotificationService;
-import de.hohenheim.ticketcricket.model.service.TicketService;
-import de.hohenheim.ticketcricket.model.service.UserService;
-import org.aspectj.weaver.ast.Not;
+import de.hohenheim.ticketcricket.model.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 public class ExpandedTicketController {
@@ -33,6 +27,8 @@ public class ExpandedTicketController {
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private MessageDraftService messageDraftService;
     @GetMapping("/ticket/expand{id}")
     public String expandTicket(@RequestParam("id") Integer id, Model model) {
         User currentUser = userService.getCurrentUser();
@@ -57,6 +53,7 @@ public class ExpandedTicketController {
         model.addAttribute("responsibleAdmin", ticketService.findTicketById(id).getAdmin().getUsername());
         model.addAttribute("bookmark", ticketService.findTicketById(id).getBookmark());
         model.addAttribute("notifications", notificationService.findAllNotificationsForTicket(id));
+        model.addAttribute("messageDrafts", messageDraftService.findAllMessageDrafts());
         return "expanded-ticket";
     }
 
@@ -155,5 +152,23 @@ public class ExpandedTicketController {
         int ticketId = notificationService.findNotificiationById(id).getTicket().getTicketID();
         notificationService.deleteNotification(notificationService.findNotificiationById(id));
         return "redirect:/ticket/expand?id="+ticketId;
+    }
+
+    @PostMapping(value = "/ticket/add-draft{id}", produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String updateDraftSelect(@RequestBody MessageDraft input, Model model){
+        if(!(input.getMessage()=="")&&!(messageDraftService.existingMessageDraft(input))) {
+            messageDraftService.saveMessage(input);
+        }
+        model.addAttribute("messageDrafts", messageDraftService.findAllMessageDrafts());
+        return "/fragments/expanded-ticket-admin :: #dropdownParent2";
+    }
+
+    @PostMapping(value = "/ticket/remove-draft{id}", produces = "application/json")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String removeDraftSelect(@RequestBody MessageDraft removeMessage, Model model){
+        messageDraftService.deleteMessageDraftByText(removeMessage.getMessage());
+        model.addAttribute("messageDrafts", messageDraftService.findAllMessageDrafts());
+        return "/fragments/expanded-ticket-admin :: #dropdownParent2";
     }
 }
