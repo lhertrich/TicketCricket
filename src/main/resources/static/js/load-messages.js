@@ -16,6 +16,8 @@ function loadMessages() {
             for (message of data) {
                 if (message.messageType === "STATUS") {
                     $("#messageBox").append(createStatus(message));
+                } else if(message.messageType === "STATUS_CHANGE") {
+                    $("#messageBox").append(createStatusChange(message));
                 } else if (message.user.userId == user.userId) {
                     $("#messageBox").append(createMessage(message, true));
                 } else {
@@ -103,5 +105,44 @@ function createStatus(message) {
         "                </div>\n" +
         "            </div>\n" +
         "        </div>";
+    return message;
+}
+
+function createStatusChange(message) {
+    var date = new Date(message.date);
+    var formatter = new Intl.DateTimeFormat('de-DE', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+    var dateString = formatter.format(date);
+
+    if(message.message === "IN_BEARBEITUNG") {
+        message = "<div class=\"container\">\n" +
+            "            <div class=\"row justify-content-center\">\n" +
+            "                <div class=\"col-4 chat-status-progress\">\n" +
+            "                    <div class=\"text-center\">Hallo " + message.ticket.user.username + "! Dein Ticket ist nun in Bearbeitung. ("+ dateString +")</div>\n" +
+            "                </div>\n" +
+            "            </div>\n" +
+            "        </div>";
+    } else if(message.message === "OFFEN") {
+        message = "<div class=\"container\">\n" +
+            "            <div class=\"row justify-content-center\">\n" +
+            "                <div class=\"col-4 chat-status-open\">\n" +
+            "                    <div class=\"text-center\">Hallo " + message.ticket.user.username + "! Der Ticketstaus hat sich zu \"Offen\" geändert. (" + dateString +")</div>\n" +
+            "                </div>\n" +
+            "            </div>\n" +
+            "        </div>";
+    } else {
+        message = "<div class=\"container\">\n" +
+            "            <div class=\"row justify-content-center\">\n" +
+            "                <div class=\"col-4 chat-status-done\">\n" +
+            "                    <div class=\"text-center\">Hallo " + message.ticket.user.username + "! Dein Ticket ist nun geschlossen. ("+ dateString +")</div>\n" +
+            "                </div>\n" +
+            "            </div>\n" +
+            "        </div>";
+    }
     return message;
 }
