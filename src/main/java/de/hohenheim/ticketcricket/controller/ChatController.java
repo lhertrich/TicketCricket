@@ -64,4 +64,11 @@ public class ChatController {
         return message;
     }
 
+    @MessageMapping("/status-change{id}")
+    @SendTo("/topic/status-change{id}")
+    public Message statusChange(Message message) {
+        messageService.saveMessage(message);
+        return message;
+    }
+
 }
