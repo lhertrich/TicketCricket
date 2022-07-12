@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Expanded Ticket</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -26,6 +28,7 @@
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/js/websocket-chat.js"></script>
+    <script src="/js/message-draft.js"></script>
 
     <!--Select 2 Stylesheet -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -57,9 +60,11 @@
             $('.selectPriority').select2({
                 minimumResultsForSearch: -1
             });
-            $('.selectDraft').select2({
+            $('#selectDraft').select2({
+                dropdownAutoWidth : false,
+                width: 'resolve',
                 dropdownParent: $('#dropdownParent2')
-            });
+            })
         });
 
     </script>
@@ -242,17 +247,28 @@
                             <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
                         </svg>
                     </button>
-                    <div id="dropdownParent2" class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="padding: 10px; border-radius: 10px">
-                            <div class="mb-3">
+                    <div id="dropdown-parent-outer" class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="padding: 10px; border-radius: 10px">
+                    <div id="dropdownParent2">
+                            <div id="dropdown-parent" class="mb-3" style="width: 375px; margin-right: 10px">
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#selectDraft').select2({
+                                            dropdownAutoWidth : false,
+                                            width: 'resolve',
+                                            dropdownParent: $('#dropdownParent2')
+                                        })
+                                    });
+                                </script>
                                 <label for="adminOptions" class="form-label">Nachricht auswählen</label> <br>
-                                    <select class="selectDraft form-control dropdown-width" id="selectDraft">
-                                        <option value="test"> test</option>
-                                        <option value="test2">test2</option>
-                                    </select>
+                                       <select class="" id="selectDraft" style=" width: 360px; margin: 5px;">
+                                            <option th:each="messageDraft : ${messageDrafts} "
+                                                    th:value="${messageDraft.getMessage()}" th:text="${messageDraft.getMessage()}"></option>
+                                        </select>
                             </div>
-                        <button id="test" class="btn our-button shadow-none">
-                            Nachricht laden
-                        </button>
+                        <input class="btn our-button" type="button" value="-" onclick="removeDraft()">
+                        <input class="btn our-button" type="button" value="+" onclick="addDraft()">
+                        <input class="btn our-button" type="button" value="Nachricht Laden" onclick="loadDraft()" style="float: right">
+                    </div>
                     </div>
                     <button id="sendButton" type="submit" class="btn shadow-none bar-button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
@@ -262,7 +278,6 @@
                 </form>
         </div>
     </div>
-
     <!-- Modal for takeback -->
     <div class="modal fade" id="modalSubmitDelete" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle"
          aria-hidden="true">
