@@ -108,8 +108,14 @@
                 </div>
                 <div id="problem" class="row fs-10 fw-bold p-1">Problembeschreibung:
                     <span th:text="${ticket.problem}"
-                          style="font-weight: normal; overflow-wrap: break-word;"/>
+                          style="font-weight: normal; overflow-wrap: break-word;" class="col"/>
                 </div>
+                <div id="creator" class="row fs-10 fw-bold p-1">Ersteller:
+                    <span th:text="${ticket.getUser().getUsername()}" style="font-weight: normal;" class="col"/>
+
+                </div>
+
+
                 <div id="status" class="row fs-10 fw-bold p-1">Status:
                     <span th:if="${ticket.status.getDisplayValue() == 'Offen'}"
                           class="openBadge badge rounded-pill d-inline-flex align-items-center justify-content-center col">Offen
