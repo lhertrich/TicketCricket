@@ -136,7 +136,7 @@ public class ExpandedTicketController {
     @PostMapping(value = "/ticket/add-draft{id}", produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     public String updateDraftSelect(@RequestBody MessageDraft input, Model model){
-        if(!(input.getMessage()=="")) {
+        if(!(input.getMessage()=="")&&!(messageDraftService.existingMessageDraft(input))) {
             messageDraftService.saveMessage(input);
         }
         model.addAttribute("messageDrafts", messageDraftService.findAllMessageDrafts());

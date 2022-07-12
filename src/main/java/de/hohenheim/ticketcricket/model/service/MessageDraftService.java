@@ -30,4 +30,8 @@ public class MessageDraftService {
         MessageDraft messageDraftToDelete = messageDraftRepository.findMessageDraftByMessage(messageDraft);
         messageDraftRepository.delete(messageDraftToDelete);
     }
+
+    public boolean existingMessageDraft(MessageDraft messageDraft){
+        return (messageDraftRepository.findMessageDraftByMessage(messageDraft.getMessage())!=null);
+    }
 }
