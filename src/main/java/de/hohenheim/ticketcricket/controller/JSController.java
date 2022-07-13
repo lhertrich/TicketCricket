@@ -39,4 +39,21 @@ public class JSController {
         }
 
     }
+
+    @GetMapping("/ajax/load-notifications")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String loadNotifications(Model model){
+        User currentUser = userService.getCurrentUser();
+        Set<Role> roles = currentUser.getRoles();
+        Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
+        model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
+        System.out.println(notificationService.findAllNewNotificationsForUser(currentUser));
+        model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
+        model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
+        if(roleNames.contains("ROLE_ADMIN")){
+            return "fragments/navbarFragments :: #newNotificationAdmin";
+        } else {
+            return "fragments/navbarFragments :: #newNotificationUser";
+        }
+    }
 }
