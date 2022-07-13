@@ -193,7 +193,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket1.setDate(date2);
         ticket1.setLastRequest(date1);
         ticket1.setProblem("Ich kann keine Artikel suchen!");
-        ticket1.setStatus(Status.IN_BEARBEITUNG);
+        ticket1.setStatus(Status.OFFEN);
         ticket1.setTitle("Artikelsuche");
         ticket1.setPriority(Priority.HOCH);
         ticket1.setAdmin(admin1);
