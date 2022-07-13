@@ -41,6 +41,7 @@ public class DashboardController {
         model.addAttribute("users", userService.findAllUsers());
         if(roleNames.contains("ROLE_ADMIN")) {
             model.addAttribute("tickets", ticketService.findAllTickets());
+            model.addAttribute("admintTickets", ticketService.findAllTicketsByAdmin(currentUser));
         } else {
             model.addAttribute("tickets", ticketService.findAllTicketsByUser(currentUser));
         }
