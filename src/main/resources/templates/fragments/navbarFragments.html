@@ -17,7 +17,7 @@
 
     <!-- Jquery import und Notification js import -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="/js/NotificationBell.js"></script>
+
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-body" >
         <div class="container-fluid">
@@ -71,8 +71,9 @@
                 <div class="d-flex">
                     <ul class="navbar-nav">
                         <!--  -->
-                        <div>
-                        <li class="nav-item dropdown">
+                        <div id="notification-div-admin">
+                        <li class="nav-item dropdown" id="notifications-admin">
+                            <script src="/js/NotificationBell.js"></script>
                             <a class="nav-link"
                                id="notificationAdmin"
                                role="button" data-bs-toggle="dropdown"
@@ -227,8 +228,9 @@
                 </ul>
                 <div class="d-flex">
                     <ul class="navbar-nav">
-                        <div>
-                            <li class="nav-item dropdown">
+                        <div id="notification-div-user">
+                            <li class="nav-item dropdown" id="notifications-user">
+                                <script src="/js/NotificationBell.js"></script>
                                 <a class="nav-link"
                                    href="#" id="notificationUser"
                                    role="button" data-bs-toggle="dropdown"
