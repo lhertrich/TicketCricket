@@ -1,10 +1,16 @@
 package de.hohenheim.ticketcricket.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.aspectj.weaver.ast.Not;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Ticket {
 
     @Id
@@ -15,7 +21,10 @@ public class Ticket {
     @JoinColumn(name = "creatorID")
     private User user;
 
-    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "adminID")
+    private User admin;
+
     private String title;
 
     private String problem;
@@ -27,8 +36,18 @@ public class Ticket {
 
     private Date lastRequest;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<User> bookmark;
+
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
+
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    private boolean viewed;
+
+
 
     public Ticket(){
     }
@@ -97,4 +116,32 @@ public class Ticket {
         this.status = status;
     }
 
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public User getAdmin() {return admin;}
+
+    public void setAdmin(User admin) {
+        this.admin = admin;
+    }
+
+    public Set<User> getBookmark() {
+        return bookmark;
+    }
+    public void setBookmark(Set<User> bookmark) {
+        this.bookmark = bookmark;
+    }
+
+    public boolean isViewed() {
+        return viewed;
+    }
+
+    public void setViewed(boolean viewed) {
+        this.viewed = viewed;
+    }
 }

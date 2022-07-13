@@ -49,7 +49,6 @@ html, body {
 }
 
 .input-field {
-    border-color:black;
     border-radius:10px;
 }
 
@@ -98,6 +97,7 @@ html, body {
     background-color: #fec004
 }
 
+
 .openBadge{
     width: 100px;
     max-width: 100px;
@@ -140,13 +140,29 @@ html, body {
     text-align: center;
 }
 
+
+
 .our-button{
     max-width: 190px;
-    background-color: #A6A6A8;
-    border-color: #A6A6A8;
+    background-color: #272635;
+    border-color: #272635;
     border-radius: 10px;
     color: white;
 }
+.our-button:disabled{
+    opacity: 98%;
+    background-color: #bdbdbd;
+    border-color: #bdbdbd;
+    color: #939393;
+}
+
+.our-button:hover {
+    background-color: rgba(39, 38, 53, 0.55);
+    border-color: rgba(39, 38, 53, 0.55);
+    color: white;
+}
+
+
 .our-button-takeback {
     border-radius: 10px;
 }
@@ -170,7 +186,279 @@ html, body {
     color: white;
 
 }
+.width-drop{
+    width: 350px;
+}
+.width-drop-message-draft{
+    width: 500px;
+}
+.arrow-drop{
+    -webkit-appearance: none; !important;
+    -moz-appearance: none; !important;
+    appearance: none; !important;
+}
+.admin-badge{
+    background-color: #3babf8;
+    font-size: large;
+}
 
-select{
+.margin-top-bar{
+    margin-right: 25px;
+}
+
+.select2-selection__rendered {
+margin: 3px;
+}
+
+.select2-selection__arrow {
+margin: 3px;
+    -webkit-appearance: none; !important;
+    -moz-appearance: none; !important;
     -webkit-appearance:listbox !important;
+}
+.select2-selection {
+    background-color: #fff;
+    border: 0;
+    border-radius: 0;
+    color: #555555;
+    font-size: 16px;
+    outline: 0;
+    min-height: 37px;
+    text-align: left;
+}
+
+.chat-message-self {
+    border: 2px solid black;
+    background-color: lightgray;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    overflow-wrap: break-word;
+}
+
+.chat-message-other {
+    border: 2px solid black;
+    background-color: darkgray;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    overflow-wrap: break-word;
+}
+
+.chat-status {
+    color: black;
+    opacity: 70%;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.chat-status-progress {
+    border: 2px solid #b98d08;
+    color: black;
+    background-color: #fec004;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.chat-status-open {
+    border: 2px solid #c42d04;
+    color: black;
+    background-color: #ef3b08;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.chat-status-done {
+    border: 2px solid #1a4230;
+    color: black;
+    background-color: #2a6749;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.message-box {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    position: relative;
+    background: rgba(59, 171, 248, 0.91);
+    border: 2px solid #3babf8;
+    color: #000000;
+}
+
+
+.message-box:after {
+    content: "";
+    position: absolute;
+    border: 10px solid transparent;
+    border-top: 10px solid #3babf8;
+    border-right: none;
+    bottom: -22px;
+    right: 5%;
+}
+
+.message-box-other {
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    position: relative;
+    background: rgba(218, 218, 218, 0.87);
+    border: 2px solid #dadada;
+    color: #000000;
+}
+
+.message-box-other:after {
+    content: "";
+    position: absolute;
+    border: 10px solid transparent;
+    border-top: 10px solid #dadada;
+    border-left: none;
+    bottom: -22px;
+    right: 90%;
+}
+
+.text-align-end {
+    text-align: end;
+}
+
+.break-text {
+    overflow-wrap: break-word;
+}
+
+.name {
+    font-weight: bold;
+}
+
+
+
+.notification-dropdown{
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.dd-outer{
+    border-color: #272635;
+    border-width: 3px;
+    border-radius: 10px;
+    background-color: #E8E9F3;
+}
+
+.dd-divider{
+    border-color: #272635;
+    border-width: 1px;
+}
+
+.dd-item{
+    background-color: white;
+    border-color: white;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.dd-text{
+    color: #636464;
+}
+
+[class^='select2'] {
+    border-radius: 10px !important;
+}
+
+.dropdown-width{
+    width: 300px;
+    visibility: hidden
+}
+.dropdown-width-message-draft{
+    width: 500px;
+    visibility: hidden
+}
+
+.filter-dropdown{
+    width: 75vw;
+    max-width: 500px;
+
+    max-height: 50vh; !important;
+}
+.sort-dropdown{
+    width: 75vw;
+    max-width: 400px;
+
+    max-height: 50vh; !important;
+}
+
+#sortAttribute{
+    width: 258px;
+}
+#min-body-height{
+    min-height: 100vh;
+}
+
+#messageBox {
+    max-height: calc(100vh - 500px);
+    height: calc(100vh - 500px);
+    overflow-y: scroll;
+}
+.search-bar-width{
+    min-width: 250px;
+    max-width: 500px;
+}
+
+.bar-button{
+    background-color: #A6A6A8;
+    color: white;
+    border-color: black;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px
+}
+::-webkit-scrollbar {
+    z-index: -1;
+    width: 8px;
+}
+
+.input-bar{
+    border-color: black;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb {
+    border: #888;
+    border-radius: 10px;
+    background: #888;
+}
+
+.scrollbar::-webkit-scrollbar-track{
+    background: none;
+}
+
+::-webkit-scrollbar-track {
+    z-index: +3;
+    border: none;
+    background: #E8E9F3;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.ticket-information{
+    position: -webkit-sticky;
+    position: sticky;
+}
+.message-draft{
+    width: 40px;
+}
+.send-bar-draft{
+    border-color: black;
+    padding-bottom: 8px
 }

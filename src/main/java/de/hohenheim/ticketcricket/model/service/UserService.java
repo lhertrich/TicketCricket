@@ -1,7 +1,6 @@
 package de.hohenheim.ticketcricket.model.service;
 
-import de.hohenheim.ticketcricket.model.entity.Role;
-import de.hohenheim.ticketcricket.model.entity.User;
+import de.hohenheim.ticketcricket.model.entity.*;
 import de.hohenheim.ticketcricket.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -22,6 +22,10 @@ public class UserService implements UserDetailsService {
 
     public User saveUser(User user) {
         return userRepository.save(user);
+    }
+
+    public Optional<User> getUserByID(int id) {
+        return userRepository.findById(id);
     }
 
     public List<User> findAllUsers() {
@@ -51,6 +55,28 @@ public class UserService implements UserDetailsService {
         return getUserByUsername(((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal()).getUsername());
     }
+
+
+    public List<User> findAllUserByUsername(String searchString) {
+        List<User> roleUserList = new ArrayList<>();
+        List<User> userList = findAllUsers();
+        for (User user : userList) {
+            Set<Role> roles = user.getRoles();
+            for (Role role : roles) {
+                if (role.getRolename().equals("ROLE_USER")) {
+                    roleUserList.add(user);
+                }
+            }
+        }
+        List<User> allUsersSearch;
+        if (searchString != null) {
+            allUsersSearch = roleUserList.stream().filter(x -> x.getUsername().toLowerCase(Locale.ROOT).replaceAll("\s", "").contains(searchString)).collect(Collectors.toList());
+        } else {
+            allUsersSearch = roleUserList;
+        }
+        return allUsersSearch;
+    }
+
 
     /**
      * Gibt das UserDetails Objekt des aktuell eingeloggten Users zurück. Wird u.U. benötigt um
@@ -89,4 +115,33 @@ public class UserService implements UserDetailsService {
         return grantedAuthorities;
     }
 
+    public Set<User> getAdmins() {
+        HashSet<User> admins = new HashSet<>();
+        List<User> users = userRepository.findAll();
+        for (User user : users) {
+            for (Role role : user.getRoles()) {
+                if (role.getRolename() == "ROLE_ADMIN") {
+                    admins.add(user);
+                }
+            }
+        }
+        return admins.stream().sorted(Comparator.comparing(User::getUsername)).collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    public List<User> getAdminsByCategory(Category category) {
+        List<User> allAdmins = getAdmins().stream().toList();
+        List<User> adminsByRole = new ArrayList<>();
+        for (User admin : allAdmins) {
+            Set<String> roleNames = admin.getRoles().stream().map(Role::getRolename).collect(Collectors.toSet());
+            System.out.println("called: "+category.toString());
+            if (roleNames.contains("ROLE_"+category)) {
+                adminsByRole.add(admin);
+            }
+        }
+        if (adminsByRole.isEmpty()) {
+            return allAdmins;
+        } else {
+            return adminsByRole;
+        }
+    }
 }
