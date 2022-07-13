@@ -6,6 +6,7 @@
 Mit folgenden Credentials kann sich in die verschiedenen Accounts eingeloggt werden:
 
 User (Benutzername, Passwort): (Larry Page, larry), (Rasmus Lerdorf, rasmus), (Christiane Floyd, christiane)
+
 Admins (Benutzername, Passwort): (Ada Lovelace, ada), (Dennis Ritchie, dennis), (Ken Thompson, ken)
 
 ## Namenszuordnung
