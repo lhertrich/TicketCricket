@@ -42,6 +42,17 @@ public class TicketService {
         return userTickets;
     }
 
+    public List<Ticket> findAllTicketsByAdmin(User admin){
+        List<Ticket> allTickets = ticketRepository.findAll();
+        List<Ticket> adminTickets = new ArrayList<>();
+        for (Ticket ticket : allTickets) {
+            if (ticket.getAdmin().equals(admin)) {
+                adminTickets.add(ticket);
+            }
+        }
+        return adminTickets;
+    }
+
     public List<Ticket> findAllTicketsForAdmin(User admin) {
         List<Ticket> allTickets = ticketRepository.findAll();
         List<Ticket> userTickets = new ArrayList<>();
