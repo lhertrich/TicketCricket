@@ -16,7 +16,7 @@ $(function (){
             xhr.setRequestHeader(header, token); });
     });
 
-    const eventSource = new EventSource("http://localhost:8080/sse/emitter");
+    const eventSource = new EventSource("http://localhost:8080/sse/notification-emitter");
 
     eventSource.onopen = function () {
         console.log('connection is established');
@@ -25,7 +25,8 @@ $(function (){
     eventSource.onmessage = function (event){
         let notification = JSON.parse(event.data);
         console.log(notification);
-        $("#notificationAdmin").load("/ajax/load-notifications");
-        $("#notificationUser").load("/ajax/load-notifications");
+        $("#notification-div-admin").load("/ajax/load-notifications");
+        $("#notification-div-user").load("/ajax/load-notifications");
     }
+
 });

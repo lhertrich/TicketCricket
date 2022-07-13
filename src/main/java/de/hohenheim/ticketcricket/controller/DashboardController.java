@@ -68,4 +68,23 @@ public class DashboardController {
         return "dashboard :: #ticketsWithHeader";
     }
 
+    @GetMapping("/sse/reload-dashboard")
+    public String refreshDashboard(Model model) {
+        User currentUser = userService.getCurrentUser();
+        Set<Role> roles = currentUser.getRoles();
+        Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
+        model.addAttribute("currentUser", userService.getCurrentUser());
+        model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
+        model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
+        model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
+        model.addAttribute("users", userService.findAllUsers());
+        if (roleNames.contains("ROLE_ADMIN")) {
+            model.addAttribute("tickets", ticketService.findAllTickets());
+        } else {
+            model.addAttribute("tickets", ticketService.findAllTicketsByUser(currentUser));
+        }
+        model.addAttribute("currentUser", currentUser);
+        return "dashboard :: #ticketsWithHeader";
+    }
+
 }

@@ -1,5 +1,6 @@
 package de.hohenheim.ticketcricket.controller;
 
+import de.hohenheim.ticketcricket.model.entity.Notification;
 import de.hohenheim.ticketcricket.model.entity.Role;
 import de.hohenheim.ticketcricket.model.entity.User;
 import de.hohenheim.ticketcricket.model.service.NotificationService;
@@ -47,13 +48,13 @@ public class JSController {
         Set<Role> roles = currentUser.getRoles();
         Set<String> roleNames = roles.stream().map(Role::getRolename).collect(java.util.stream.Collectors.toSet());
         model.addAttribute("currentNotifications", notificationService.findAllCurrentNotificationsForUser(currentUser));
-        System.out.println(notificationService.findAllNewNotificationsForUser(currentUser));
+        notificationService.findAllNewNotificationsForUser(currentUser).stream().map(Notification::getNotificationType).forEach(System.out::println);
         model.addAttribute("oldNotifications", notificationService.findAllOldNotificationsForUser(currentUser));
         model.addAttribute("newNotifications", notificationService.findAllNewNotificationsForUser(currentUser));
         if(roleNames.contains("ROLE_ADMIN")){
-            return "fragments/navbarFragments :: #newNotificationAdmin";
+            return "fragments/navbarFragments :: #notifications-admin";
         } else {
-            return "fragments/navbarFragments :: #newNotificationUser";
+            return "fragments/navbarFragments :: #notifications-user";
         }
     }
 }

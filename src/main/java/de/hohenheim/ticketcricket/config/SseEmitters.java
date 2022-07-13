@@ -34,11 +34,6 @@ public class SseEmitters {
                 failedEmitters.add(emitter);
             }
         });
-
         this.emitters.removeAll(failedEmitters);
-    }
-
-    public List<SseEmitter> getEmitters() {
-        return emitters;
     }
 }
