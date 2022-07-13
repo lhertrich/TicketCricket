@@ -65,21 +65,6 @@ public class ExpandedTicketController {
     @PostMapping("/ticket/expand/setStatus{id}")
     public String setStatus(@RequestParam("id") Integer id, @ModelAttribute("ticket") Ticket ticket){
         ticketService.setStatus(ticket.getStatus(), id);
-        Ticket newTicket = ticketService.findTicketById(id);
-        Notification statusNotification = new Notification();
-        statusNotification.setNotificationType(NotificationType.STATUS_ÄNDERUNG);
-        statusNotification.setTicket(newTicket);
-        statusNotification.setDate(new Date());
-        statusNotification.setUser(newTicket.getUser());
-        if(!userService.getCurrentUser().equals(newTicket.getAdmin())){
-            Notification adminNotification = new Notification();
-            adminNotification.setNotificationType(NotificationType.STATUS_ÄNDERUNG);
-            adminNotification.setTicket(newTicket);
-            adminNotification.setDate(new Date());
-            adminNotification.setUser(newTicket.getAdmin());
-            notificationService.saveNotification(adminNotification);
-        }
-        notificationService.saveNotification(statusNotification);
         return "redirect:/ticket/expand?id="+id;
     }
     @PostMapping("/ticket/expand/setCategory{id}")

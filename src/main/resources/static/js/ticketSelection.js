@@ -79,4 +79,19 @@ $(document).ready(function(){
         $("#sortAttribute").val('').change();
         getDataAndSend();
     });
+
+    $(function (){
+
+        const ticketEventSource = new EventSource("http://localhost:8080/sse/ticket-emitter");
+
+        ticketEventSource.onopen = function () {
+            console.log('connection is established');
+        };
+
+        ticketEventSource.onmessage = function () {
+            getDataAndSend();
+        }
+
+    });
 });
+

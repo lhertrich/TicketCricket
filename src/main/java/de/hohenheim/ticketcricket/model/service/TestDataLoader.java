@@ -71,6 +71,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         MessageDraft messageDraft3 = new MessageDraft();
         messageDraft3.setMessage("Das Problem wurde behoben, ich werde das Ticket jetzt schließen.");
         messageDraftService.saveMessage(messageDraft3);
+        MessageDraft messageDraft4 = new MessageDraft();
+        messageDraft4.setMessage("Vielen Dank!");
+        messageDraftService.saveMessage(messageDraft4);
 
 
         Set<User> allBookmarked = new HashSet<>(userService.findAllUsers());
@@ -98,12 +101,21 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         userService.saveUser(normalUser2);
 
         User normalUser3 = new User();
-        normalUser3.setUsername("Edsger Dijkstra");
-        normalUser3.setPassword(passwordEncoder.encode("edsger"));
+        normalUser3.setUsername("Christiane Floyd");
+        normalUser3.setPassword(passwordEncoder.encode("christiane"));
         normalUser3.setRoles(userRoles);
         normalUser3.setAllowed(true);
         normalUser3.setAllowedGeneral(true);
         userService.saveUser(normalUser3);
+
+        User normalUser4 = new User();
+        normalUser4.setUsername("Edsger Dijkstra");
+        normalUser4.setPassword(passwordEncoder.encode("edsger"));
+        normalUser4.setRoles(userRoles);
+        normalUser4.setAllowed(true);
+        normalUser4.setAllowedGeneral(true);
+        userService.saveUser(normalUser4);
+
 
         User admin1 = new User();
         admin1.setUsername("Ada Lovelace");
@@ -141,6 +153,10 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         String dateInString6 = "12-Jul-2022 15:59:08";
         String dateInString7 = "11-Jul-2022 12:45:06";
         String dateInString8 = "11-Jul-2022 23:59:59";
+        String dateInString9 = "13-Jul-2022 18:45:07";
+        String dateInString10 = "13-Jul-2022 18:48:06";
+        String dateInString11 = "13-Jul-2022 18:50:21";
+        String dateInString12 = "13-Jul-2022 18:51:51";
         try {
             Date date1 = formatter2.parse(dateInString);
             Date date2 = formatter2.parse(dateInString2);
@@ -150,6 +166,10 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
             Date date6 = formatter2.parse(dateInString6);
             Date date7 = formatter2.parse(dateInString7);
             Date date8 = formatter2.parse(dateInString8);
+            Date date9 = formatter2.parse(dateInString9);
+            Date date10 = formatter2.parse(dateInString10);
+            Date date11 = formatter2.parse(dateInString11);
+            Date date12 = formatter2.parse(dateInString12);
 
         Ticket ticket = new Ticket();
         ticket.setCategory(Category.TECHNISCHE_PROBLEME);
@@ -167,13 +187,13 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticketService.saveTicket(ticket);
 
         Ticket ticket1 = new Ticket();
-        ticket1.setCategory(Category.TECHNISCHE_PROBLEME);
+        ticket1.setCategory(Category.SONSTIGES);
         ticket1.setUser(normalUser1);
         long d = System.currentTimeMillis();
         ticket1.setDate(date2);
         ticket1.setLastRequest(date1);
         ticket1.setProblem("Ich kann keine Artikel suchen!");
-        ticket1.setStatus(Status.IN_BEARBEITUNG);
+        ticket1.setStatus(Status.OFFEN);
         ticket1.setTitle("Artikelsuche");
         ticket1.setPriority(Priority.HOCH);
         ticket1.setAdmin(admin1);
@@ -222,7 +242,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket4.setStatus(Status.ERLEDIGT);
         ticket4.setTitle("Spam Links in Direct Message");
         ticket4.setPriority(Priority.HOCH);
-        ticket4.setAdmin(admin1);
+        ticket4.setAdmin(admin3);
         ticket4.setBookmark(new HashSet<>());
         ticket4.isViewed();
         ticket4.setViewed(true);
@@ -235,7 +255,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket5.setDate(date1);
         ticket5.setLastRequest(date1);
         ticket5.setProblem("Die Seite lädt sehr langsam und funktioniert manchmal nicht");
-        ticket5.setStatus(Status.OFFEN);
+        ticket5.setStatus(Status.ERLEDIGT);
         ticket5.setTitle("Seite lädt nicht");
         ticket5.setPriority(Priority.MITTEL);
         ticket5.setAdmin(admin1);
@@ -250,10 +270,10 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket6.setDate(date3);
         ticket6.setLastRequest(date3);
         ticket6.setProblem("Der Impressum-Button kann nicht gedrückt werden");
-        ticket6.setStatus(Status.OFFEN);
+        ticket6.setStatus(Status.IN_BEARBEITUNG);
         ticket6.setTitle("Button funktioniert nicht");
         ticket6.setPriority(Priority.NIEDRIG);
-        ticket6.setAdmin(admin1);
+        ticket6.setAdmin(admin2);
         ticket6.setBookmark(new HashSet<>());
         ticket6.setViewed(true);
         ticketService.saveTicket(ticket6);
@@ -268,7 +288,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket7.setStatus(Status.ERLEDIGT);
         ticket7.setTitle("User antwortet nicht");
         ticket7.setPriority(Priority.MITTEL);
-        ticket7.setAdmin(admin1);
+        ticket7.setAdmin(admin3);
         ticket7.setBookmark(allBookmarked);
         ticket7.setViewed(true);
         ticketService.saveTicket(ticket7);
@@ -317,6 +337,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket10.setAdmin(admin1);
         ticket10.setBookmark(new HashSet<>());
         ticket10.setViewed(true);
+        ticket10.setViewed(true);
         ticketService.saveTicket(ticket10);
 
         Ticket ticket11 = new Ticket();
@@ -334,6 +355,63 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         ticket11.isViewed();
         ticket11.setViewed(true);
         ticketService.saveTicket(ticket11);
+
+        Ticket ticket12 = new Ticket();
+        ticket12.setCategory(Category.SONSTIGES);
+        ticket12.setUser(normalUser4);
+        ticket12.setDate(date9);
+        ticket12.setLastRequest(date9);
+        ticket12.setProblem("Ich spamme gerne um Admins zu nerven!!");
+        ticket12.setStatus(Status.OFFEN);
+        ticket12.setTitle("Spam an Admins!");
+        ticket12.setPriority(Priority.NIEDRIG);
+        ticket12.setAdmin(admin2);
+        ticket12.setBookmark(new HashSet<>());
+        ticket12.setViewed(true);
+        ticketService.saveTicket(ticket12);
+
+        Ticket ticket13 = new Ticket();
+        ticket13.setCategory(Category.SONSTIGES);
+        ticket13.setUser(normalUser4);
+        ticket13.setDate(date10);
+        ticket13.setLastRequest(date10);
+        ticket13.setProblem("Ich spamme gerne um Admins zu nerven!!");
+        ticket13.setStatus(Status.OFFEN);
+        ticket13.setTitle("Spam an Admins!");
+        ticket13.setPriority(Priority.NIEDRIG);
+        ticket13.setAdmin(admin2);
+        ticket13.setBookmark(new HashSet<>());
+        ticket13.setViewed(true);
+        ticketService.saveTicket(ticket13);
+
+        Ticket ticket14 = new Ticket();
+        ticket14.setCategory(Category.SONSTIGES);
+        ticket14.setUser(normalUser4);
+        ticket14.setDate(date11);
+        ticket14.setLastRequest(date11);
+        ticket14.setProblem("Ich spamme gerne um Admins zu nerven!!");
+        ticket14.setStatus(Status.OFFEN);
+        ticket14.setTitle("Spam an Admins!");
+        ticket14.setPriority(Priority.NIEDRIG);
+        ticket14.setAdmin(admin2);
+        ticket14.setBookmark(new HashSet<>());
+        ticket14.setViewed(true);
+        ticketService.saveTicket(ticket14);
+
+        Ticket ticket15 = new Ticket();
+        ticket15.setCategory(Category.SONSTIGES);
+        ticket15.setUser(normalUser4);
+        ticket15.setDate(date12);
+        ticket15.setLastRequest(date12);
+        ticket15.setProblem("Ich spamme gerne um Admins zu nerven!!");
+        ticket15.setStatus(Status.OFFEN);
+        ticket15.setTitle("Spam an Admins!");
+        ticket15.setPriority(Priority.NIEDRIG);
+        ticket15.setAdmin(admin2);
+        ticket15.setBookmark(new HashSet<>());
+        ticket15.setViewed(true);
+        ticketService.saveTicket(ticket15);
+
 
         Notification notification1 = new Notification();
         notification1.setUser(normalUser1);

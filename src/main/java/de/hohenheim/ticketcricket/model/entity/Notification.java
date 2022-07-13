@@ -80,4 +80,17 @@ public class Notification {
     public void setNew(boolean aNew) {
         isNew = aNew;
     }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "notificationId=" + notificationId +
+                ", user=" + user.getUsername() +
+                ", ticket=" + ticket.getTicketID() +
+                ", date=" + date +
+                ", notificationType=" + notificationType +
+                ", isNew=" + isNew +
+                '}';
+    }
+
 }
