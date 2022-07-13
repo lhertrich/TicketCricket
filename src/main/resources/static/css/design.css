@@ -253,6 +253,33 @@ margin: 3px;
     margin: 10px 0;
 }
 
+.chat-status-progress {
+    border: 2px solid #b98d08;
+    color: black;
+    background-color: #fec004;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.chat-status-open {
+    border: 2px solid #c42d04;
+    color: black;
+    background-color: #ef3b08;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.chat-status-done {
+    border: 2px solid #1a4230;
+    color: black;
+    background-color: #2a6749;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
 .message-box {
     border-radius: 10px;
     padding: 10px;

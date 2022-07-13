@@ -8,7 +8,7 @@ $(document).ready(function(){
 
     var searchString;
     $("#searchBar").keyup(function (){
-        searchString = $("#searchBar").val();
+        searchString = $("#searchBar").val().toLowerCase().replace(/\s+/g, '');
         $("#bottomOuterBorder").load("/ajax/updateTicketerstellung?searchString=" + searchString);
     });
 

@@ -42,10 +42,11 @@
 
     <script src="/js/ticketSelection.js"></script>
     <link rel="stylesheet" href="/css/dashboard.css">
+
     <li id="topBar" class="list-group-item">
         <div class="d-flex justify-content-between">
             <form class="input-group search-bar-width" style="padding-right: 50px" onsubmit="return false">
-                <input id="searchBar" type="text" class="form-control shadow-none" placeholder="...">
+                <input id="searchBar" type="text" class="form-control shadow-none" placeholder="Suche">
                 <button id="search" type="button" class="btn shadow-none" >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-search" viewBox="0 0 16 16">
@@ -80,8 +81,8 @@
                                 <label for="categoryCheckbox" th:text="${category.getDisplayValue()}"></label>
                             </div>
                     </li>
-                    <li class="dropdown-divider dd-divider"/>
-                    <li class="dd-item">
+                    <li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-divider dd-divider"/>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')" class="dd-item">
                         <label for="categoryInput"> <strong>Priorität</strong> </label>
                         <div id="priorityInput"
                              th:each="prio: ${T(de.hohenheim.ticketcricket.model.entity.Priority).values()}">
@@ -106,7 +107,7 @@
                         </div>
                     </li>
                     <li class="dropdown-divider dd-divider"/>
-                    <li class="dd-item">
+                    <li sec:authorize="hasRole('ROLE_ADMIN')" class="dd-item">
                         <label for="categoryInput"> <strong>User</strong> </label>
                         <div id="userInput">
                             <select id="userSelection" class="sortDropdown">
@@ -115,7 +116,7 @@
                             </select>
                         </div>
                     </li>
-                    <li class="dropdown-divider dd-divider"/>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-divider dd-divider"/>
                     <li sec:authorize="hasRole('ROLE_ADMIN')" class="dd-item">
                         <label for="categoryInput"> <strong>Meine Tickets</strong> </label>
                         <div id="adminInput">
@@ -154,9 +155,10 @@
                             <option value="" selected disabled hidden>Bitte auswählen</option>
                             <option value="Status">Status</option>
                             <option value="Kategorie">Kategorie</option>
-                            <option value="Priorität">Priorität</option>
-                            <option value="Datum">Datum</option>
-                            <option value="User">User</option>
+                            <option value="Priorität" sec:authorize="hasRole('ROLE_ADMIN')">Priorität</option>
+                            <option value="Datum aufsteigend">Datum (aufsteigend)</option>
+                            <option value="Datum absteigend">Datum (absteigend)</option>
+                            <option sec:authorize="hasRole('ROLE_ADMIN')" value="User">User</option>
                         </select>
                     </li>
                     <li class="dropdown-divider dd-divider"></li>
