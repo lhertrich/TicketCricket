@@ -174,8 +174,10 @@ public class TicketService {
             Collections.sort(tickets, Comparator.comparing(Ticket::getStatus));
         } else if(sortString.equals("Priorität")){
             Collections.sort(tickets, Comparator.comparing(Ticket::getPriority));
-        } else if(sortString.equals("Datum")){
+        } else if(sortString.equals("Datum aufsteigend")){
             Collections.sort(tickets, Comparator.comparing(Ticket::getDate));
+        } else if(sortString.equals("Datum absteigend")){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getDate).reversed());
         } else if(sortString.equals("User")){
             Collections.sort(tickets, Comparator.comparing(x -> x.getUser().getUsername()));
         }

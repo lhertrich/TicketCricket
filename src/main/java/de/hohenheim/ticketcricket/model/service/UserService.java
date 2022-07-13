@@ -70,7 +70,7 @@ public class UserService implements UserDetailsService {
         }
         List<User> allUsersSearch;
         if (searchString != null) {
-            allUsersSearch = roleUserList.stream().filter(x -> x.getUsername().replaceAll("\s", "").contains(searchString)).collect(Collectors.toList());
+            allUsersSearch = roleUserList.stream().filter(x -> x.getUsername().toLowerCase(Locale.ROOT).replaceAll("\s", "").contains(searchString)).collect(Collectors.toList());
         } else {
             allUsersSearch = roleUserList;
         }
