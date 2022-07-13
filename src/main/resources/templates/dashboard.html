@@ -428,11 +428,17 @@
             </div>
         </div>
     </div>
-    <div class="container p-3" style="color: dimgrey; font-weight: bold">
-        <div class="row justify-content-between">
+    <div sec:authorize="hasRole('ROLE_ADMIN')" class="container-fluid p-3 d-none d-md-inline" style="color: #939393; font-weight: bold">
+        <div class="row" style=" text-align:center">
             <div class="col-4" th:text="'Nutzer: '+${currentUser.getUsername()}"/>
             <div class="col-4" th:text="'Anzahl Tickets: '+${tickets.size()}"/>
             <div class="col-4" th:text="'Mir zugwiesene Tickets: '+${admintTickets.size()}"/>
+        </div>
+    </div>
+    <div sec:authorize="hasRole('ROLE_USER')" class="container-fluid p-3 d-none d-md-inline" style="color: #939393; font-weight: bold">
+        <div class="row" style=" text-align:center">
+            <div class="col-6" th:text="'Nutzer: '+${currentUser.getUsername()}"/>
+            <div class="col-6" th:text="'Anzahl Tickets: '+${tickets.size()}"/>
         </div>
     </div>
 </div>
