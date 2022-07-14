@@ -2,15 +2,12 @@
 **Repository von Gruppe 09**
 
 ## Login
-Zu Beginn werden über einen TestDataLoader 10 Tickets, 3 User, 2 Admins und eine Notification die zu einem der Tickets gehört in die Datenbank geladen.
-Mit folgenden Credentials kann sich in die verschiedenen Accounts eingeloggt werden (Username, Passwort):
 
-User: (user1, user1), (user2, user2), (user3, user3)
-Admins: (admin1, admin1), (admin2, admin2)
+Mit folgenden Credentials kann sich in die verschiedenen Accounts eingeloggt werden:
 
-Die Tickets [#8], [#9] und [#10] erlauben eine Demo der Statusanfrage.
+User (Benutzername, Passwort): (Larry Page, larry), (Rasmus Lerdorf, rasmus), (Christiane Floyd, christiane)
 
-Funktionen die für die Abgabe nicht implementiert werden mussten sind ausgegraut oder disabled.
+Admins (Benutzername, Passwort): (Ada Lovelace, ada), (Dennis Ritchie, dennis), (Ken Thompson, ken)
 
 ## Namenszuordnung
 

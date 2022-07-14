@@ -12,9 +12,6 @@
 
 <!-- Navbar  class="col top-bar-text"-->
 <div th:fragment="expanded-ticket-user" class="box-format">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
         var ticket = /*[[${ticket}]]*/ "";
@@ -28,14 +25,24 @@
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/js/websocket-chat.js"></script>
+    <script src="/js/sse.js"></script>
 
     <div class="container-fluid">
         <!-- Top Bar -->
         <div id="topBar" class="row top-bar align-items-center top-outer-border p-1">
             <div class="no-overflow col my-2">
+                <th:block id="title" th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"></th:block>
+
+            </div>
+            <div id="topButtons" class="col d-flex align-items-center justify-content-end">
+                <button type="button" style="max-width: 190px"
+                        class="col-6 btn btn-danger no-overflow float-end mx-2 d-none d-sm-block our-button-takeback"
+                        data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
+                    Ticket&nbsp;zurücknehmen
+                </button>
+
                 <form class="form-inline" method="post"
                       th:action="@{/ticket/expand/setBookmark(id=${ticket.ticketID})}">
-                    <th:block id="title" th:text="${'[#' + ticket.ticketID + ']' + ' ' + ticket.title}"></th:block>
                     <button type="submit" name="submit" value="value" class="link-button" data-toggle="tooltip" data-placement="bottom" title="Klicken um Lesezeichen zu setzen/löschen"
                             style="background-color: #272635; border: none">
                         <svg th:if="${ticket.getBookmark().contains(currentUser)}" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -48,13 +55,6 @@
                         </svg>
                     </button>
                 </form>
-            </div>
-            <div id="topButtons" class="col d-flex align-items-center justify-content-end">
-                <button type="button" style="max-width: 190px"
-                        class="col-6 btn btn-danger no-overflow float-end mx-2 d-none d-sm-block our-button-takeback"
-                        data-bs-toggle="modal" data-bs-target="#modalSubmitDelete">
-                    Ticket&nbsp;zurücknehmen
-                </button>
                 <a th:href="@{/}" style="color: white; margin-left: 25px">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                          fill="currentColor" class="bi bi-x-lg float-end mx-2" viewBox="0 0 16 16"
@@ -100,14 +100,14 @@
                           class="elseBadge badge rounded-pill d-inline-flex align-items-center justify-content-center"/>
                 </div>
                 <div id="priority" class="row fs-10 fw-bold p-1">Priorität:
-                    <span th:if="${ticket.priority.getDisplayValue() == 'Sehr Wichtig'}"
-                          class="openBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Sehr wichtig
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Hoch'}"
+                          class="openBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Hoch
                     </span>
-                    <span th:if="${ticket.priority.getDisplayValue() == 'Wichtig'}"
-                          class="progressBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Wichtig
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Mittel'}"
+                          class="progressBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Mittel
                     </span>
-                    <span th:if="${ticket.priority.getDisplayValue() == 'Unwichtig'}"
-                          class="finishedBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Unwichtig
+                    <span th:if="${ticket.priority.getDisplayValue() == 'Niedrig'}"
+                          class="finishedBadge badge rounded-pill col d-inline-flex align-items-center justify-content-center">Niedrig
                     </span>
                 </div>
             </div>
@@ -167,10 +167,10 @@
                         werden. </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn our-button" data-bs-dismiss="modal">Abbrechen</button>
                     <form th:action="@{/ticket/delete(id=${ticket.ticketID})}" th:object="${ticket}"
                           method="post">
-                        <button type="submit" class="btn btn-danger no-overflow">
+                        <button type="submit" class="btn btn-danger no-overflow our-button-takeback">
                             Ticket zurücknehmen
                         </button>
                     </form>

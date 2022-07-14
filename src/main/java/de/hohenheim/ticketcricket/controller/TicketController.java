@@ -7,17 +7,14 @@ import de.hohenheim.ticketcricket.model.service.UserService;
 import de.hohenheim.ticketcricket.model.validation.TicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.validation.Valid;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class TicketController {
@@ -73,6 +70,7 @@ public class TicketController {
         }
         model.addAttribute("currentUser", currentUser);
         if (currentUser.isAllowed()) {
+            ticket.setViewed(true);
             ticketService.saveTicket(ticket);
         }
         return "redirect:/";
@@ -80,11 +78,11 @@ public class TicketController {
 
     private Priority prioritiseTicket(Ticket ticket){
         if(ticket.getCategory() == Category.TECHNISCHE_PROBLEME){
-            return Priority.SEHR_WICHTIG;
+            return Priority.HOCH;
         } else if(ticket.getCategory() == Category.INAKTIVITÄT){
-            return Priority.WICHTIG;
+            return Priority.MITTEL;
         } else {
-            return Priority.UNWICHTIG;
+            return Priority.NIEDRIG;
         }
     }
 

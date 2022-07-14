@@ -20,10 +20,12 @@ $(document).ready(function(){
                 filterString += $(this).val();
             }
         });
-        console.log("selection: "+$("#userSelection").val())
-        filterString = filterString + $("#userSelection").val();
+        if(($("#userSelection").length)){
+            filterString = filterString + $("#userSelection").val();
+        } else {
+            filterString = filterString + "noUser";
+        }
         sortString = $("#sortAttribute").val();
-        console.log("searchstring: "+searchString+"; filterstring: "+filterString+"; sortattribute: "+sortString);
         let selectionObject = {
             searchString: searchString,
             filterString: filterString,
@@ -36,7 +38,6 @@ $(document).ready(function(){
             contentType: "application/json",
             data: JSON.stringify(selectionObject),
             success: function (result){
-                console.log("success");
                 $("#bottomOuterBorder").html(result);
             }
         })
@@ -61,7 +62,10 @@ $(document).ready(function(){
         $(":checkbox").each(function (){
             $(this).prop('checked', false);
         });
-        $("#userSelection").val('noUser').change();
+        if(($("#userSelection").length)){
+
+            $("#userSelection").val('noUser').change();
+        }
         getDataAndSend();
     });
 
@@ -75,4 +79,19 @@ $(document).ready(function(){
         $("#sortAttribute").val('').change();
         getDataAndSend();
     });
+
+    $(function (){
+
+        const ticketEventSource = new EventSource("http://localhost:8080/sse/ticket-emitter");
+
+        ticketEventSource.onopen = function () {
+            console.log('connection is established');
+        };
+
+        ticketEventSource.onmessage = function () {
+            getDataAndSend();
+        }
+
+    });
 });
+

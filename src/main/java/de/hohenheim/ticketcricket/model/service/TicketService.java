@@ -6,7 +6,6 @@ import de.hohenheim.ticketcricket.model.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,6 +40,17 @@ public class TicketService {
             }
         }
         return userTickets;
+    }
+
+    public List<Ticket> findAllTicketsByAdmin(User admin){
+        List<Ticket> allTickets = ticketRepository.findAll();
+        List<Ticket> adminTickets = new ArrayList<>();
+        for (Ticket ticket : allTickets) {
+            if (ticket.getAdmin().equals(admin)) {
+                adminTickets.add(ticket);
+            }
+        }
+        return adminTickets;
     }
 
     public List<Ticket> findAllTicketsForAdmin(User admin) {
@@ -113,16 +123,16 @@ public class TicketService {
     private List<Ticket> filterTicketsByPrio(List<Ticket> tickets, String filterString){
         List<Ticket> prioTickets = new ArrayList<>();
 
-        if(filterString.contains("SEHR_WICHTIG")){
-            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.SEHR_WICHTIG).collect(Collectors.toList()));
+        if(filterString.contains("HOCH")){
+            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.HOCH).collect(Collectors.toList()));
         }
-        if(filterString.contains("WICHTIG") && !filterString.contains("SEHR_WICHTIG") && !filterString.contains("UNWICHTIG")){
-            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.WICHTIG).collect(Collectors.toList()));
+        if(filterString.contains("MITTEL") && !filterString.contains("HOCH") && !filterString.contains("NIEDRIG")){
+            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.MITTEL).collect(Collectors.toList()));
         }
-        if(filterString.contains("UNWICHTIG") && !filterString.contains("WICHTIG")){
-            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.UNWICHTIG).collect(Collectors.toList()));
+        if(filterString.contains("NIEDRIG") && !filterString.contains("MITTEL")){
+            prioTickets.addAll(tickets.stream().filter(x -> x.getPriority() == Priority.NIEDRIG).collect(Collectors.toList()));
         }
-        if(!filterString.contains("SEHR_WICHTIG") && !filterString.contains("WICHTIG") && !filterString.contains("UNWICHTIG")){
+        if(!filterString.contains("HOCH") && !filterString.contains("MITTEL") && !filterString.contains("NIEDRIG")){
             return tickets;
         }
         return prioTickets;
@@ -175,8 +185,10 @@ public class TicketService {
             Collections.sort(tickets, Comparator.comparing(Ticket::getStatus));
         } else if(sortString.equals("Priorität")){
             Collections.sort(tickets, Comparator.comparing(Ticket::getPriority));
-        } else if(sortString.equals("Datum")){
+        } else if(sortString.equals("Datum aufsteigend")){
             Collections.sort(tickets, Comparator.comparing(Ticket::getDate));
+        } else if(sortString.equals("Datum absteigend")){
+            Collections.sort(tickets, Comparator.comparing(Ticket::getDate).reversed());
         } else if(sortString.equals("User")){
             Collections.sort(tickets, Comparator.comparing(x -> x.getUser().getUsername()));
         }

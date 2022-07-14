@@ -23,6 +23,8 @@ public class Message {
 
     private MessageType messageType;
 
+    @Lob
+    @Column
     private String message;
 
     private Date date;

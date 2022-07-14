@@ -17,7 +17,7 @@
 
     <!-- Jquery import und Notification js import -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="/js/NotificationBell.js"></script>
+
 
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark navbar-body" >
         <div class="container-fluid">
@@ -71,8 +71,9 @@
                 <div class="d-flex">
                     <ul class="navbar-nav">
                         <!--  -->
-                        <div>
-                        <li class="nav-item dropdown">
+                        <div id="notification-div-admin">
+                        <li class="nav-item dropdown" id="notifications-admin">
+                            <script src="/js/NotificationBell.js"></script>
                             <a class="nav-link"
                                id="notificationAdmin"
                                role="button" data-bs-toggle="dropdown"
@@ -156,9 +157,9 @@
                     <p>Sind Sie sich sicher, dass sie sich abmelden wollen?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn our-button" data-bs-dismiss="modal">Abbrechen</button>
                     <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="btn btn-danger no-overflow">
+                        <button type="submit" class="btn btn-danger no-overflow our-button-takeback">
                             Abmelden
                         </button>
                     </form>
@@ -227,8 +228,9 @@
                 </ul>
                 <div class="d-flex">
                     <ul class="navbar-nav">
-                        <div>
-                            <li class="nav-item dropdown">
+                        <div id="notification-div-user">
+                            <li class="nav-item dropdown" id="notifications-user">
+                                <script src="/js/NotificationBell.js"></script>
                                 <a class="nav-link"
                                    href="#" id="notificationUser"
                                    role="button" data-bs-toggle="dropdown"
@@ -309,9 +311,9 @@
                     <p>Sind Sie sich sicher, dass sie sich abmelden wollen?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn our-button" data-bs-dismiss="modal">Abbrechen</button>
                     <form th:action="@{/logout}" method="post">
-                        <button type="submit" class="btn btn-danger no-overflow">
+                        <button type="submit" class="btn btn-danger no-overflow our-button-takeback">
                             Abmelden
                         </button>
                     </form>
